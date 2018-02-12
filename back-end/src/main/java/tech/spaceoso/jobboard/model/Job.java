@@ -5,12 +5,14 @@ public class Job {
     private String title;
     private Location location;
     private String description;
+    private Long employerId;
 
-    public Job(Long id, String title, Location location, String description) {
+    public Job(Long id, String title, Location location, String description, Long employerId) {
         this.id = id;
         this.title = title;
         this.location = location;
         this.description = description;
+        this.employerId = employerId;
     }
 
     public Long getId() {
