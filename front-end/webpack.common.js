@@ -1,14 +1,21 @@
 const {resolve} = require('path');
+const path = require('path');
 const webpack = require('webpack');
 const DotenvPlugin = require('webpack-dotenv-plugin');
 
 module.exports = {
     // context: resolve('src'),
     entry: "./src/index.tsx",
+    devServer:{
+        contentBase: resolve('../back-end/src/main/resources/public/'),
+    },
     output: {
-        path: resolve('../back-end/src/main/resources/js/'),
+        // path: resolve('../back-end/src/main/resources/public/'),
+        path: resolve('../back-end/src/main/resources/public/'),
         filename: "bundle.js",
-        publicPath: 'src/resources',
+        // publicPath: 'src/resources',
+        // publicPath: resolve('../back-end/src/main/resources/public/'),
+
     },
     resolve: {
         extensions: [".ts", ".tsx", ".js", ".jsx"]
@@ -22,8 +29,8 @@ module.exports = {
     ],
     module: {
         loaders: [
-            { test: /\.([tj])sx?$/, exclude: /node_modules/, use: { loader: 'awesome-typescript-loader' } },
-            { enforce: "pre", test: /\.js$/, loader: "source-map-loader" },
+            {test: /\.([tj])sx?$/, exclude: /node_modules/, use: {loader: 'awesome-typescript-loader'}},
+            {enforce: "pre", test: /\.js$/, loader: "source-map-loader"},
             {
                 test: /\.scss$/,
                 loaders: ["style-loader", "css-loader", "sass-loader"]
@@ -45,6 +52,6 @@ module.exports = {
     node: {
         dns: 'empty',
         net: 'empty',
-        fs:'empty'
+        fs: 'empty'
     }
 };
