@@ -1,0 +1,299 @@
+@import "variables";
+@import "../components/header/Header";
+
+html {
+  font-size: 62.5%; /* font-size 1em = 10px on default browser settings */
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background-color: $siteBackground;
+  color: $carbon;
+  margin: 0;
+}
+.noScroll { /* ...or body.dialogShowing */
+  overflow: hidden;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  text-align: center;
+  //background-color: #EFEFEF;
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.6rem;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+[data-reactroot],
+#root {
+  height: 100%;
+}
+
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  //justify-content: space-between;
+}
+
+.content {
+  /* 0 flex-grow, 0 flex-shrink, auto flex-basis */
+  flex: 1 0 auto;
+}
+
+/*=======================================*/
+/*STANDARD SIZES*/
+/*=======================================*/
+h1 {
+  font-size: 2.6rem;
+}
+
+h3 {
+  font-size: 2.0rem;
+}
+
+input {
+  background-color: $inputBg;
+  -webkit-appearance: none;
+  outline: none;
+  border-style: none;
+  -webkit-border-radius: .2rem;
+  -moz-border-radius: .2rem;
+  border-radius: 5px;
+  border: 1px solid $inputTextBorder;
+  padding: .5rem;
+  color: $inputText;
+  min-height: 45px;
+}
+
+input[type='text']::placeholder,
+input[type='email']::placeholder,
+input[type='password']::placeholder {
+  color: $carbon;
+  font-size: 1.3rem;
+}
+
+select {
+  background-color: $inputBg;
+  height: 45px;
+  border: 1px solid $accentColor;
+  color: $inputText;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 6px;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px white inset;
+}
+
+/*=======================================*/
+/*- HELPER CLASSES*/
+/*=======================================*/
+.btn-standard {
+  background-color: $button;
+  border: none;
+  border-radius: 4px;
+  color: $white;
+  min-height: 35px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.btn-standard:hover {
+  background-color: $accentColor;
+}
+
+.btn-standard-selected {
+  background-color: $buttonActivated;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.full-width {
+  width: 100%;
+}
+
+hr.style1 {
+  border-top: 3px double #8c8b8b;
+}
+
+.job-container {
+  display: flex;
+  width: 100%;
+  background-color: palevioletred;
+}
+
+.inlineblock {
+  display: inline-block;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.bottom5 {
+  margin-bottom: 5px;
+}
+
+.bottom7 {
+  margin-bottom: 7px;
+}
+
+.bottom10 {
+  margin-bottom: 10px;
+}
+
+.bottom15 {
+  margin-bottom: 15px;
+}
+
+.bottom17 {
+  margin-bottom: 17px;
+}
+
+.bottom30 {
+  margin-bottom: 30px;
+}
+
+.jb-shadow {
+  -webkit-box-shadow: 0px 11px 5px -5px rgba(0, 0, 0, 0.24);
+  -moz-box-shadow: 0px 11px 5px -5px rgba(0, 0, 0, 0.24);
+  box-shadow: 0px 11px 5px -5px rgba(0, 0, 0, 0.24);
+
+}
+
+.floating-spinner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
+.link-standard{
+  cursor: pointer;
+}
+
+.link-standard:hover{
+  text-decoration: underline;
+  color: $button;
+  font-weight: bold;
+}
+
+/*=======================================*/
+/*- EMPLOYER PAGE*/
+/*=======================================*/
+
+.jumbotron1 {
+  padding: 30px 15px;
+  margin-bottom: 30px;
+  color: inherit;
+  background-color: #f9f9f9;
+  text-align: center;
+  background-size: cover;
+  background-image: url("http://www.online-image-editor.com//styles/2014/images/example_image.png")
+}
+
+.employer-jumbotron {
+  /*background-image: url("./assets/images/employer-frontpage.jpg");*/
+}
+
+.job-submit {
+  text-align: left;
+}
+
+@media (min-width: 1200px) {
+  .container {
+    width: 970px;
+  }
+}
+
+/*=======================================*/
+/*- FRONT PAGE*/
+/*=======================================*/
+
+.app-container {
+  //width: 80%;
+  max-width: 940px;
+  flex: 1 0 auto;
+  margin: auto;
+}
+
+.jumboTron {
+  width: 100%;
+  height: 250px;
+  background-color: $dark;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+
+  #site-title {
+    font-size: 5.6rem;
+  }
+
+  #site-subtext {
+    font-size: 4.8rem;
+    margin: 0 auto;
+  }
+}
+
+.not-found {
+  background-color: red;
+  font-size: 3.5rem;
+  color: green;
+}
+
+.panel {
+  @include panel();
+}
+
+.panel-shadow {
+  -webkit-box-shadow: 0 17px 27px -13px rgba(182, 201, 214, 1);
+  -moz-box-shadow: 0 17px 27px -13px rgba(182, 201, 214, 1);
+  box-shadow: 0 17px 27px -13px rgba(182, 201, 214, 1);
+}
+
+/*=======================================*/
+/*MODAL*/
+/*=======================================*/
+#modal-root {
+  position: relative;
+  z-index: 999;
+}
+
+.modal {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

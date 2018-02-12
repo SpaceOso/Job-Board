@@ -1,0 +1,16 @@
+@import "../../../../styles/variables";
+@import "../../dashboardStyles";
+
+.dashboard-layout {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.dashboard-info-panel{
+  @include dashboard-main-section();
+
+  @media (min-width: 768px) {
+    padding: 1% 1%;
+  }
+}

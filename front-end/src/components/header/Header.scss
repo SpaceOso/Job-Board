@@ -1,0 +1,33 @@
+@import "../../styles/_variables";
+
+.header-component{
+  width: 100%;
+  background-color: $header;
+  display: flex;
+  height: 55px;
+  flex-direction: row;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  color: $headerFont;
+  border-bottom: 5px solid $accentColor;
+
+  .mobile-nav-menu-btn{
+    margin-right: 20px;
+  }
+  #header-logo{
+    margin-left: 23px;
+  }
+
+  .nav-item{
+    margin: 0 50px;
+    font-size: 1.8rem;
+
+    &#dashboard-btn{
+      margin-left: auto;
+    }
+  }
+  #nav-links{
+
+  }
+}

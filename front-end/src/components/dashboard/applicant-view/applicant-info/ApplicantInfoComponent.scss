@@ -1,0 +1,91 @@
+@import "../../../../styles/variables";
+
+.applicant-info-component {
+  text-align: left;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  @include panel();
+  padding: 1%;
+
+  .applicant-info{
+    width: 100%;
+  }
+
+  .applicant-details{
+    display: inline-block;
+    p{
+      margin: 5px;
+    }
+  }
+
+  .applicant-links{
+    width: 100%;
+    button{
+      margin-right: 10px;
+    }
+  }
+
+  .applicant-status{
+    display: inline-block;
+    float: right;
+    h1{
+      display: inline-block;
+    }
+    select{
+      margin: 0 20px;
+    }
+    button{
+      float:right;
+      margin: 20px;
+    }
+  }
+
+  .social-links {
+    text-align: left;
+    margin: 10px 0;
+    padding: 0;
+    li {
+      list-style-type: none;
+      display: inline-block;
+      margin: 0 20px 0 0;
+    }
+
+    img {
+      width: 32px;
+    }
+  }
+
+  .document-container{
+    flex: 2 0 auto;
+    width: 100%;
+    padding-top: 11px;
+  }
+
+  #status-block,
+  #interest-block{
+    display: inline-block;
+  }
+
+  @media(max-width: 822px){
+    .applicant-status{
+      //float: none;
+      display: block;
+      width: 264px;
+      text-align: right;
+      h1{
+        font-size: 1.8rem;
+      }
+      #status-block,
+      #interest-block{
+        display: block;
+      }
+    }
+  }
+
+  @media(max-width: 560px){
+    .applicant-status{
+      float: none;
+    }
+  }
+}

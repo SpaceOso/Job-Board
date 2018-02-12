@@ -1,0 +1,32 @@
+@import "../../../../styles/variables";
+
+.job-post-updates-container{
+  width: 95%;
+  margin: auto;
+}
+
+.job-post-updates{
+  background-color: $panelBg;
+  padding: 20px 18px;
+  @include panel();
+  .job-title{
+    display: inline-block;
+    font-weight: bold;
+    margin: 0;
+  }
+  .job-post-update-list{
+    list-style-type: none;
+    padding: 0;
+    .job-update-item{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    li{
+      padding: 19px 5px;
+      border-bottom: 2px solid $borders;
+      height: 54px;
+    }
+  }
+}

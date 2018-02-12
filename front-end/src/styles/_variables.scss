@@ -1,0 +1,59 @@
+//colors
+$watermelon: #ff3b3f;
+$carbon: #8493A8;
+$sky: #caebf2;
+$siteBackground: #E5E5E5;
+$neutral: #efefef;
+$dark: #312C32;
+//inputs
+$inputText: #8493A8;
+$inputError: rgba(255, 16, 0, 0.51);
+$inputTextBorder: #C9D3DF;
+$inputBg: #ECEFF4;
+$panelBg: #FDFDFD;
+$jobTitle: #638ADF;
+
+//datatable
+$dataNavigation: #F0F0F0;
+$dataNavFont: #54657E;
+$adminBackground: #31213D;
+$adminNavRollover: #EB5E28;
+$applicantMaybe: #f88215;
+$applicantInterested: #4ab62e;
+$applicantNeedsReview: #f8361d;
+$applicantNoInterest: #2e2c2e;
+$footerBg: #747C92;
+$jobLocation: #ffffff;
+$headers: #EBEFF3;
+$headerFont: #31213D;
+$accentColor: #FF0B0B;
+$white: #ffffff;
+$borders: #8393A7;
+$button: #0089FF;
+$buttonActivated: #1CB314;
+$disabled: #dcdcdc;
+$testcolor: red;
+
+$header: #FFF;
+//$header: #E05915;
+
+$contentPadding: 15px;
+
+@mixin panelShadow() {
+  -webkit-box-shadow: 0 17px 27px -13px rgba(182,201,214,1);
+  -moz-box-shadow: 0 17px 27px -13px rgba(182,201,214,1);
+  box-shadow: 0 17px 27px -13px rgba(182,201,214,1);
+}
+
+@mixin panelBorders(){
+  border: 1px solid $borders;
+}
+
+@mixin panel(){
+  background-color: $panelBg;
+  @include panelBorders();
+  @include panelShadow();
+}
+
+$break-large: 1024px;
+$break-med: 1024px;

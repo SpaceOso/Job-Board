@@ -1,0 +1,63 @@
+.fade{
+  opacity: 1;
+}
+.fade-enter {
+  opacity: 0.01;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit.fade-exit-active {
+  opacity: 0.01;
+  transition: opacity 500ms ease-in;
+}
+
+
+.slide{
+  left: 0;
+}
+
+.slide-enter{
+  left: -1000px;
+}
+
+.slide-enter.slide-enter-active {
+  left: 0;
+  transition: left 500ms ease-out;
+}
+
+.slide-exit{
+  left: 0;
+}
+
+.slide-exit.slide-exit-active{
+  left: -1000px;
+  transition: left 500ms ease-out;
+}
+
+
+/**--- example styles ---**/
+.container {
+  padding: 20px;
+  border: 1px solid #ccc;
+  width: 200px;
+  margin: auto;
+  border-radius: 4px;
+}
+
+.todo-list > * {
+  margin: 5px 0;
+  padding: 5px 0;
+  border-bottom:  1px solid #ccc;
+}
+
+.container > button {
+  margin-top: 20px;
+}

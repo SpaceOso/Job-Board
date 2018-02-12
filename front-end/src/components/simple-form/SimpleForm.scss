@@ -1,0 +1,58 @@
+@import "/../../styles/_variables";
+
+
+.simple-form {
+  color: $carbon;
+  width: 50rem;
+  background-color: $panelBg;
+  margin: auto;
+  font-size: 1.8rem;
+  padding: $contentPadding;
+  -webkit-border-radius: 25rem;
+  -moz-border-radius: 25rem;
+  border-radius: 2rem;
+  @include panelBorders();
+  //@include panelShadow();
+
+  .job-form-group {
+    text-align: left;
+    margin: 0 0 2rem 0;
+
+    label {
+      display: block;
+      margin: 0 0 .5rem 0;
+    }
+    input {
+      width: 100%;
+    }
+
+    &.error {
+      color: $watermelon;
+      label {
+        font-weight: bold;
+      }
+      input {
+        border: 2px solid $watermelon;
+      }
+    }
+
+    .input-error-box {
+      //border: 1px solid $watermelon;
+      width: 60%;
+    }
+
+  }
+
+  .form-error-box {
+    background-color: $watermelon;
+    color: $white;
+    z-index: 444;
+  }
+}
+
+.joined-row{
+  .job-form-group{
+    display: inline-block;
+    margin: 10px;
+  }
+}

@@ -1,0 +1,18 @@
+@import '../../../styles/variables';
+@import '../dashboardStyles';
+
+.dashboard-home{
+  width: 70%;
+  float: left;
+  .home-logo{
+    max-width: 56px;
+    float: right;
+  }
+  .header{
+    display: inline-block;
+  }
+
+  @media(min-width: 508px){
+    width: 100%;
+  }
+}

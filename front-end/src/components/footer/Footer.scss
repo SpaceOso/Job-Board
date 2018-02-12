@@ -1,0 +1,9 @@
+@import '../../styles/variables';
+
+.footer {
+  color: $white;
+  flex: 0 0 auto;
+  height: 83px;
+  background-color: $footerBg;
+  border-top: 5px solid $white;
+}

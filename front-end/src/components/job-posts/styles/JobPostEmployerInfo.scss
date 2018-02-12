@@ -1,0 +1,63 @@
+@import "../../../styles/variables";
+
+.jp-employer-aside{
+  background-color: $white;
+  color: $carbon;
+  text-align: left;
+  font-size: 1.6rem;
+  width: 40%;
+  max-width: 350px;
+  display: inline-block;
+  border: 1px solid $borders;
+  padding: 16px;
+  position: relative;
+
+  #about-section{
+    margin-top: 17px;
+  }
+
+  .info-container{
+    border: 1px solid $borders;
+    padding: 10px 20px;
+    margin-bottom: 16px;
+
+    h1{
+      margin-top: 0;
+    }
+    p{
+      margin: 0;
+    }
+  }
+  .company-logo{
+    display: block;
+    margin: auto;
+    max-width: 130px;
+    left: 34%;
+    top: -27%;
+    background-color: white;
+    border: 1px solid gray;
+  }
+
+  .title{
+    color: $jobTitle;
+    font-weight: bold;
+    font-size: 2.0rem;
+  }
+}
+
+.social-lists{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+
+  li{
+    width: 32px;
+    height: 32px;
+    //max-width: 32px;
+    //max-height: 32px;
+    margin-right: 22px;
+    display: inline-block;
+  }
+
+}

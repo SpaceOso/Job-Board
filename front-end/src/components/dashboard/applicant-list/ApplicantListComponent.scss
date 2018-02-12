@@ -1,0 +1,67 @@
+@import '../../../styles/variables';
+@import '../dashboardStyles';
+
+.dashboard-applicant-section {
+  width: 100%;
+  float: left;
+
+  .data-row td:first-child {
+    position: relative;
+  }
+;
+
+  .data-row td:first-child::before {
+    content: '';
+    background-color: red;
+    width: 10px;
+    height: 100%;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .data-row.needsReview {
+    font-weight: bold;
+    color: red;
+  }
+
+  .data-row.maybe {
+    //color: $applicantMaybe;
+  }
+
+  .data-row.interested {
+    //color: $applicantInterested;
+  }
+
+  .data-row.maybe td:first-child::before {
+    background-color: $applicantMaybe;
+  }
+
+  .data-row.noInterest td:first-child::before {
+    background-color: $applicantNoInterest;
+  }
+
+  .data-row.interested td:first-child::before {
+    background-color: $applicantInterested;
+  }
+
+  .data-row.needsReview td:first-child::before {
+    background-color: $applicantNeedsReview;
+  }
+
+  @media(max-width: 566px) {
+    width: 100%;
+    th[data-column='Interest'],
+    td[data-column='interest']{
+      display: none;
+    }
+  }
+
+  @media(max-width: 450px){
+    th[data-column='Email'],
+    td[data-column='email']{
+      display: none;
+    }
+  }
+}

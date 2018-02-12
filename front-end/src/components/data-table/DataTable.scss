@@ -1,0 +1,37 @@
+@import "../../styles/variables";
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  @include panel();
+
+  table, tr {
+    border: 1px solid $borders;
+  }
+
+  td,th {
+    padding: 10px 10px 10px 15px;
+  }
+
+  .data-row {
+    height: 50px;
+  }
+
+
+
+  .data-row:nth-child(even) {
+    //background-color: $neutral;
+  }
+
+  .data-row:hover {
+    background-color: $jobTitle;
+    color: $white;
+    cursor: pointer;
+  }
+
+  .selected {
+    background-color: $watermelon;
+    color: $white;
+    font-weight: bold;
+  }
+}

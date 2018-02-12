@@ -1,0 +1,45 @@
+@import "../../../styles/variables";
+
+.user-dashboard-nav {
+  background-color: $adminBackground;
+  width: 30%;
+  max-width: 230px;
+  color: $white;
+
+  height: 100%; /* 100% Full-height */
+  float: left;
+  top: 0;
+  left: 0;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+
+
+  .user-dashboard-btn {
+    height: 62px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    padding-left: 10%;
+
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    -ms-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
+
+    &:hover {
+      background-color: $adminNavRollover;
+    }
+
+    img{
+      max-width: 23px;
+      margin-right: 13px;
+    }
+  }
+
+  .selected {
+    background-color: black;
+    border-right: 8px solid $accentColor;
+  }
+}

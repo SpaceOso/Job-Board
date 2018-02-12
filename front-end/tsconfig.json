@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "outDir": "./public/",        // path to output directory
+    "sourceMap": true,          // allow sourcemap support
+    "moduleResolution": "Node",
+    "strictNullChecks": true,   // enable strict null checks as a best practice
+    "module": "commonjs",       // specifiy module code generation
+    "jsx": "react",             // use typescript to transpile jsx to js
+    "target": "es5",            // specify ECMAScript target version
+    "lib": ["es2016","dom"],
+    "allowJs": true            // allow a partial TypeScript and JavaScript codebase
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

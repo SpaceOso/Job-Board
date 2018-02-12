@@ -1,0 +1,25 @@
+@import "../../../styles/variables";
+
+.job-list-container{
+  flex: 1 0 auto;
+  padding: 40px;
+  width: 80%;
+  max-width: 990px;
+  margin: auto;
+  //background-color: orange;
+}
+
+#job-post-header{
+  margin: 0;
+  text-align: left;
+  color: $jobTitle;
+  font-weight: normal;
+}
+
+@media (max-width: 768px) {
+  .job-list-container{
+    margin: 0;
+    width: auto;
+    padding: 10px;
+  }
+}

@@ -1,0 +1,47 @@
+@import "../../../styles/variables";
+
+.data-nav-container{
+  background-color: $dataNavigation;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 87px;
+
+  .data-nav-button {
+    width: 50px;
+    height: 50px;
+    padding: 2px;
+    color: $dataNavFont;
+    font-weight:bold;
+    background-color: $white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin: 0 10px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
+    &:hover{
+      background-color: $jobTitle;
+      color: $white;
+    }
+    .fa{
+      margin: 0 5px;
+    }
+  }
+  #next,
+  #prev{
+    width: 100px;
+  }
+  .active{
+    background-color: $watermelon;
+    color: $white;
+  }
+
+
+}

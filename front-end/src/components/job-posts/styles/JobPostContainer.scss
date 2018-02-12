@@ -1,0 +1,80 @@
+@import "../../../styles/variables";
+
+.job-post-container {
+  flex: 1 0 auto;
+  width: 90%;
+  margin: auto;
+  margin-top: 15px;
+  text-align: left;
+  padding: 10px;
+}
+
+.job-post {
+  width: 60%;
+  margin: auto;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 45px;
+  text-align: left;
+
+  .job-header-container {
+    border: 1px solid $borders;
+    //max-height: 70px;
+    margin-bottom: 15px;
+    background-color: $panelBg;
+    text-align: left;
+    padding: 15px;
+
+  }
+  .job-description-container {
+    border: 1px solid $borders;
+    background-color: $panelBg;
+    margin-bottom: 75px;
+    padding: 10px;
+    font-size: 1.6rem;
+  }
+
+  .jp-job-header {
+    color: $jobTitle;
+    font-weight: bold;
+    //margin: 0 0 15px 0;
+    margin: 0;
+  }
+}
+
+@media (max-width: 1124px) {
+
+  .job-post-container{
+    margin: 0;
+    width: 100%;
+    text-align: center;
+
+    .job-post{
+      margin-right: 8px;
+    }
+  }
+}
+
+@media(max-width: 916px){
+  .job-post-container{
+    .job-post{
+      width: auto;
+    }
+  }
+  .jp-employer-aside{
+    display: none;
+  }
+}
+
+@media(max-width: 555px){
+  .job-post{
+    .job-header-container{
+      max-height: none;
+    }
+    .jp-job-header{
+      font-size: 1.8rem;
+      margin: 0;
+    }
+  }
+
+}

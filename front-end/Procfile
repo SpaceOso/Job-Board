@@ -1,0 +1,1 @@
+web: set NODE_ENV=production&&  bin/www.js

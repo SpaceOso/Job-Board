@@ -1,0 +1,77 @@
+what data does the employer need when login in?
+Total job posts
+    applicant count per job post
+    status of jobs
+
+applicants
+    status of applicants
+
+how should the employer know the status of the jobs?
+Set a status column on each job? or a second table?
+
+job =
+    {
+        title,
+        id,
+        location{
+            city,
+            state,
+            zip
+        },
+        description
+    }
+
+applicant = {
+    id,
+    firstName,
+    lastName,
+    email,
+    homePhone,
+    cellPhone,
+    resume,
+    coverLetter,
+    (hasMany)notes
+}
+
+jbUser = {
+    id,
+    firstName,
+    lastName,
+    email,
+    password
+}
+
+employer = {
+    id,
+    name,
+    location{
+        city,
+        state,
+        zip
+    },
+    logoImg,
+    website,
+    twitter,
+    facebook,
+    linkedIn
+}
+
+jobApplication = {
+    id,
+    applicantId,
+    jobId
+}
+
+notes = {
+    id,
+    date,
+    note,
+    applicantId
+}
+
+applicantNotes = {
+    id,
+    applicantId,
+    noteId
+}
+
