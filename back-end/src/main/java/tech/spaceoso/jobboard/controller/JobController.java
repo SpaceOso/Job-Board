@@ -10,16 +10,18 @@ import tech.spaceoso.jobboard.model.Job;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/v1/")
 public class JobController {
-    @CrossOrigin
+//    @CrossOrigin
     @RequestMapping(value = "jobposts", method = RequestMethod.GET)
     public List<Job> list() {
         return JobsStub.list();
     }
 
+//    @CrossOrigin
     @RequestMapping(value = "jobposts/{id}", method = RequestMethod.GET)
     public Job getJobById(){
-        return JobsStub.getJobById()
+        return JobsStub.getJobById(1l);
     }
 }

@@ -107,9 +107,10 @@ export function addApplicantToJob(applicantInfo) {
 export function getJobById(id) {
   return (dispatch) => {
     dispatch(fetchingJobs());
-
-    axios.get(`${ROOT_URL}${'api/jobposts/'}${id}`)
+    console.log("Getting single job: ", id);
+    axios.get(`${ROOT_URL}${'api/v1/jobposts/'}${id}`)
       .then((response) => {
+          console.log("and the response from job: ", response);
         dispatch(singleJobSuccess(response.data));
       })
       .catch((error) => {
