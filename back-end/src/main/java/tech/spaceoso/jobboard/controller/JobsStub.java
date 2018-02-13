@@ -4,6 +4,7 @@ import tech.spaceoso.jobboard.model.Employer;
 import tech.spaceoso.jobboard.model.Job;
 import tech.spaceoso.jobboard.model.Location;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +35,15 @@ public class JobsStub {
         jobs.put(2L, b);
     }
 
+    /**
+     * Get all the jobs
+     * @return {ArrayList<Job>}
+     */
     public static List<Job> list() {
         return new ArrayList<Job>(jobs.values());
+    }
+
+    public static Job getJobById(Long id){
+        return jobs.get(id);
     }
 }

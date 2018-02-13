@@ -17,4 +17,9 @@ public class JobController {
     public List<Job> list() {
         return JobsStub.list();
     }
+
+    @RequestMapping(value = "jobposts/{id}", method = RequestMethod.GET)
+    public Job getJobById(){
+        return JobsStub.getJobById()
+    }
 }
