@@ -6,13 +6,16 @@ public class Job {
     private Location location;
     private String description;
     private Long employerId;
+    private Employer employer;
 
-    public Job(Long id, String title, Location location, String description, Long employerId) {
+
+    public Job(Long id, String title, Location location, String description, Long employerId, Employer employer) {
         this.id = id;
         this.title = title;
         this.location = location;
         this.description = description;
         this.employerId = employerId;
+        this.employer = employer;
     }
 
     public Long getId() {
@@ -45,5 +48,21 @@ public class Job {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Long getEmployerId() {
+        return employerId;
+    }
+
+    public void setEmployerId(Long employerId) {
+        this.employerId = employerId;
+    }
+
+    public Employer getEmployer() {
+        return employer;
+    }
+
+    public void setEmployer(Employer employer) {
+        this.employer = employer;
     }
 }

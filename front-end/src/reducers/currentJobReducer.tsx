@@ -18,7 +18,7 @@ const thisState: CurrentJobPost = {
     state: '',
     zip: '',
   },
-  Employer: {
+  employer: {
     id: '',
     name: '',
     location: {

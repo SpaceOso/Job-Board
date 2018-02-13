@@ -13,7 +13,7 @@ module.exports = {
         // path: resolve('../back-end/src/main/resources/public/'),
         path: resolve('../back-end/src/main/resources/public/'),
         filename: "bundle.js",
-        // publicPath: 'src/resources',
+        // publicPath: '/uploads',
         // publicPath: resolve('../back-end/src/main/resources/public/'),
 
     },

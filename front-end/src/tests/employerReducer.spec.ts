@@ -18,7 +18,7 @@ const emptyJobPost: CurrentJobPost = {
     state: '',
     zip: '',
   },
-  Employer: {
+  employer: {
     id: '',
     name: '',
     location: {
@@ -39,7 +39,7 @@ const jobReducer = currentJobPostReducer;
 const mockJob: CurrentJobPost = {
   createdAt: '12/12/12',
   description: 'Mock Test Job',
-  Employer: {
+  employer: {
     facebook: 'facebook.com',
     id: '1234345',
     linkedIn: 'linked.com',

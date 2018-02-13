@@ -115,7 +115,7 @@ class JobPostLayout extends React.Component<JobPostProps, MyState> {
         <Fade key={'post-container'} in={!this.props.currentJobPost.isFetching}>
           {jobPostInfoComponent}
         </Fade>
-        <JobPostEmployerInfoComponent isFetching={this.props.currentJobPost.isFetching} employer={this.props.currentJobPost.Employer} loadJob={this.loadNewJob} currentJob={this.props.currentJobPost.id}/>
+        <JobPostEmployerInfoComponent isFetching={this.props.currentJobPost.isFetching} employer={this.props.currentJobPost.employer} loadJob={this.loadNewJob} currentJob={this.props.currentJobPost.id}/>
       </div>
     );
 

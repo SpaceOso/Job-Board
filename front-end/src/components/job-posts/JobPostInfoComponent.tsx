@@ -26,7 +26,7 @@ class JobPostInfoComponent extends React.Component<JobPostInfoProps> {
     return (
       <div className="job-post">
         <div className="job-header-container panel-shadow">
-          <h1 className="jp-job-header">{this.props.job.title} @ <span className="italic">{this.props.job.Employer.name}</span></h1>
+          <h1 className="jp-job-header">{this.props.job.title} @ <span className="italic">{this.props.job.employer.name}</span></h1>
         </div>
         <div className="job-description-container panel-shadow">
           <div

@@ -22,7 +22,7 @@ const jobListItemComponent: React.SFC<Props> = (props) => {
         {/*LOGO*/}
         <div className="job-list-logo">
           <img
-            src={job.Employer.logoImg ? `${IMG_URL}${job.Employer.logoImg}` : require('../../../../images/icon/no-icon.svg')}
+            src={job.employer.logoImg ? `${IMG_URL}${job.employer.logoImg}` : require('../../../../images/icon/no-icon.svg')}
           />
         </div>
         {/*JOB INFORMATION*/}
@@ -31,12 +31,12 @@ const jobListItemComponent: React.SFC<Props> = (props) => {
             {job.title}
           </h1>
           <p className="job-employer">
-            {job.Employer.name}
+            {job.employer.name}
           </p>
         </div>
         <div className="post-info">
           <p className="post-date">{moment(new Date(job.createdAt)).fromNow()}</p>
-          <p className="post-location">{`${job.Employer.location.city}, ${job.Employer.location.state}`}</p>
+          <p className="post-location">{`${job.employer.location.city}, ${job.employer.location.state}`}</p>
         </div>
       </Link>
     </div>

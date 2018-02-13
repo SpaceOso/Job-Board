@@ -11,7 +11,7 @@ export interface Job {
     state: string;
     zip: string;
   };
-  Employer: {
+  employer: {
     id: string;
     name: string;
     location: {

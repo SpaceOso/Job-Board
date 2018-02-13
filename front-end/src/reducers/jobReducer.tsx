@@ -10,17 +10,23 @@ function jobReducer(state: StoreState, action) {
       const newJobs = {};
       const jobDateRegex: RegExp = /.+?(?=T)/g;
 
-      for (const job in action.payload.data) {
-        if (action.payload.data.hasOwnProperty(job)) {
-          const currentJob = action.payload.data[ job ];
-          const splitDate = currentJob.createdAt.match(jobDateRegex)[ 0 ].split('-');
-          currentJob.createdAt = `${splitDate[ 1 ]}-${splitDate[ 2 ]}-${splitDate[ 0 ]}`;
+      console.log("now in reducer with: ", action.payload.data);
+      action.payload.data.map((job) => {
+          console.log("Current job:", job);
+          const currentJob = job;
+          // const splitDate = currentJob.createdAt.match(jobDateRegex)[ 0 ].split('-');
+          // currentJob.createdAt = `${splitDate[ 1 ]}-${splitDate[ 2 ]}-${splitDate[ 0 ]}`;
+          currentJob.createdAt = "sorynodate";
 
           newJobs[ currentJob.id ] = { ...currentJob };
-        }
-      }
+      });
+      /*for (const job in action.payload.data) {
+        if (action.payload.data.hasOwnProperty(job)) {
 
-      return action.payload.data;
+        }
+      }*/
+
+      return newJobs;
     case GET_JOBS_ERROR:
 
       return state;

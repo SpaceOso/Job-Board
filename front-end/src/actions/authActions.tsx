@@ -199,7 +199,8 @@ export function logInOnLoad(token) {
       })
       .catch((error) => {
         // dispatch(logInUserError(error.response.status));
-        const errorMsg = error.response.data.message;
+        // const errorMsg = error.response.data.message;
+        const errorMsg = "credentials expired";
         if (errorMsg === 'credentials expired') {
           // TODO we need to send them to the log in page
           console.log('we need to have them re-log');

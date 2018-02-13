@@ -12,6 +12,6 @@ public class HomeController {
      */
     @RequestMapping("/")
     public String loadHome(){
-        return "yo you 2325555";
+        return "yo you fsd";
     }
 }

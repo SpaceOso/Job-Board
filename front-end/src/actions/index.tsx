@@ -1,13 +1,14 @@
 declare let process: {
-  env: {
-    NODE_ENV: string;
-  };
+    env: {
+        NODE_ENV: string;
+    };
 };
 
+// TODO need to move these declerations from this file to either the types file or utils
 let URL_Test = 'https://mr-job-board.herokuapp.com/';
 
 if (process.env.NODE_ENV === 'development') {
-  URL_Test = 'http://localhost:4200/';
+    URL_Test = 'http://localhost:8080/';
 }
 
 export const ROOT_URL = URL_Test;
