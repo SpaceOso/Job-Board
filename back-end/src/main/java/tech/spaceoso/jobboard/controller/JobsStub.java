@@ -14,8 +14,6 @@ public class JobsStub {
     private static Map<Long, Job> jobs = new HashMap<Long, Job>();
     private static Long idIndex = 3L;
 
-    static Employer testEmployer = new Employer(2l,"Spring Test Employer", new Location("test street", "palmdale", "ny", 12345), "./cool/logo", "miguelricodev.com", "tiwtter.com", "facebook.com", "linkedin.com");
-
     static {
         Job a = new Job(
                 1L,

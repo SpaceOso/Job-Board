@@ -1,10 +1,7 @@
 package tech.spaceoso.jobboard.controller;
 
 import org.springframework.beans.BeanUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tech.spaceoso.jobboard.model.Job;
 
 import java.util.List;
@@ -13,15 +10,14 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/api/v1/")
 public class JobController {
-//    @CrossOrigin
     @RequestMapping(value = "jobposts", method = RequestMethod.GET)
     public List<Job> list() {
         return JobsStub.list();
     }
 
-//    @CrossOrigin
     @RequestMapping(value = "jobposts/{id}", method = RequestMethod.GET)
-    public Job getJobById(){
-        return JobsStub.getJobById(1l);
+    public Job getJobById(@PathVariable Long id){
+
+        return JobsStub.getJobById(id);
     }
 }
