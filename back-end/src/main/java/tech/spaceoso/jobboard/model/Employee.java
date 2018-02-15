@@ -4,8 +4,7 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "user")
-public class User {
+public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -17,10 +16,10 @@ public class User {
     /**
      * JPA requires this to be created because they use POJO's
      */
-    protected User() {
+    protected Employee() {
     }
 
-    public User(Long id, String firstName, String lastName, String email, String password) {
+    public Employee(Long id, String firstName, String lastName, String email, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

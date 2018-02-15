@@ -6,13 +6,13 @@
 * will handle individual job post requests
 
 #/register
-* will handle user registration
+* will handle employee registration
 * will also handle company creation
 
-#/user
+#/employee
 * should handle all auth issues
     * like login in
-    * and checking url ID with user id
+    * and checking url ID with employee id
     
 #/employer
 * should handle all job CRUD operations
