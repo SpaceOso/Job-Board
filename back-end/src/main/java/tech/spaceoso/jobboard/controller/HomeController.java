@@ -8,8 +8,6 @@ import tech.spaceoso.jobboard.repository.UserRepository;
 @RestController
 public class HomeController {
 
-    @Autowired
-    private UserRepository userRepository;
 
     /**
      * adding this request mapping overrides the default load of index.html
