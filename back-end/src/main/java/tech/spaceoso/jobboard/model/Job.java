@@ -10,10 +10,10 @@ import java.util.UUID;
 public class Job {
 //    @org.hibernate.annotations.Type(type="org.hibernate.type.PostgresUUIDType")
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    UUID id;
     private String title;
-    private Location location;
+//    private Location location;
     private String description;
     private Long employerId;
 //    @OneToOne

@@ -1,15 +1,17 @@
 package tech.spaceoso.jobboard.model;
 
-import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.UUID;
 
 @Entity
 public class Location {
-//    @org.hibernate.annotations.Type(type="org.hibernate.type.PostgresUUIDType")
     @Id
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    UUID id;
     public String street;
     public String city;
     public String state;
@@ -21,6 +23,46 @@ public class Location {
         this.street = street;
         this.city = city;
         this.state = state;
+        this.zipCode = zipCode;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public Integer getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(Integer zipCode) {
         this.zipCode = zipCode;
     }
 }
