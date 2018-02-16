@@ -13,6 +13,6 @@ public class HomeController {
      */
     @RequestMapping("/")
     public String loadHome(){
-        return "yo you fsd";
+        return "Welcome to the job board api!";
     }
 }
