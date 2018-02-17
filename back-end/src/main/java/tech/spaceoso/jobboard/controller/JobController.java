@@ -10,6 +10,7 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/api/v1/")
 public class JobController {
+
     @RequestMapping(value = "jobposts", method = RequestMethod.GET)
     public List<Job> list() {
         return JobsStub.list();
