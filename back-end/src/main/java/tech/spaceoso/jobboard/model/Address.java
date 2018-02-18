@@ -1,14 +1,11 @@
 package tech.spaceoso.jobboard.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-public class Location {
+public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     UUID id;
@@ -17,9 +14,9 @@ public class Location {
     public String state;
     public Integer zipCode;
 
-    public Location(){};
+    public Address(){};
 
-    public Location(String street, String city, String state, int zipCode) {
+    public Address(String street, String city, String state, int zipCode) {
         this.street = street;
         this.city = city;
         this.state = state;
@@ -64,5 +61,16 @@ public class Location {
 
     public void setZipCode(Integer zipCode) {
         this.zipCode = zipCode;
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "id=" + id +
+                ", street='" + street + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zipCode=" + zipCode +
+                '}';
     }
 }

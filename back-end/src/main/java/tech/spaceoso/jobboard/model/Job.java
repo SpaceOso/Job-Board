@@ -1,19 +1,18 @@
 package tech.spaceoso.jobboard.model;
 
-import com.fasterxml.jackson.annotation.JsonValue;
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
 public class Job {
-//    @org.hibernate.annotations.Type(type="org.hibernate.type.PostgresUUIDType")
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     UUID id;
     private String title;
-//    private Location location;
+    @OneToOne(fetch = FetchType.LAZY, cascade={CascadeType.ALL})
+    @JoinColumn(name = "address_id")
+    private Address address;
     private String description;
     private Long employerId;
 //    @OneToOne
@@ -24,10 +23,10 @@ public class Job {
     }
 
 
-    public Job(UUID id, String title, String description, Long employerId) {
+    public Job(UUID id, String title, Address address, String description, Long employerId) {
         this.id = id;
         this.title = title;
-//        this.location = location;
+        this.address = address;
         this.description = description;
         this.employerId = employerId;
 //        this.employer = employer;
@@ -49,13 +48,13 @@ public class Job {
         this.title = title;
     }
 
-//    public Location getLocation() {
-//        return location;
-//    }
+    public Address getAddress() {
+        return address;
+    }
 
-//    public void setLocation(Location location) {
-//        this.location = location;
-//    }
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 
     public String getDescription() {
         return description;
@@ -80,4 +79,16 @@ public class Job {
 //    public void setEmployer(Employer employer) {
 //        this.employer = employer;
 //    }
+
+
+    @Override
+    public String toString() {
+        return "Job{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", address=" + address +
+                ", description='" + description + '\'' +
+                ", employerId=" + employerId +
+                '}';
+    }
 }

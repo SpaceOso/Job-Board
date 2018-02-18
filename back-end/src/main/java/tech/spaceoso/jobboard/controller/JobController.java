@@ -1,15 +1,27 @@
 package tech.spaceoso.jobboard.controller;
 
-import org.springframework.beans.BeanUtils;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tech.spaceoso.jobboard.model.Job;
+import tech.spaceoso.jobboard.repository.JobRepository;
 
 import java.util.List;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+
 
 @RestController
 @CrossOrigin
 @RequestMapping("/api/v1/")
 public class JobController {
+
+    final Logger logger = LoggerFactory.getLogger(JobController.class);
+
+    @Autowired
+    private JobRepository jobRepository;
 
     @RequestMapping(value = "jobposts", method = RequestMethod.GET)
     public List<Job> list() {
@@ -20,5 +32,12 @@ public class JobController {
     public Job getJobById(@PathVariable Long id){
 
         return JobsStub.getJobById(id);
+    }
+
+    @RequestMapping(value = "jobposts/create", method = RequestMethod.POST)
+    public Job create(@RequestBody Job job){
+
+        logger.info("The job to be saved {}", job);
+        return jobRepository.saveAndFlush(job);
     }
 }

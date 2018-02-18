@@ -13,7 +13,7 @@ job =
     {
         title,
         id,
-        location{
+        address{
             city,
             state,
             zip
@@ -44,7 +44,7 @@ jbUser = {
 employer = {
     id,
     name,
-    location{
+    address{
         city,
         state,
         zip

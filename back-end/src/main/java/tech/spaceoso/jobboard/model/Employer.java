@@ -3,17 +3,17 @@ package tech.spaceoso.jobboard.model;
 public class Employer {
     private Long id;
     private String name;
-    private Location location;
+    private Address address;
     private String logoImg;
     private String website;
     private String twitter;
     private String facebook;
     private String linkedIn;
 
-    public Employer(Long id, String name, Location location, String logoImg, String website, String twitter, String facebook, String linkedIn) {
+    public Employer(Long id, String name, Address address, String logoImg, String website, String twitter, String facebook, String linkedIn) {
         this.id = id;
         this.name = name;
-        this.location = location;
+        this.address = address;
         this.logoImg = logoImg;
         this.website = website;
         this.twitter = twitter;
@@ -37,12 +37,12 @@ public class Employer {
         this.name = name;
     }
 
-    public Location getLocation() {
-        return location;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public String getLogoImg() {
@@ -90,7 +90,7 @@ public class Employer {
         return "Employer{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", location=" + location +
+                ", address=" + address +
                 ", logoImg='" + logoImg + '\'' +
                 ", website='" + website + '\'' +
                 ", twitter='" + twitter + '\'' +
