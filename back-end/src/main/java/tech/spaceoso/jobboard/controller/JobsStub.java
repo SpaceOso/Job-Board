@@ -36,7 +36,7 @@ public class JobsStub {
         return new ArrayList<Job>(jobs.values());
     }
 
-    public static Job getJobById(Long id){
+    public static Job getJobById(UUID id){
         return jobs.get(id);
     }
 }

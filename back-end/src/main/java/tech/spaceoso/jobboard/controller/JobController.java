@@ -9,6 +9,7 @@ import tech.spaceoso.jobboard.model.Job;
 import tech.spaceoso.jobboard.repository.JobRepository;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -29,9 +30,9 @@ public class JobController {
     }
 
     @RequestMapping(value = "jobposts/{id}", method = RequestMethod.GET)
-    public Job getJobById(@PathVariable Long id){
+    public Job getJobById(@PathVariable UUID id){
 
-        return JobsStub.getJobById(id);
+        return jobRepository.findOne(id);
     }
 
     @RequestMapping(value = "jobposts/create", method = RequestMethod.POST)
