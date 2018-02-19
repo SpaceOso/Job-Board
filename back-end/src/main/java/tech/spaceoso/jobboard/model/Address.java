@@ -1,10 +1,13 @@
 package tech.spaceoso.jobboard.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

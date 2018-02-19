@@ -1,9 +1,12 @@
 package tech.spaceoso.jobboard.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Job {
 
     @Id
@@ -15,8 +18,6 @@ public class Job {
     private Address address;
     private String description;
     private Long employerId;
-//    @OneToOne
-//    private Employer employer;
 
     public Job(){
 
@@ -29,7 +30,6 @@ public class Job {
         this.address = address;
         this.description = description;
         this.employerId = employerId;
-//        this.employer = employer;
     }
 
     public UUID getId() {
@@ -71,15 +71,6 @@ public class Job {
     public void setEmployerId(Long employerId) {
         this.employerId = employerId;
     }
-
-//    public Employer getEmployer() {
-//        return employer;
-//    }
-
-//    public void setEmployer(Employer employer) {
-//        this.employer = employer;
-//    }
-
 
     @Override
     public String toString() {

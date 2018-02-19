@@ -24,9 +24,10 @@ public class JobController {
     @Autowired
     private JobRepository jobRepository;
 
-    @RequestMapping(value = "jobposts", method = RequestMethod.GET)
+    @RequestMapping(value = "jobposts/list", method = RequestMethod.GET)
     public List<Job> list() {
-        return JobsStub.list();
+
+        return jobRepository.findAll();
     }
 
     @RequestMapping(value = "jobposts/{id}", method = RequestMethod.GET)
