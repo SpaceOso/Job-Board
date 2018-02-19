@@ -1,12 +1,9 @@
 package tech.spaceoso.jobboard.webIntegration;
 
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
-import org.hamcrest.core.Every;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -45,27 +42,22 @@ public class JobControllerWebIntegrationTest {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 
-        Job[] jobs = objectMapper.readValue(response.getBody(), Job[].class);
+        List<Job> newJobs = Arrays.asList(objectMapper.readValue(response.getBody(), Job[].class));
 
-
-        List<Job> newJobs = Arrays.asList(jobs);
-        Job testerJob = new Job(UUID.randomUUID(), "hello!", new Address("3434", "sdfsadf", "asldkjf", 1234), "yo yo yo",3L);
-
-        System.out.println("single job: " + testerJob);
-        assertThat(testerJob, hasProperty("title"));
-        assertThat(newJobs.get(0).getAddress(), isA(Address.class));
+        // check that every element is a Job
         assertThat(newJobs, everyItem(isA(Job.class)));
+        // check that every address object inside the Job is an Address
         assertThat(newJobs, everyItem(Matchers.<Job>hasProperty("address", isA(Address.class))));
-        assertThat(newJobs, everyItem(Matchers.<Job>hasProperty("title")));
-        assertThat(newJobs, everyItem(Matchers.<Job>hasProperty("id")));
-        assertThat(newJobs, everyItem(Matchers.<Job>hasProperty("description")));
-        assertThat(newJobs, everyItem(Matchers.<Job>hasProperty("address")));
-        assertThat(newJobs, everyItem(Matchers.<Job>hasProperty("address", hasProperty("street"))));
-        assertThat(newJobs, everyItem(Matchers.<Job>hasProperty("address", hasProperty("city"))));
-        assertThat(newJobs, everyItem(Matchers.<Job>hasProperty("address", hasProperty("state"))));
-        assertThat(newJobs, everyItem(Matchers.<Job>hasProperty("address", hasProperty("zipCode"))));
+        // TODO need to implement a check for an employer
+
+        assertThat(newJobs, everyItem(Matchers.<Job>hasProperty("title", isA(String.class))));
+        assertThat(newJobs, everyItem(Matchers.<Job>hasProperty("id", isA(UUID.class))));
+        assertThat(newJobs, everyItem(Matchers.<Job>hasProperty("description", isA(String.class))));
+        assertThat(newJobs, everyItem(Matchers.<Job>hasProperty("address", hasProperty("street", isA(String.class)))));
+        assertThat(newJobs, everyItem(Matchers.<Job>hasProperty("address", hasProperty("city", isA(String.class)))));
+        assertThat(newJobs, everyItem(Matchers.<Job>hasProperty("address", hasProperty("state", isA(String.class)))));
+        assertThat(newJobs, everyItem(Matchers.<Job>hasProperty("address", hasProperty("zipCode", isA(Integer.class)))));
         assertThat(newJobs, everyItem(Matchers.<Job>hasProperty("employerId")));
-//        assertThat(newJobs, Matchers.<Job>hasItem(Matchers.<Job>hasProperty("title")));
     }
 
 }
