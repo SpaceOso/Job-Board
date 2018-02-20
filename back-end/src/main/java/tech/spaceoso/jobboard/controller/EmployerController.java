@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 import tech.spaceoso.jobboard.model.Employer;
 import tech.spaceoso.jobboard.repository.EmployerRepository;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping(value = "/secured/employer/")
 public class EmployerController {
@@ -17,5 +19,9 @@ public class EmployerController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public Employer create(@RequestBody Employer employer){
         return employerRepository.saveAndFlush(employer);
+    }
+
+    public Employer getEmployerById(UUID id){
+        return employerRepository.findOne(id);
     }
 }

@@ -42,7 +42,13 @@ public class JobControllerTest {
         verify(jobRepository).findOne(id);
 
         assertThat(jobTest, is(job) );
+    }
 
+    @Test
+    public void testJobCreate() {
+        UUID employerId = UUID.randomUUID();
+
+        //TODO create test
     }
 
 

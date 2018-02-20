@@ -18,6 +18,7 @@ public class Job {
     private Address address;
     private String description;
     private Long employerId;
+    //TODO we need to find out how to pull this form the employer, this is not saved into the job itself
     private String logoImg;
 
     public Job(){
