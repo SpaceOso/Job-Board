@@ -46,8 +46,8 @@ const mockJob: Job = {
     facebook: 'facebook.com',
     id: '1234345',
     linkedIn: 'linked.com',
-    location: {
-      address: '602 mock street',
+    address: {
+      street: '602 mock street',
       city: 'New York',
       state: 'mock state',
       zip: '123456',
@@ -59,8 +59,8 @@ const mockJob: Job = {
   },
   employerId: 'employer1234',
   id: '1234556',
-  location: {
-    address: '6092 job mock street',
+  address: {
+    street: '6092 job mock street',
     city: 'mock city job',
     state: 'mock state',
     zip: '1234556',
@@ -97,7 +97,7 @@ describe('/api/v1/jobposts/', () => {
     chai.request(url)
       .get('/api/v1/jobposts/12312312-1234-1234-1234-123412341234')
       .end((err, res) => {
-        const singleJobKey = ['id', 'name', 'location', 'logoImg', 'website', 'twitter', 'facebook', 'linkedIn', 'createdAt', 'updatedAt', 'jobs'];
+        const singleJobKey = ['id', 'name', 'street', 'logoImg', 'website', 'twitter', 'facebook', 'linkedIn', 'createdAt', 'updatedAt', 'jobs'];
         res.should.have.status(200);
         res.body.should.be.a('object');
         expect(res.body).to.have.all.keys(jobKeys);

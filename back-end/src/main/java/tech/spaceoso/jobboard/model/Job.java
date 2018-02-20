@@ -18,18 +18,20 @@ public class Job {
     private Address address;
     private String description;
     private Long employerId;
+    private String logoImg;
 
     public Job(){
 
     }
 
 
-    public Job(UUID id, String title, Address address, String description, Long employerId) {
+    public Job(UUID id, String title, Address address, String description, Long employerId, String logoImg) {
         this.id = id;
         this.title = title;
         this.address = address;
         this.description = description;
         this.employerId = employerId;
+        this.logoImg = logoImg;
     }
 
     public UUID getId() {
@@ -72,6 +74,14 @@ public class Job {
         this.employerId = employerId;
     }
 
+    public String getLogoImg() {
+        return logoImg;
+    }
+
+    public void setLogoImg(String logoImg) {
+        this.logoImg = logoImg;
+    }
+
     @Override
     public String toString() {
         return "Job{" +
@@ -80,6 +90,7 @@ public class Job {
                 ", address=" + address +
                 ", description='" + description + '\'' +
                 ", employerId=" + employerId +
+                ", logoImg='" + logoImg + '\'' +
                 '}';
     }
 }

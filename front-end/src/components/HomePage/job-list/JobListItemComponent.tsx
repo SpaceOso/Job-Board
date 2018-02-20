@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import './JobListItem.scss';
 
 // interfaces
-import { Job } from '../../../types';
+import { Job } from '../../../types/index';
 import { IMG_URL } from '../../../utils/utils';
 
 export interface Props {
@@ -36,7 +36,7 @@ const jobListItemComponent: React.SFC<Props> = (props) => {
         </div>
         <div className="post-info">
           <p className="post-date">{moment(new Date(job.createdAt)).fromNow()}</p>
-          <p className="post-location">{`${job.employer.location.city}, ${job.employer.location.state}`}</p>
+          <p className="post-location">{`${job.employer.address.city}, ${job.employer.address.state}`}</p>
         </div>
       </Link>
     </div>

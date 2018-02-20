@@ -33,7 +33,7 @@ public class JobControllerTest {
     public void testJobControllerGetById(){
         UUID id = UUID.randomUUID();
 
-        Job job = new Job(id, "Fake job", new Address("6df02 fake street", "palmdaless", "NY", 12345), "Test tube job ", 1L);
+        Job job = new Job(id, "Fake job", new Address("6df02 fake street", "palmdaless", "NY", 12345), "Test tube job ", 1L, "tester.png");
 
         when(jobRepository.findOne(id)).thenReturn(job);
 

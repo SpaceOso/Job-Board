@@ -65,7 +65,7 @@ class CompRegisterComponent extends React.Component<CompRegisterProps, MyState> 
       id: 'linkedIn',
     },
     {
-      label: 'address:',
+      label: 'street:',
       required: true,
       type: 'address',
       placeHolder: 'address',

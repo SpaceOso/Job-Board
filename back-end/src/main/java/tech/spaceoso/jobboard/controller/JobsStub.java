@@ -15,7 +15,7 @@ public class JobsStub {
                 "First Job",
                 new Address("test street", "test city", "NY", 12345),
                 "first job on list",
-                1L);
+                1L, "tester.png");
 //                new Employer(2l,"Spring Test Employer", new Address("test street", "palmdale", "ny", 12345), "jhsayp.png", "miguelricodev.com", "tiwtter.com", "facebook.com", "linkedin.com"));
         jobs.put(1L, a);
         Job b = new Job(
@@ -23,7 +23,7 @@ public class JobsStub {
                 "Second Job",
                 new Address("test street", "test city", "NY", 12345),
                 "2 job on list",
-                2L);
+                2L, "Tester.png");
 //                new Employer(2l,"Spring Test Employer", new Address("test street", "palmdale", "ny", 12345), "jhsayp.png", "miguelricodev.com", "tiwtter.com", "facebook.com", "linkedin.com"));
         jobs.put(2L, b);
     }

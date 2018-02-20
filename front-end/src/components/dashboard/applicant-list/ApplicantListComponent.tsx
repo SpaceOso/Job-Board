@@ -91,7 +91,7 @@ class ApplicantListComponent extends React.Component<MyProps, MyState> {
     }
     return (
       <div>
-        <h1>Candidates for {this.state.currentJob.title} - {this.state.currentJob.location.city}</h1>
+        <h1>Candidates for {this.state.currentJob.title} - {this.state.currentJob.address.city}</h1>
         <DataTable
           rowData={this.state.currentJob.Applicants}
           specialClasses={specialClasses}

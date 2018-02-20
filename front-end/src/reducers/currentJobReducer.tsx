@@ -12,8 +12,8 @@ const thisState: CurrentJobPost = {
   employerId: '',
   isFetching: false,
   createdAt: '',
-  location: {
-    address: '',
+  address: {
+    street: '',
     city: '',
     state: '',
     zip: '',
@@ -21,8 +21,8 @@ const thisState: CurrentJobPost = {
   employer: {
     id: '',
     name: '',
-    location: {
-      address: '',
+    address: {
+      street: '',
       city: '',
       state: '',
       zip: '',

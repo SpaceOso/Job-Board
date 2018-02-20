@@ -20,12 +20,6 @@ function jobReducer(state: StoreState, action) {
 
           newJobs[ currentJob.id ] = { ...currentJob };
       });
-      /*for (const job in action.payload.data) {
-        if (action.payload.data.hasOwnProperty(job)) {
-
-        }
-      }*/
-
       return newJobs;
     case GET_JOBS_ERROR:
 

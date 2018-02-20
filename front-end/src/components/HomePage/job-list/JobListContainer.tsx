@@ -9,7 +9,7 @@ import './JoblistContainer.scss';
 import JobListComponent from './JobListComponent';
 
 // interfaces
-import { StoreState } from '../../../types';
+import { StoreState } from '../../../types/index';
 
 function mapPropsToState({ jobs }: StoreState) {
   return {

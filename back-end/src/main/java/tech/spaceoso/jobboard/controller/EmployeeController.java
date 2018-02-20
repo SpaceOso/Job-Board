@@ -19,7 +19,7 @@ public class EmployeeController {
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public Employee getById(@PathVariable Long id){
+    public Employee getById(@PathVariable Long id) {
         return EmployeeStub.getEmployeeById(id);
     }
 }

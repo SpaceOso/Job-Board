@@ -5,8 +5,8 @@ export interface Job {
   title: string;
   description: string;
   employerId: string;
-  location: {
-    address: string;
+  address: {
+    street: string;
     city: string;
     state: string;
     zip: string;
@@ -14,8 +14,8 @@ export interface Job {
   employer: {
     id: string;
     name: string;
-    location: {
-      address: string;
+    address: {
+      street: string;
       city: string;
       state: string;
       zip: string;

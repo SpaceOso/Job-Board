@@ -1,8 +1,19 @@
 package tech.spaceoso.jobboard.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
+import java.util.UUID;
+
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Employer {
-    private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
     private String name;
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "address_id")
     private Address address;
     private String logoImg;
     private String website;
@@ -10,7 +21,11 @@ public class Employer {
     private String facebook;
     private String linkedIn;
 
-    public Employer(Long id, String name, Address address, String logoImg, String website, String twitter, String facebook, String linkedIn) {
+    public Employer() {
+
+    }
+
+    public Employer(UUID id, String name, Address address, String logoImg, String website, String twitter, String facebook, String linkedIn) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -21,11 +36,11 @@ public class Employer {
         this.linkedIn = linkedIn;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

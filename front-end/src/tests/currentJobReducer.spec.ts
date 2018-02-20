@@ -11,8 +11,8 @@ const emptyJobPost: CurrentJobPost = {
   employerId: '',
   isFetching: false,
   createdAt: '',
-  location: {
-    address: '',
+  address: {
+    street: '',
     city: '',
     state: '',
     zip: '',
@@ -20,8 +20,8 @@ const emptyJobPost: CurrentJobPost = {
   employer: {
     id: '',
     name: '',
-    location: {
-      address: '',
+    address: {
+      street: '',
       city: '',
       state: '',
       zip: '',
@@ -42,8 +42,8 @@ const mockJob: CurrentJobPost = {
     facebook: 'facebook.com',
     id: '1234345',
     linkedIn: 'linked.com',
-    location: {
-      address: '602 mock street',
+    address: {
+      street: '602 mock street',
       city: 'New York',
       state: 'mock state',
       zip: '123456',
@@ -55,8 +55,8 @@ const mockJob: CurrentJobPost = {
   },
   employerId: 'employer1234',
   id: '1234556',
-  location: {
-    address: '6092 job mock street',
+  address: {
+    street: '6092 job mock street',
     city: 'mock city job',
     state: 'mock state',
     zip: '1234556',

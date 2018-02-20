@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import UserDashboardContainer from './dashboard/UserDashboardContainer';
-import JobListContainer from './job-list/home/JobListContainer';
+import JobListContainer from './HomePage/job-list/JobListContainer';
 import JobPostContainer from './job-posts/JobPostContainer';
 import LayoutComponent from './LayoutComponent';
 import LoginContainer from './log-in/LoginContainer';
