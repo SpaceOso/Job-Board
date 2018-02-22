@@ -3,6 +3,8 @@ package tech.spaceoso.jobboard.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -10,6 +12,7 @@ import java.util.UUID;
 public class Employer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @org.hibernate.annotations.Type(type="org.hibernate.type.PostgresUUIDType")
     private UUID id;
     private String name;
     @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
@@ -20,12 +23,18 @@ public class Employer {
     private String twitter;
     private String facebook;
     private String linkedIn;
+    @OneToMany(mappedBy = "employer")
+    private List<Job> jobs;
 
     public Employer() {
 
     }
 
-    public Employer(UUID id, String name, Address address, String logoImg, String website, String twitter, String facebook, String linkedIn) {
+    public Employer(UUID id){
+        this.id = id;
+    }
+
+    public Employer(UUID id, String name, Address address, String logoImg, String website, String twitter, String facebook, String linkedIn, List<Job> jobs) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -34,6 +43,7 @@ public class Employer {
         this.twitter = twitter;
         this.facebook = facebook;
         this.linkedIn = linkedIn;
+        this.jobs = jobs;
     }
 
     public UUID getId() {
@@ -100,6 +110,14 @@ public class Employer {
         this.linkedIn = linkedIn;
     }
 
+    public List<Job> getJobs() {
+        return jobs;
+    }
+
+    public void setJobs(List<Job> jobs) {
+        this.jobs = jobs;
+    }
+
     @Override
     public String toString() {
         return "Employer{" +
@@ -111,6 +129,7 @@ public class Employer {
                 ", twitter='" + twitter + '\'' +
                 ", facebook='" + facebook + '\'' +
                 ", linkedIn='" + linkedIn + '\'' +
+                ", jobs=" + jobs +
                 '}';
     }
 }

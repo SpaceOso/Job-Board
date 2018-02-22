@@ -5,12 +5,15 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import tech.spaceoso.jobboard.ObjectCreator;
 import tech.spaceoso.jobboard.model.Address;
 import tech.spaceoso.jobboard.model.Employer;
 import tech.spaceoso.jobboard.model.Job;
 import tech.spaceoso.jobboard.repository.EmployerRepository;
 import tech.spaceoso.jobboard.repository.JobRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -33,13 +36,22 @@ public class EmployerControllerTest {
         MockitoAnnotations.initMocks(this);
     }
 
+    private UUID id = UUID.randomUUID();
+    private Address testerAddress = new Address("test street", "test city", "NY", 12345);
+    private Job jobTest = new Job(UUID.randomUUID(), "Tester 1", testerAddress, "Fake job", ObjectCreator.creatEmployer());
+    private List<Job> jobList = new ArrayList<Job>();
+
+
+
     @Test
+
     public void testEmployerControllerGetById() {
         // create and save id for later use
-        UUID id = UUID.randomUUID();
+
+        jobList.add(jobTest);
 
         // create mock mockEmployer
-        Employer mockEmployer = new Employer(id, "Test Tube Employer", new Address("fake street", "fake city", "NY", 12345), "fake.png", "fake.com", "twitter", "facebook", "linkedin");
+        Employer mockEmployer = new Employer(id, "Test Tube Employer", new Address("fake street", "fake city", "NY", 12345), "fake.png", "fake.com", "twitter", "facebook", "linkedin", jobList);
 
         // when we search the repo for id return mock mockEmployer
         when(employerRepository.findOne(id)).thenReturn(mockEmployer);
@@ -57,8 +69,9 @@ public class EmployerControllerTest {
 
     @Test
     public void testEmployerCreate() {
+        jobList.add(jobTest);
         // create mockEmployer to use within this test
-        Employer mockEmployer = new Employer(UUID.randomUUID(), "Test Tube Created", new Address("fake street", "fake city", "NY", 12345), "fake.png", "fake.com", "twitter", "facebook", "linkedin");
+        Employer mockEmployer = new Employer(UUID.randomUUID(), "Test Tube Created", new Address("fake street", "fake city", "NY", 12345), "fake.png", "fake.com", "twitter", "facebook", "linkedin", jobList);
 
         // when we contact the repo to create return the created employer
         when(employerRepository.saveAndFlush(mockEmployer)).thenReturn(mockEmployer);

@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import tech.spaceoso.jobboard.ObjectCreator;
 import tech.spaceoso.jobboard.model.Address;
 import tech.spaceoso.jobboard.model.Job;
 import tech.spaceoso.jobboard.repository.JobRepository;
@@ -33,7 +34,7 @@ public class JobControllerTest {
     public void testJobControllerGetById(){
         UUID id = UUID.randomUUID();
 
-        Job job = new Job(id, "Fake job", new Address("6df02 fake street", "palmdaless", "NY", 12345), "Test tube job ", 1L, "tester.png");
+        Job job = new Job(id, "Fake job", new Address("6df02 fake street", "palmdaless", "NY", 12345), "Test tube job ", ObjectCreator.creatEmployer());
 
         when(jobRepository.findOne(id)).thenReturn(job);
 

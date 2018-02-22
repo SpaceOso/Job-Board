@@ -11,28 +11,34 @@ public class Job {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    UUID id;
+    @org.hibernate.annotations.Type(type="org.hibernate.type.PostgresUUIDType")
+    private UUID id;
     private String title;
     @OneToOne(fetch = FetchType.LAZY, cascade={CascadeType.ALL})
     @JoinColumn(name = "address_id")
     private Address address;
     private String description;
-    private Long employerId;
-    //TODO we need to find out how to pull this form the employer, this is not saved into the job itself
-    private String logoImg;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
+    @JoinColumn(name = "employer_id")
+    private Employer employer;
+
 
     public Job(){
 
     }
-
-
-    public Job(UUID id, String title, Address address, String description, Long employerId, String logoImg) {
+    public Job(UUID id, String title, Address address, String description) {
         this.id = id;
         this.title = title;
         this.address = address;
         this.description = description;
-        this.employerId = employerId;
-        this.logoImg = logoImg;
+    }
+
+    public Job(UUID id, String title, Address address, String description, Employer employer) {
+        this.id = id;
+        this.title = title;
+        this.address = address;
+        this.description = description;
+        this.employer = employer;
     }
 
     public UUID getId() {
@@ -67,20 +73,12 @@ public class Job {
         this.description = description;
     }
 
-    public Long getEmployerId() {
-        return employerId;
+    public Employer getEmployer() {
+        return employer;
     }
 
-    public void setEmployerId(Long employerId) {
-        this.employerId = employerId;
-    }
-
-    public String getLogoImg() {
-        return logoImg;
-    }
-
-    public void setLogoImg(String logoImg) {
-        this.logoImg = logoImg;
+    public void setEmployer(Employer employer) {
+        this.employer = employer;
     }
 
     @Override
@@ -90,8 +88,7 @@ public class Job {
                 ", title='" + title + '\'' +
                 ", address=" + address +
                 ", description='" + description + '\'' +
-                ", employerId=" + employerId +
-                ", logoImg='" + logoImg + '\'' +
+                ", employer=" + employer +
                 '}';
     }
 }
