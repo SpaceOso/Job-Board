@@ -1,6 +1,7 @@
 package tech.spaceoso.jobboard.controller;
 
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import jdk.nashorn.internal.codegen.ObjectCreator;
@@ -29,6 +30,9 @@ public class JobController {
     @PersistenceContext
     private EntityManager em;
 
+    @Autowired
+    private ObjectMapper mapper;
+
     final Logger logger = LoggerFactory.getLogger(JobController.class);
 
     @Autowired
@@ -47,12 +51,14 @@ public class JobController {
     }
 
     @RequestMapping(value = "jobposts/create", method = RequestMethod.POST)
-    public Job create(@RequestBody Map<String, String> payload){
-        Employer emp = em.getReference(Employer.class, payload.get("employerId"));
+    public Job create(@RequestBody Map<String, Object> payload){
+        Employer emp = em.getReference(Employer.class, UUID.fromString(payload.get("employerId").toString()));
 //        HashMap<String, String> customerInfo = requestData.get("employer");
-        System.out.println(payload);
-        Address newAdd = new Address("tester", "city", "NY", 1234);
-        Job newJob = new Job(UUID.randomUUID(), payload.get("description"), newAdd, payload.get("description"), emp);
+        logger.info("The payload is {} ", payload);
+//        Address addressa = payload.get("address");
+        Address jsonAddres = Address.class.cast(payload.get("address"));
+//        Address newAdd = new Address(payload.get("address"), "city", "NY", 1234);
+        Job newJob = new Job(UUID.randomUUID(), payload.get("title").toString(), jsonAddres, payload.get("description").toString(), emp);
         logger.info("The employer is: {} ", emp);
         //mapper.configure(DeserializationConfig.Feature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true)
         logger.info("The job to be saved {}", newJob);
