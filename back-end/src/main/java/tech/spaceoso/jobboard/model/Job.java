@@ -1,6 +1,11 @@
 package tech.spaceoso.jobboard.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.UUIDSerializer;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -17,20 +22,16 @@ public class Job {
     @OneToOne(fetch = FetchType.LAZY, cascade={CascadeType.ALL})
     @JoinColumn(name = "address_id")
     private Address address;
+    @Transient
+    @JsonProperty("address")
+    private JsonNode addressNode;
     private String description;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "employer_id")
     private Employer employer;
 
+    public Job() {
 
-    public Job(){
-
-    }
-    public Job(UUID id, String title, Address address, String description) {
-        this.id = id;
-        this.title = title;
-        this.address = address;
-        this.description = description;
     }
 
     public Job(UUID id, String title, Address address, String description, Employer employer) {

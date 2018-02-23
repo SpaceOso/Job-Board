@@ -19,7 +19,7 @@ final public class ObjectCreator {
     }
 
     static public List<Job> createJobs(){
-        Job newJob = new Job(generateId(), "Tester title", createAddress(), "fake description");
+        Job newJob = new Job(generateId(), "Tester title", createAddress(), "fake description", creatEmployer());
         List<Job> jobList= new ArrayList<Job>();
         jobList.add(newJob);
 
