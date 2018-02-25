@@ -1,4 +1,4 @@
-# React Job Board
+# Full-Stack Job Board
 
 A project I've been working on to learn the ins and outs of web applications. Front end is developed in react using Node with Express and PostgreSQL for the backend.
 
