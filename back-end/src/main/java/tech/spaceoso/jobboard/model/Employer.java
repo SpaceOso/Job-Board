@@ -1,6 +1,7 @@
 package tech.spaceoso.jobboard.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -24,15 +25,12 @@ public class Employer {
     private String twitter;
     private String facebook;
     private String linkedIn;
-    @OneToMany(mappedBy = "employer")
+    @OneToMany(mappedBy = "employer", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @JsonManagedReference
     private List<Job> jobs;
 
     public Employer() {
 
-    }
-
-    public Employer(UUID id){
-        this.id = id;
     }
 
     public Employer(UUID id, String name, Address address, String logoImg, String website, String twitter, String facebook, String linkedIn, List<Job> jobs) {

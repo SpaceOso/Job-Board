@@ -1,5 +1,6 @@
 package tech.spaceoso.jobboard.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -22,14 +23,11 @@ public class Job {
     private String title;
     @OneToOne(fetch = FetchType.LAZY, cascade={CascadeType.ALL})
     @JoinColumn(name = "address_id")
-    @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
     private Address address;
-    @Transient
-    @JsonProperty("address")
-    private JsonNode addressNode;
     private String description;
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "employer_id")
+    @JsonBackReference
     private Employer employer;
 
     public Job() {
