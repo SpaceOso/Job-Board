@@ -43,10 +43,24 @@ public class JobController {
         return jobRepository.findAll();
     }
 
+/*    @RequestMapping(value = "jobposts/list-with-employer", method = RequestMethod.GET)
+    public List<JobWrapper> listWithEmployer(){
+        List<Job> jobs = jobRepository.findAll();
+
+        for(Job job : jobs){
+            job.getEmployer();
+        }
+    }*/
+
     @RequestMapping(value = "jobposts/{id}", method = RequestMethod.GET)
     public Job getJobById(@PathVariable UUID id){
-
         return jobRepository.findOne(id);
+    }
+
+    @RequestMapping(value = "jobposts/employer/{employerId}", method = RequestMethod.GET)
+    public List<Job> getJobByEmployer(@PathVariable UUID employerId){
+        logger.info("geting all employer jobs");
+        return jobRepository.findJobsByEmployer_Id(employerId);
     }
 
     @RequestMapping(value = "jobposts/create", method = RequestMethod.POST)

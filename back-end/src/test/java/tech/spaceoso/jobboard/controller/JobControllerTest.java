@@ -10,7 +10,6 @@ import tech.spaceoso.jobboard.model.Address;
 import tech.spaceoso.jobboard.model.Job;
 import tech.spaceoso.jobboard.repository.JobRepository;
 
-import java.util.Random;
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -34,7 +33,7 @@ public class JobControllerTest {
     public void testJobControllerGetById(){
         UUID id = UUID.randomUUID();
 
-        Job job = new Job(id, "Fake job", new Address("6df02 fake street", "palmdaless", "NY", 12345), "Test tube job ", ObjectCreator.creatEmployer());
+        Job job = new Job(id, "Fake job", new Address("6df02 fake street", "palmdaless", "NY", 12345), "Test tube job ", ObjectCreator.createEmployer());
 
         when(jobRepository.findOne(id)).thenReturn(job);
 

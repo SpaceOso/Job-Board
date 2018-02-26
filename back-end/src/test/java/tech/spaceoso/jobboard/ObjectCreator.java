@@ -19,7 +19,7 @@ final public class ObjectCreator {
     }
 
     static public List<Job> createJobs(){
-        Job newJob = new Job(generateId(), "Tester title", createAddress(), "fake description", creatEmployer());
+        Job newJob = new Job(generateId(), "Tester title", createAddress(), "fake description", null);
         List<Job> jobList= new ArrayList<Job>();
         jobList.add(newJob);
 
@@ -27,15 +27,22 @@ final public class ObjectCreator {
 
     }
 
-    static public Employer creatEmployer(){
-        return new Employer(generateId(),
-                "fake employer",
-                createAddress(),
-                "fakelogo.png",
-                "website.com",
-                "twitter.com",
-                "facebook.com",
-                "linkedin.com",
-                createJobs());
+    static public Employer createEmployer(){
+
+        // generate id for the employer
+        UUID employerId = UUID.randomUUID();
+
+        Employer employer = new Employer(employerId, "Test Employer", createAddress(), "noLogo.png", "fake.com", "twitter.com", "facebook", "linkedin.com", null);
+        // get list of jobs
+        List<Job> jobs = createJobs();
+        // add this employerId to all jobs that we receive
+        for (Job job : jobs) {
+            job.setEmployer(employer);
+        }
+
+        // add this job list to the jobs section of the employer
+        employer.setJobs(jobs);
+
+        return employer;
     }
 }
