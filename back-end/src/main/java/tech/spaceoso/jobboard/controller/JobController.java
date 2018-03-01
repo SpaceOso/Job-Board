@@ -1,19 +1,13 @@
 package tech.spaceoso.jobboard.controller;
 
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import jdk.nashorn.internal.codegen.ObjectCreator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tech.spaceoso.jobboard.model.Address;
 import tech.spaceoso.jobboard.model.Employer;
 import tech.spaceoso.jobboard.model.Job;
 import tech.spaceoso.jobboard.model.JobWrapper;
-import tech.spaceoso.jobboard.repository.EmployerRepository;
 import tech.spaceoso.jobboard.repository.JobRepository;
 
 import java.util.*;
@@ -56,6 +50,7 @@ public class JobController {
     public Job getJobById(@PathVariable UUID id){
         return jobRepository.findOne(id);
     }
+
 
     @RequestMapping(value = "jobposts/employer/{employerId}", method = RequestMethod.GET)
     public List<Job> getJobByEmployer(@PathVariable UUID employerId){

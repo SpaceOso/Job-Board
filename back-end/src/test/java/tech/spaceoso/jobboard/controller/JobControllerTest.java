@@ -10,7 +10,9 @@ import tech.spaceoso.jobboard.model.Address;
 import tech.spaceoso.jobboard.model.Job;
 import tech.spaceoso.jobboard.repository.JobRepository;
 
+
 import java.util.UUID;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -18,6 +20,12 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class JobControllerTest {
+    private UUID id;
+
+    public JobControllerTest() {
+        this.id = UUID.randomUUID();
+    }
+
     @InjectMocks
     JobController jobController;
 
@@ -30,9 +38,7 @@ public class JobControllerTest {
     }
 
     @Test
-    public void testJobControllerGetById(){
-        UUID id = UUID.randomUUID();
-
+    public void testJobControllerGetById() {
         Job job = new Job(id, "Fake job", new Address("6df02 fake street", "palmdaless", "NY", 12345), "Test tube job ", ObjectCreator.createEmployer());
 
         when(jobRepository.findOne(id)).thenReturn(job);
@@ -41,7 +47,20 @@ public class JobControllerTest {
 
         verify(jobRepository).findOne(id);
 
-        assertThat(jobTest, is(job) );
+        assertThat(jobTest, is(job));
+    }
+
+    @Test
+    public void testJobControllerList() {
+        List<Job> jobs = ObjectCreator.createJobs(4);
+
+        when(jobRepository.findAll()).thenReturn(jobs);
+
+        List<Job> returnedJobs = jobController.list();
+
+        verify(jobRepository).findAll();
+
+        assertThat(returnedJobs.get(0), is(jobs.get(0)));
     }
 
     @Test
