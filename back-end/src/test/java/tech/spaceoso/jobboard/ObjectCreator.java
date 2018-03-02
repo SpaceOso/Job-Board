@@ -5,6 +5,7 @@ import tech.spaceoso.jobboard.model.Employer;
 import tech.spaceoso.jobboard.model.Job;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,7 +22,7 @@ final public class ObjectCreator {
     static public List<Job> createJobs(int totalJobs) {
         List<Job> jobList = new ArrayList<Job>();
         for (int i = 0; i < totalJobs; i++) {
-            Job newJob = new Job(generateId(), "Tester title", createAddress(), "fake description", null);
+            Job newJob = new Job(generateId(), new Date(), "Tester title", createAddress(), "fake description", null);
             jobList.add(newJob);
         }
 
@@ -31,7 +32,7 @@ final public class ObjectCreator {
     }
 
     static public Job createJobs() {
-        return new Job(generateId(), "Tester title", createAddress(), "fake description", null);
+        return new Job(generateId(), new Date(), "Tester title", createAddress(), "fake description", null);
     }
 
     static public Employer createEmployer() {
@@ -39,7 +40,7 @@ final public class ObjectCreator {
         // generate id for the employer
         UUID employerId = UUID.randomUUID();
 
-        Employer employer = new Employer(employerId, "Test Employer", createAddress(), "noLogo.png", "fake.com", "twitter.com", "facebook", "linkedin.com", null);
+        Employer employer = new Employer(employerId, new Date(), "Test Employer", createAddress(), "noLogo.png", "fake.com", "twitter.com", "facebook", "linkedin.com", null);
         // get list of jobs
         List<Job> jobs = createJobs(3);
         // add this employerId to all jobs that we receive

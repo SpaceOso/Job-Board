@@ -1,22 +1,14 @@
 package tech.spaceoso.jobboard.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.UUIDSerializer;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
-import static javax.persistence.TemporalType.TIMESTAMP;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -26,11 +18,14 @@ public class Job {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @org.hibernate.annotations.Type(type="org.hibernate.type.PostgresUUIDType")
     private UUID id;
-    @CreatedDate
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+//    @Column(name = "createdDate")
     private Date createdDate;
-    @LastModifiedDate
-    @Temporal(TIMESTAMP)
-    protected Date lastModifiedDate;
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+//    @Column(name = "lastModifiedDate")
+    private Date lastModifiedDate;
     private String title;
     @OneToOne(fetch = FetchType.LAZY, cascade={CascadeType.ALL})
     @JoinColumn(name = "address_id")
@@ -45,8 +40,9 @@ public class Job {
 
     }
 
-    public Job(UUID id, String title, Address address, String description, Employer employer) {
+    public Job(UUID id, Date createdDate, String title, Address address, String description, Employer employer) {
         this.id = id;
+        this.createdDate = createdDate;
         this.title = title;
         this.address = address;
         this.description = description;

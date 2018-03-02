@@ -12,6 +12,7 @@ import tech.spaceoso.jobboard.model.Job;
 import tech.spaceoso.jobboard.repository.EmployerRepository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,7 +38,7 @@ public class EmployerControllerTest {
 
     private UUID id = UUID.randomUUID();
     private Address testerAddress = new Address("test street", "test city", "NY", 12345);
-    private Job jobTest = new Job(UUID.randomUUID(), "Tester 1", testerAddress, "Fake job", ObjectCreator.createEmployer());
+    private Job jobTest = new Job(UUID.randomUUID(), new Date(), "Tester 1", testerAddress, "Fake job", ObjectCreator.createEmployer());
     private List<Job> jobList = new ArrayList<Job>();
 
 
@@ -49,7 +50,7 @@ public class EmployerControllerTest {
         jobList.add(jobTest);
 
         // create mock mockEmployer
-        Employer mockEmployer = new Employer(id, "Test Tube Employer", new Address("fake street", "fake city", "NY", 12345), "fake.png", "fake.com", "twitter", "facebook", "linkedin", jobList);
+        Employer mockEmployer = new Employer(id, new Date(), "Test Tube Employer", new Address("fake street", "fake city", "NY", 12345), "fake.png", "fake.com", "twitter", "facebook", "linkedin", jobList);
 
         // when we search the repo for id return mock mockEmployer
         when(employerRepository.findOne(id)).thenReturn(mockEmployer);
@@ -69,7 +70,7 @@ public class EmployerControllerTest {
     public void testEmployerCreate() {
         jobList.add(jobTest);
         // create mockEmployer to use within this test
-        Employer mockEmployer = new Employer(UUID.randomUUID(), "Test Tube Created", new Address("fake street", "fake city", "NY", 12345), "fake.png", "fake.com", "twitter", "facebook", "linkedin", jobList);
+        Employer mockEmployer = new Employer(UUID.randomUUID(), new Date(), "Test Tube Created", new Address("fake street", "fake city", "NY", 12345), "fake.png", "fake.com", "twitter", "facebook", "linkedin", jobList);
 
         // when we contact the repo to create return the created employer
         when(employerRepository.saveAndFlush(mockEmployer)).thenReturn(mockEmployer);

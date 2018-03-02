@@ -1,17 +1,32 @@
 package tech.spaceoso.jobboard.model;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    String firstName;
-    String lastName;
-    String email;
-    String password;
+    private Long id;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_date", insertable=false)
+    private Date createdDate;
+
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "last_modified_date", insertable=false)
+    private Date lastModifiedDate;
+
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
 
     /**
      * JPA requires this to be created because they use POJO's
@@ -19,12 +34,29 @@ public class Employee {
     protected Employee() {
     }
 
-    public Employee(Long id, String firstName, String lastName, String email, String password) {
+    public Employee(Long id, Date date, String firstName, String lastName, String email, String password) {
         this.id = id;
+        this.createdDate = date;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
 
     public Long getId() {

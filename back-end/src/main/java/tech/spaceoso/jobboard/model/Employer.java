@@ -2,10 +2,11 @@ package tech.spaceoso.jobboard.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,8 +15,14 @@ import java.util.UUID;
 public class Employer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @org.hibernate.annotations.Type(type="org.hibernate.type.PostgresUUIDType")
+    @org.hibernate.annotations.Type(type = "org.hibernate.type.PostgresUUIDType")
     private UUID id;
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastModifiedDate;
     private String name;
     @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @JoinColumn(name = "address_id")
@@ -33,8 +40,9 @@ public class Employer {
 
     }
 
-    public Employer(UUID id, String name, Address address, String logoImg, String website, String twitter, String facebook, String linkedIn, List<Job> jobs) {
+    public Employer(UUID id, Date date, String name, Address address, String logoImg, String website, String twitter, String facebook, String linkedIn, List<Job> jobs) {
         this.id = id;
+        this.createdDate = date;
         this.name = name;
         this.address = address;
         this.logoImg = logoImg;
@@ -51,6 +59,22 @@ public class Employer {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
 
     public String getName() {

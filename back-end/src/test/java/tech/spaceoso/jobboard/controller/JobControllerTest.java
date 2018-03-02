@@ -39,7 +39,7 @@ public class JobControllerTest {
 
     @Test
     public void testJobControllerGetById() {
-        Job job = new Job(id, "Fake job", new Address("6df02 fake street", "palmdaless", "NY", 12345), "Test tube job ", ObjectCreator.createEmployer());
+        Job job = new Job(id, new Date() ,"Fake job", new Address("6df02 fake street", "palmdaless", "NY", 12345), "Test tube job ", ObjectCreator.createEmployer());
 
         when(jobRepository.findOne(id)).thenReturn(job);
 

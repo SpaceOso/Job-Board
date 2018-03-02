@@ -73,6 +73,7 @@ export function getJobs() {
 
     axios.get(`${ROOT_URL}api/v1/jobposts/list`)
       .then((response) => {
+        console.log(`${ROOT_URL}pi/v1/jobposts/list`);
         console.log("the jobs from the backend:", response);
         dispatch(getJobsSuccess(response));
       })

@@ -31,6 +31,23 @@ public class JobController {
     @Autowired
     private JobRepository jobRepository;
 
+
+    // TODO need to either return JobWrapper or crete new url with wrapper
+    @RequestMapping(value = "jobposts/list/home-page", method = RequestMethod.GET)
+    public List<Job> homeJobList(){
+//        List<Job> ascJobs = jobRepository.findAllAndOrderByCreatedDate();
+
+        //todo you can pass a sort
+        List<Job> ascJobs = jobRepository.findAll();
+        for(Job job : ascJobs){
+            // get employer reference from employerId sent in JSON
+            logger.info("each job: " + job);
+//            Employer emp = em.getReference(Employer.class, job.e());
+        }
+
+        return ascJobs;
+    }
+
     @RequestMapping(value = "jobposts/list", method = RequestMethod.GET)
     public List<Job> list() {
 
