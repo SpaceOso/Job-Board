@@ -2,6 +2,7 @@ package tech.spaceoso.jobboard.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -31,10 +32,9 @@ public class Job {
     @JoinColumn(name = "address_id")
     private Address address;
     private String description;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "employer_id")
-//    @JsonBackReference
-    @MapsId
+    @JsonManagedReference
     private Employer employer;
     public Job() {
 
