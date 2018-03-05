@@ -1,5 +1,6 @@
 package tech.spaceoso.jobboard.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CreationTimestamp;
@@ -33,7 +34,8 @@ public class Employer {
     private String facebook;
     private String linkedIn;
     @OneToMany(mappedBy = "employer", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @JsonManagedReference
+//    @JsonManagedReference
+    @JsonBackReference
     private List<Job> jobs;
 
     public Employer() {
@@ -152,7 +154,6 @@ public class Employer {
                 ", twitter='" + twitter + '\'' +
                 ", facebook='" + facebook + '\'' +
                 ", linkedIn='" + linkedIn + '\'' +
-                ", jobs=" + jobs +
                 '}';
     }
 }

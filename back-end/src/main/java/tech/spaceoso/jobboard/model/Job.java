@@ -20,22 +20,22 @@ public class Job {
     private UUID id;
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-//    @Column(name = "createdDate")
+    @Column(name = "createdDate")
     private Date createdDate;
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-//    @Column(name = "lastModifiedDate")
+    @Column(name = "lastModifiedDate")
     private Date lastModifiedDate;
     private String title;
     @OneToOne(fetch = FetchType.LAZY, cascade={CascadeType.ALL})
     @JoinColumn(name = "address_id")
     private Address address;
     private String description;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "employer_id")
-    @JsonBackReference
+//    @JsonBackReference
+    @MapsId
     private Employer employer;
-
     public Job() {
 
     }
@@ -109,10 +109,12 @@ public class Job {
     public String toString() {
         return "Job{" +
                 "id=" + id +
+                ", createdDate=" + createdDate +
+                ", lastModifiedDate=" + lastModifiedDate +
                 ", title='" + title + '\'' +
                 ", address=" + address +
                 ", description='" + description + '\'' +
-                ", employer=" + employer +
+                ", employer=" + employer.getId() +
                 '}';
     }
 }
