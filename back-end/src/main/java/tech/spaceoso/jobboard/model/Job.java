@@ -34,7 +34,7 @@ public class Job {
     private String description;
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "employer_id")
-    @JsonManagedReference
+    @JsonBackReference
     private Employer employer;
     public Job() {
 

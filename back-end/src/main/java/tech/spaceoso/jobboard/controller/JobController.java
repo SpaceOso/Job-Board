@@ -56,6 +56,7 @@ public class JobController {
 
     @RequestMapping(value = "jobposts/create", method = RequestMethod.POST)
     public JobWrapper create(@RequestBody JobWrapper jobWrapper){
+        logger.info("creating a new job with:", jobWrapper);
         // get employer reference from employerId sent in JSON
         Employer emp = em.getReference(Employer.class, jobWrapper.getEmployerId());
 

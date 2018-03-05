@@ -34,7 +34,7 @@ public class Employer {
     private String facebook;
     private String linkedIn;
     @OneToMany(mappedBy = "employer", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @JsonBackReference
+    @JsonManagedReference
     private List<Job> jobs;
 
     public Employer() {
