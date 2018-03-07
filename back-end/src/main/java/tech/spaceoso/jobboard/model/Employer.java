@@ -25,7 +25,7 @@ public class Employer {
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
     private String name;
-    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
     private String logoImg;
@@ -33,8 +33,8 @@ public class Employer {
     private String twitter;
     private String facebook;
     private String linkedIn;
-    @OneToMany(mappedBy = "employer", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @JsonBackReference
+    @OneToMany(mappedBy = "employer", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @JsonManagedReference
     private List<Job> jobs;
 
     public Employer() {

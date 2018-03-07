@@ -28,13 +28,13 @@ public class Job {
     @Column(name = "lastModifiedDate")
     private Date lastModifiedDate;
     private String title;
-    @OneToOne(fetch = FetchType.LAZY, cascade={CascadeType.ALL})
+    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
     private String description;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "employer_id")
-    @JsonManagedReference
+    @JsonBackReference
     private Employer employer;
     public Job() {
 
