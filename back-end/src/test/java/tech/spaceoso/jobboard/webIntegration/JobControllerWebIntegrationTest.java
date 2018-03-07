@@ -57,7 +57,6 @@ public class JobControllerWebIntegrationTest {
         assertThat(newJobs, everyItem(Matchers.<Job>hasProperty("address", hasProperty("city", isA(String.class)))));
         assertThat(newJobs, everyItem(Matchers.<Job>hasProperty("address", hasProperty("state", isA(String.class)))));
         assertThat(newJobs, everyItem(Matchers.<Job>hasProperty("address", hasProperty("zipCode", isA(Integer.class)))));
-        assertThat(newJobs, everyItem(Matchers.<Job>hasProperty("employerId")));
     }
 
 }
