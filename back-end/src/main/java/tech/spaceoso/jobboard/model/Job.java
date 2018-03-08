@@ -7,6 +7,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -20,13 +22,11 @@ public class Job {
     @org.hibernate.annotations.Type(type="org.hibernate.type.PostgresUUIDType")
     private UUID id;
     @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "createdDate")
-    private Date createdDate;
+    private LocalDateTime createdDate;
+//    @Temporal(TemporalType.DATE)
     @UpdateTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "lastModifiedDate")
-    private Date lastModifiedDate;
+    private LocalDateTime lastModifiedDate;
     private String title;
     @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name = "address_id")
@@ -40,7 +40,7 @@ public class Job {
 
     }
 
-    public Job(UUID id, Date createdDate, String title, Address address, String description, Employer employer) {
+    public Job(UUID id, LocalDateTime createdDate, String title, Address address, String description, Employer employer) {
         this.id = id;
         this.createdDate = createdDate;
         this.title = title;
@@ -57,19 +57,19 @@ public class Job {
         this.id = id;
     }
 
-    public Date getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
-    public Date getLastModifiedDate() {
+    public LocalDateTime getLastModifiedDate() {
         return lastModifiedDate;
     }
 
-    public void setLastModifiedDate(Date lastModifiedDate) {
+    public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
 

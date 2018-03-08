@@ -3,7 +3,7 @@
     "outDir": "./public/",        // path to output directory
     "sourceMap": true,          // allow sourcemap support
     "moduleResolution": "Node",
-    "strictNullChecks": true,   // enable strict null checks as a best practice
+    "strictNullChecks": false,   // enable strict null checks as a best practice
     "module": "commonjs",       // specifiy module code generation
     "jsx": "react",             // use typescript to transpile jsx to js
     "target": "es5",            // specify ECMAScript target version

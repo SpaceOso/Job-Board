@@ -50,7 +50,7 @@ class JobPostEmployerInfoComponent extends React.Component<MyProps, any> {
         <img className="company-logo panel-shadow" src={logo} alt={`${employer.name} Logo`}/>
         <div className="info-container panel-shadow" id="about-section">
           <h1 className="title">About {employer.name}</h1>
-          <p className="jp-employer-location">{`${employer.location.city}, ${employer.location.state}`}</p>
+          <p className="jp-employer-location">{`${employer.address.city}, ${employer.address.state}`}</p>
         </div>
         <SocialMediaComponent employer={employer}/>
         <OtherJobsComponent employer={employer} handleClick={this.handleClick} currentJob={this.props.currentJob} isFetching={this.props.isFetching}/>

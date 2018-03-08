@@ -1,73 +1,73 @@
 import {
-  DONE_FETCHING, FETCHING_JOBS,
-  RESET_CURRENT_JOB, SET_CURRENT_JOB,
-  SINGLE_JOB_SUCCESS,
+    DONE_FETCHING, FETCHING_JOBS,
+    RESET_CURRENT_JOB, SET_CURRENT_JOB,
+    SINGLE_JOB_SUCCESS,
 } from '../actions/jobActions';
-import { CurrentJobPost } from '../types';
+import {CurrentJobPost} from '../types';
 
 const thisState: CurrentJobPost = {
-  id: '',
-  title: '',
-  description: '',
-  employerId: '',
-  isFetching: false,
-  createdAt: '',
-  address: {
-    street: '',
-    city: '',
-    state: '',
-    zip: '',
-  },
-  employer: {
     id: '',
-    name: '',
+    title: '',
+    description: '',
+    employerId: '',
+    isFetching: false,
+    createdDate: '',
     address: {
-      street: '',
-      city: '',
-      state: '',
-      zip: '',
+        street: '',
+        city: '',
+        state: '',
+        zip: '',
     },
-    linkedIn: null,
-    facebook: null,
-    logoImg: null,
-    twitter: null,
-    website: null,
-  },
+    employer: {
+        id: '',
+        name: '',
+        address: {
+            street: '',
+            city: '',
+            state: '',
+            zip: '',
+        },
+        linkedIn: null,
+        facebook: null,
+        logoImg: null,
+        twitter: null,
+        website: null,
+    },
 };
 
 function currentJobPostReducer(state = thisState, action) {
-  switch (action.type) {
-    case FETCHING_JOBS:
-      return {
-        ...state,
-        isFetching: true,
-      };
-    case DONE_FETCHING: {
-      return {
-        ...state,
-        isFetching: false,
-      };
+    switch (action.type) {
+        case FETCHING_JOBS:
+            return {
+                ...state,
+                isFetching: true,
+            };
+        case DONE_FETCHING: {
+            return {
+                ...state,
+                isFetching: false,
+            };
+        }
+        case SET_CURRENT_JOB: {
+            return {
+                ...state,
+                ...action.payload,
+                isFetching: false,
+            };
+        }
+        case SINGLE_JOB_SUCCESS:
+            return {
+                ...state,
+                ...action.payload,
+                isFetching: false,
+            };
+        case RESET_CURRENT_JOB:
+            return {
+                ...thisState,
+            };
+        default:
+            return state;
     }
-    case SET_CURRENT_JOB: {
-      return {
-        ...state,
-        ...action.payload,
-        isFetching: false,
-      };
-    }
-    case SINGLE_JOB_SUCCESS:
-      return {
-        ...state,
-        ...action.payload,
-        isFetching: false,
-      };
-    case RESET_CURRENT_JOB:
-      return {
-        ...thisState,
-      };
-    default:
-      return state;
-  }
 }
 
 export default currentJobPostReducer;

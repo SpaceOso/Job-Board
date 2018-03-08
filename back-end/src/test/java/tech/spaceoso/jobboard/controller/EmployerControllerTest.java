@@ -11,6 +11,7 @@ import tech.spaceoso.jobboard.model.Employer;
 import tech.spaceoso.jobboard.model.Job;
 import tech.spaceoso.jobboard.repository.EmployerRepository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,7 +39,7 @@ public class EmployerControllerTest {
 
     private UUID id = UUID.randomUUID();
     private Address testerAddress = new Address("test street", "test city", "NY", 12345);
-    private Job jobTest = new Job(UUID.randomUUID(), new Date(), "Tester 1", testerAddress, "Fake job", ObjectCreator.createEmployer());
+    private Job jobTest = new Job(UUID.randomUUID(), LocalDateTime.now(), "Tester 1", testerAddress, "Fake job", ObjectCreator.createEmployer());
     private List<Job> jobList = new ArrayList<Job>();
 
 

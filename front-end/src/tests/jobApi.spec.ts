@@ -40,7 +40,7 @@ const emptyJobPost = {
 const jobReducer = currentJobPostReducer;
 
 const mockJob: Job = {
-  createdAt: '12/12/12',
+  createdDate: '12/12/12',
   description: 'Mock Test Job',
   employer: {
     facebook: 'facebook.com',

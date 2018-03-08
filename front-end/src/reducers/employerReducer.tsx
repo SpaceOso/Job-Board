@@ -15,11 +15,11 @@ import { Employer } from '../types';
 const defaultState: Employer = {
   id: '',
   name: '',
-  location: {
-    address: '',
+  address: {
+    street: '',
     city: '',
     state: '',
-    zip: '',
+    zipCode: '',
   },
   logoImg: '',
   website: '',

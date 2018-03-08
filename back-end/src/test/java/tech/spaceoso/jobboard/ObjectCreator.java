@@ -4,6 +4,8 @@ import tech.spaceoso.jobboard.model.Address;
 import tech.spaceoso.jobboard.model.Employer;
 import tech.spaceoso.jobboard.model.Job;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,7 +24,7 @@ final public class ObjectCreator {
     static public List<Job> createJobs(int totalJobs) {
         List<Job> jobList = new ArrayList<Job>();
         for (int i = 0; i < totalJobs; i++) {
-            Job newJob = new Job(generateId(), new Date(), "Tester title", createAddress(), "fake description", null);
+            Job newJob = new Job(generateId(), LocalDateTime.now(), "Tester title", createAddress(), "fake description", null);
             jobList.add(newJob);
         }
 
@@ -32,7 +34,7 @@ final public class ObjectCreator {
     }
 
     static public Job createJobs() {
-        return new Job(generateId(), new Date(), "Tester title", createAddress(), "fake description", null);
+        return new Job(generateId(), LocalDateTime.now(), "Tester title", createAddress(), "fake description", null);
     }
 
     static public Employer createEmployer() {

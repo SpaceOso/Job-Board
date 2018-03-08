@@ -11,6 +11,8 @@ import tech.spaceoso.jobboard.model.Job;
 import tech.spaceoso.jobboard.repository.JobRepository;
 
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import java.util.*;
 
@@ -39,7 +41,7 @@ public class JobControllerTest {
 
     @Test
     public void testJobControllerGetById() {
-        Job job = new Job(id, new Date() ,"Fake job", new Address("6df02 fake street", "palmdaless", "NY", 12345), "Test tube job ", ObjectCreator.createEmployer());
+        Job job = new Job(id, LocalDateTime.now(),"Fake job", new Address("6df02 fake street", "palmdaless", "NY", 12345), "Test tube job ", ObjectCreator.createEmployer());
 
         when(jobRepository.findOne(id)).thenReturn(job);
 

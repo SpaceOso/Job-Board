@@ -26,7 +26,7 @@ export interface Job {
     twitter: string | null;
     linkedIn: string | null;
   };
-  createdAt: string;
+    createdDate: string;
 }
 
 export interface SiteError {
@@ -80,11 +80,11 @@ export interface User extends AuthUser {
 export interface Employer {
   id: string;
   name: string;
-  location: {
-    address: string;
+  address: {
+    street: string;
     city: string;
     state: string;
-    zip: string;
+    zipCode: string;
   };
   logoImg: string;
   website: string;
