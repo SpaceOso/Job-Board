@@ -11,7 +11,7 @@ const emptyJobPost: CurrentJobPost = {
     description: '',
     employerId: '',
     isFetching: false,
-    createdDate: '',
+    createdDate: null,
     address: {
         street: '',
         city: '',
@@ -37,7 +37,22 @@ const emptyJobPost: CurrentJobPost = {
 const jobReducer = currentJobPostReducer;
 
 const mockJob: CurrentJobPost = {
-    createdDate: '12/12/12',
+    createdDate: {
+        dayOfMonth: 0,
+        dayOfWeek: '',
+        dayOfYea: 0,
+        month: '',
+        year: 0,
+        monthValue: 0,
+        hour: 0,
+        minute: 0,
+        nano: 0,
+        second: 0,
+        chronology: {
+            id: '',
+            calendarType: ''
+        }
+    },
     description: 'Mock Test Job',
     employer: {
         facebook: 'facebook.com',

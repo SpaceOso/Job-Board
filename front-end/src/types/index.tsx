@@ -1,5 +1,22 @@
 // src/types/index.tsx
 
+export interface createdDate{
+    dayOfMonth: number,
+    dayOfWeek: string,
+    dayOfYea: number,
+    month: string,
+    year: number,
+    monthValue: number,
+    hour: number,
+    minute: number,
+    nano: number,
+    second: number,
+    chronology: {
+        id: string,
+        calendarType: string
+    }
+}
+
 export interface Job {
   id: string;
   title: string;
@@ -26,7 +43,7 @@ export interface Job {
     twitter: string | null;
     linkedIn: string | null;
   };
-    createdDate: string;
+    createdDate: createdDate | null;
 }
 
 export interface SiteError {

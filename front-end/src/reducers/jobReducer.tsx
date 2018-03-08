@@ -16,11 +16,6 @@ function jobReducer(state: StoreState, action) {
           //TODO need to create a job model based on the backend jobwrapper
           const currentJob : Job = {...job.job};
           currentJob.employer = {...job.employer};
-          console.log("date..", Date.parse(job.createdDate));
-          // let splitDate : String[];
-          // splitDate = currentJob.createdAt.match(jobDateRegex)[ 0 ].split('-');
-          // currentJob.createdAt = `${splitDate[ 1 ]}-${splitDate[ 2 ]}-${splitDate[ 0 ]}`;
-          currentJob.createdDate = "sorynodate";
 
           newJobs[ currentJob.id ] = { ...currentJob };
       });

@@ -11,7 +11,7 @@ const thisState: CurrentJobPost = {
     description: '',
     employerId: '',
     isFetching: false,
-    createdDate: '',
+    createdDate: null,
     address: {
         street: '',
         city: '',
