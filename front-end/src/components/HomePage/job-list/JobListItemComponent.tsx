@@ -6,38 +6,38 @@ import { Link } from 'react-router-dom';
 import './JobListItem.scss';
 
 // interfaces
-import { Job } from '../../../types/index';
+import { JobPost} from '../../../types';
 import { IMG_URL } from '../../../utils/utils';
 
 export interface Props {
-  job: Job;
+  jobPost: JobPost;
 }
 
 const jobListItemComponent: React.SFC<Props> = (props) => {
-  const { job } = props;
+  const { jobPost } = props;
   return (
     // LOGO
     <div className="job-list-item panel-shadow">
-      <Link className="link-container" to={`jobposts/${job.id}`}>
+      <Link className="link-container" to={`jobposts/${jobPost.job.id}`}>
         {/*LOGO*/}
         <div className="job-list-logo">
           <img
-            src={job.employer.logoImg ? `${IMG_URL}${job.employer.logoImg}` : require('../../../../images/icon/no-icon.svg')}
+            src={jobPost.employer.logoImg ? `${IMG_URL}${jobPost.employer.logoImg}` : require('../../../../images/icon/no-icon.svg')}
           />
         </div>
         {/*JOB INFORMATION*/}
         <div className="job-info">
           <h1 className="job-title">
-            {job.title}
+            {jobPost.job.title}
           </h1>
           <p className="job-employer">
-            {job.employer.name}
+            {jobPost.employer.name}
           </p>
         </div>
         <div className="post-info">
             {/*TODO create a helper function for dates*/}
-          <p className="post-date">{moment(new Date(job.createdDate.year, job.createdDate.monthValue - 1, job.createdDate.dayOfMonth, job.createdDate.hour, job.createdDate.minute)).fromNow()}</p>
-          <p className="post-location">{`${job.employer.address.city}, ${job.employer.address.state}`}</p>
+          <p className="post-date">{moment(new Date(jobPost.job.createdDate.year, jobPost.job.createdDate.monthValue - 1, jobPost.job.createdDate.dayOfMonth, jobPost.job.createdDate.hour, jobPost.job.createdDate.minute)).fromNow()}</p>
+          <p className="post-location">{`${jobPost.employer.address.city}, ${jobPost.employer.address.state}`}</p>
         </div>
       </Link>
     </div>

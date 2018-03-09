@@ -7,7 +7,7 @@ declare let process: {
   };
 };
 
-let URL_Test = 'https://mr-job-board.herokuapp.com/';
+let URL_Test = 'https://mr-jobPost-board.herokuapp.com/';
 let set_IMG_URL = 'http://localhost:3000/uploads/images/';
 let set_LOCAL_URL = 'http://localhost:3000/';
 
@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === 'development') {
   URL_Test = 'http://localhost:8080/';
 } else {
   set_IMG_URL = 'https://s3.us-east-2.amazonaws.com/mrjobboard/';
-  set_LOCAL_URL = 'https://mr-job-board.herokuapp.com/';
+  set_LOCAL_URL = 'https://mr-jobPost-board.herokuapp.com/';
 }
 
 export const IMG_URL = set_IMG_URL;

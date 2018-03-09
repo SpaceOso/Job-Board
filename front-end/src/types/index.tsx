@@ -26,24 +26,9 @@ export interface Job {
     street: string;
     city: string;
     state: string;
-    zip: string;
+    zipCode: string;
   };
-  employer: {
-    id: string;
-    name: string;
-    address: {
-      street: string;
-      city: string;
-      state: string;
-      zip: string;
-    };
-    logoImg: string | null;
-    website: string | null;
-    facebook: string | null;
-    twitter: string | null;
-    linkedIn: string | null;
-  };
-    createdDate: createdDate | null;
+  createdDate: createdDate | null;
 }
 
 export interface SiteError {
@@ -112,8 +97,10 @@ export interface Employer {
   isFetching: boolean | null;
 }
 
-export interface CurrentJobPost extends Job {
+export interface JobPost {
   isFetching: boolean;
+  job: Job;
+  employer: Employer;
 }
 
 export interface Applicants {
@@ -140,7 +127,7 @@ export interface StoreState {
   jobs?: Job[];
   user?: User | null;
   employer?: Employer | null;
-  currentJobPost?: CurrentJobPost;
+  currentJobPost?: JobPost;
   siteFetching?: SiteFetching;
   siteErrors?: SiteErrors;
 }

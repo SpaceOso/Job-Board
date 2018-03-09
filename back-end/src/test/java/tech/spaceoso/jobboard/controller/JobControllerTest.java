@@ -8,6 +8,7 @@ import org.mockito.MockitoAnnotations;
 import tech.spaceoso.jobboard.ObjectCreator;
 import tech.spaceoso.jobboard.model.Address;
 import tech.spaceoso.jobboard.model.Job;
+import tech.spaceoso.jobboard.model.JobWrapper;
 import tech.spaceoso.jobboard.repository.JobRepository;
 
 
@@ -45,7 +46,7 @@ public class JobControllerTest {
 
         when(jobRepository.findOne(id)).thenReturn(job);
 
-        Job jobTest = jobController.getJobById(id);
+        JobWrapper jobTest = jobController.getJobById(id);
 
         verify(jobRepository).findOne(id);
 

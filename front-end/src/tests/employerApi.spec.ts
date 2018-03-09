@@ -3,7 +3,7 @@ import chaiHttp = require('chai-http');
 import 'mocha';
 import * as app from '../../app';
 import { employerKeys } from './jobApi.spec';
-import { CurrentJobPost, Job } from '../types'
+import { JobPost } from '../types'
 
 const should = chai.should();
 const expect = chai.expect;
@@ -16,11 +16,11 @@ describe('/employer', () => {
 
   it('should POST a NEW JOB', (done) => {
     const jobDetails = {
-      title: 'chai job',
+      title: 'chai jobPost',
       city: 'palmdale',
       state: 'CA',
       zip: '93550',
-      description: 'a chai test job',
+      description: 'a chai test jobPost',
       employerId: '76d743f0-05a2-11e8-8a62-509a4c1c45f2',
     };
 

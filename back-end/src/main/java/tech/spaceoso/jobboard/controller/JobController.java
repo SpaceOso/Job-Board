@@ -53,8 +53,11 @@ public class JobController {
     }
 
     @RequestMapping(value = "jobposts/{id}", method = RequestMethod.GET)
-    public Job getJobById(@PathVariable UUID id){
-        return jobRepository.findOne(id);
+    public JobWrapper getJobById(@PathVariable UUID id){
+        Job job = jobRepository.findOne(id);
+        JobWrapper wrappedJob = new JobWrapper(job, job.getEmployer().getId());
+        wrappedJob.setEmployer(job.getEmployer());
+        return wrappedJob;
     }
 
 

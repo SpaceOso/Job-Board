@@ -37,14 +37,14 @@ class ApplicantListComponent extends React.Component<MyProps, MyState> {
 
   componentDidMount() {
     if (this.props.jobs !== null && this.props.jobs.length > 0) {
-      // adds the first job to state
+      // adds the first jobPost to state
       this.setState({ currentJob: this.props.jobs[ 0 ] });
     }
   }
 
   createList() {
     if (this.state.currentJob !== null) {
-      console.log('new list created with job:', this.state.currentJob.title);
+      console.log('new list created with jobPost:', this.state.currentJob.title);
     }
     const specialClasses = {
       Interested: 'interested',
@@ -127,7 +127,7 @@ class ApplicantListComponent extends React.Component<MyProps, MyState> {
           Currently viewing applicants for job:
           <DropDownComponent
             list={this.props.jobs}
-            listName={'job-select'}
+            listName={'jobPost-select'}
             onChangeCB={this.handleJobSelectionChange}
           />
         </div>

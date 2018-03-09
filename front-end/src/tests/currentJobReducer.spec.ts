@@ -2,21 +2,23 @@ import {expect} from 'chai';
 import 'mocha';
 import {doneFetchingJobs, fetchingJobs, resetCurrentJob, setCurrentJob, singleJobSuccess} from '../actions/jobActions';
 import {default as currentJobPostReducer} from '../reducers/currentJobReducer';
-import {CurrentJobPost, Job} from '../types';
+import {JobPost} from '../types';
 
-const emptyJobPost: CurrentJobPost = {
-    id: '',
-    title: '',
-    description: '',
-    employerId: '',
+const emptyJobPost: JobPost = {
     isFetching: false,
-    address: {
-        street: '',
-        city: '',
-        state: '',
-        zip: '',
+    job: {
+        id: '',
+        title: '',
+        description: '',
+        employerId: '',
+        address: {
+            street: '',
+            city: '',
+            state: '',
+            zipCode: '',
+        },
+        createdDate: null,
     },
-    createdDate: null,
     employer: {
         id: '',
         name: '',
@@ -24,36 +26,51 @@ const emptyJobPost: CurrentJobPost = {
             street: '',
             city: '',
             state: '',
-            zip: '',
+            zipCode: '',
         },
         linkedIn: null,
         facebook: null,
         logoImg: null,
         twitter: null,
         website: null,
+        jobs: null,
+        isFetching: false,
     },
 };
 const jobReducer = currentJobPostReducer;
 
-const mockJob: CurrentJobPost = {
-    createdDate: {
-        dayOfMonth: 0,
-        dayOfWeek: '',
-        dayOfYea: 0,
-        month: '',
-        year: 0,
-        monthValue: 0,
-        hour: 0,
-        minute: 0,
-        nano: 0,
-        second: 0,
-        chronology: {
-            id: '',
-            calendarType: ''
-        }
+const mockJob: JobPost = {
+    isFetching: false,
+    job: {
+        createdDate: {
+            dayOfMonth: 0,
+            dayOfWeek: '',
+            dayOfYea: 0,
+            month: '',
+            year: 0,
+            monthValue: 0,
+            hour: 0,
+            minute: 0,
+            nano: 0,
+            second: 0,
+            chronology: {
+                id: '',
+                calendarType: ''
+            }
+        },
+        id: '1234556',
+        title: 'mock jobPost title yo',
+        description: 'Mock Test Job',
+        address: {
+            street: '6092 jobPost mock street',
+            city: 'mock city jobPost',
+            state: 'mock state',
+            zipCode: '1234556',
+        },
+        employerId: 'employer1234',
     },
-    description: 'Mock Test Job',
     employer: {
+        isFetching: false,
         facebook: 'facebook.com',
         id: '1234345',
         linkedIn: 'linked.com',
@@ -61,23 +78,14 @@ const mockJob: CurrentJobPost = {
             street: '602 mock street',
             city: 'New York',
             state: 'mock state',
-            zip: '123456',
+            zipCode: '123456',
         },
         logoImg: null,
         name: 'mock employer',
         twitter: 'twitter.com',
         website: 'www.mock.com',
+        jobs: null,
     },
-    employerId: 'employer1234',
-    id: '1234556',
-    address: {
-        street: '6092 job mock street',
-        city: 'mock city job',
-        state: 'mock state',
-        zip: '1234556',
-    },
-    title: 'mock job title yo',
-    isFetching: false,
 };
 
 describe('CurrentJobPostReducer', () => {
@@ -93,15 +101,15 @@ describe('CurrentJobPostReducer', () => {
         expect(jobReducer(undefined, doneFetchingJobs())).eql({...emptyJobPost, isFetching: false});
     });
 
-    it('singleJobSuccess should return with a job that matches our mockJob', () => {
+    it('singleJobSuccess should return with a jobPost that matches our mockJob', () => {
         expect(jobReducer(undefined, singleJobSuccess(mockJob))).eql({...mockJob, isFetching: false});
     });
 
-    it('resetCurrentJob should reset job to a blank job', () => {
+    it('resetCurrentJob should reset jobPost to a blank jobPost', () => {
         expect(jobReducer(mockJob, resetCurrentJob())).eql({...emptyJobPost, isFetching: false});
     });
 
-    it('SET_CURRENT_JOB should return with a job that matches our mockJob', () => {
+    it('SET_CURRENT_JOB should return with a jobPost that matches our mockJob', () => {
         expect(jobReducer(undefined, setCurrentJob(mockJob))).eql({...mockJob, isFetching: false});
     });
 

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { Job } from '../types';
+import {JobPost} from '../types';
 import { ROOT_URL } from './index';
 
 export const GET_JOBS_SUCCESS = 'GET_JOBS_SUCCESS';
@@ -12,7 +12,7 @@ export const ADDING_APPLICANT_TO_JOB = 'ADDING_APPLICANT_TO_JOB';
 export const RESET_CURRENT_JOB = 'RESET_CURRENT_JOB';
 export const SINGLE_JOB_SUCCESS = 'SINGLE_JOB_SUCCESS';
 
-/*These are actions for the main page and job post page. Actions requiring CRUD job operations will be handled in the
+/*These are actions for the main page and jobPost post page. Actions requiring CRUD jobPost operations will be handled in the
 * employerDashboardAction file.*/
 
 export function getJobsSuccess(jobs) {
@@ -44,14 +44,14 @@ export function resetCurrentJob() {
   };
 }
 
-export function singleJobSuccess(data: Job) {
+export function singleJobSuccess(data: JobPost) {
   return {
     type: SINGLE_JOB_SUCCESS,
     payload: data,
   };
 }
 
-export function setCurrentJob(data: Job) {
+export function setCurrentJob(data: JobPost) {
   return {
     type: SET_CURRENT_JOB,
     payload: data,
@@ -108,10 +108,10 @@ export function addApplicantToJob(applicantInfo) {
 export function getJobById(id) {
   return (dispatch) => {
     dispatch(fetchingJobs());
-    console.log("Getting single job: ", id);
-    axios.get(`${ROOT_URL}${'api/v1/jobposts/'}${id}`)
+    console.log("Getting single jobPost: ", id);
+      axios.get(`${ROOT_URL}${'api/v1/jobposts/'}${id}`)
       .then((response) => {
-          console.log("and the response from job: ", response);
+          console.log("and the response from jobPost: ", response);
         dispatch(singleJobSuccess(response.data));
       })
       .catch((error) => {

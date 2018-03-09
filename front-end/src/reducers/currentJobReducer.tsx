@@ -3,20 +3,22 @@ import {
     RESET_CURRENT_JOB, SET_CURRENT_JOB,
     SINGLE_JOB_SUCCESS,
 } from '../actions/jobActions';
-import {CurrentJobPost} from '../types';
+import {JobPost} from '../types';
 
-const thisState: CurrentJobPost = {
-    id: '',
-    title: '',
-    description: '',
-    employerId: '',
+const thisState: JobPost = {
     isFetching: false,
-    createdDate: null,
-    address: {
-        street: '',
-        city: '',
-        state: '',
-        zip: '',
+    job: {
+        id: '',
+        title: '',
+        description: '',
+        employerId: '',
+        createdDate: null,
+        address: {
+            street: '',
+            city: '',
+            state: '',
+            zipCode: '',
+        },
     },
     employer: {
         id: '',
@@ -25,13 +27,15 @@ const thisState: CurrentJobPost = {
             street: '',
             city: '',
             state: '',
-            zip: '',
+            zipCode: '',
         },
         linkedIn: null,
         facebook: null,
         logoImg: null,
         twitter: null,
         website: null,
+        jobs: [],
+        isFetching: false,
     },
 };
 
@@ -49,13 +53,21 @@ function currentJobPostReducer(state = thisState, action) {
             };
         }
         case SET_CURRENT_JOB: {
+            const currentJob: JobPost = {
+                isFetching: false,
+                ...action.payload.data.job,
+                ...action.payload.data.employer,
+            };
+
+            console.log("sending:", currentJob);
+
             return {
                 ...state,
-                ...action.payload,
-                isFetching: false,
+                ...currentJob
             };
         }
         case SINGLE_JOB_SUCCESS:
+            console.log("single jobPost success:", action.payload);
             return {
                 ...state,
                 ...action.payload,

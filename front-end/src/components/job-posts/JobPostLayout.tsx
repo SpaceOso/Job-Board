@@ -1,13 +1,9 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-// import { CSSTransition } from 'react-transition-group';
-import { CurrentJobPost } from '../../types/index';
-import { default as SpinnerComponent } from '../spinners/spinnerComponent';
-import { TransitionGroup } from 'react-transition-group';
+import { JobPost } from '../../types';
 import Fade from '../animations/Fade';
 import JobPostEmployerInfoComponent from './employer-info/JobPostEmployerInfoComponent';
 import JobPostInfoComponent from './JobPostInfoComponent';
-import TestComponent from '../tests/TestComponent';
 
 // styles
 import './styles/JobPostContainer.scss';
@@ -20,12 +16,12 @@ interface JobPostProps extends RouteComponentProps<any> {
   loadJob: () => {};
   resetCurrentJob: () => {};
   addApplicantToJob: (applicantInfo) => {};
-  currentJobPost: CurrentJobPost;
+  currentJobPost: JobPost;
 }
 
 interface MyState {
   jobInfoLoaded: boolean;
-  currentJobPost: CurrentJobPost | null;
+  currentJobPost: JobPost | null;
   isApplying: boolean;
   didApply: boolean;
 }
@@ -83,7 +79,7 @@ class JobPostLayout extends React.Component<JobPostProps, MyState> {
   }
 
   handleJobApplicantInfo(data) {
-    console.log('in the job post layout about to add applicant:', data);
+    console.log('in the jobPost post layout about to add applicant:', data);
     this.props.addApplicantToJob(data);
   }
 
@@ -91,16 +87,16 @@ class JobPostLayout extends React.Component<JobPostProps, MyState> {
 
     const jobPostInfoComponent = (
       <JobPostInfoComponent
-        job={this.props.currentJobPost}
-        handleApplicationClick={this.handleApplication}
+          jobPost={this.props.currentJobPost}
+          handleApplicationClick={this.handleApplication}
       />
     );
 
     const applicationComponent = (
       <ApplicationComponent
-        employerId={this.props.currentJobPost.employerId}
-        jobId={this.props.currentJobPost.id}
-        jobTitle={this.props.currentJobPost.title}
+        employerId={this.props.currentJobPost.job.employerId}
+        jobId={this.props.currentJobPost.job.id}
+        jobTitle={this.props.currentJobPost.job.title}
         handleApplicantInfo={this.props.addApplicantToJob}
         cancelApplication={this.handleApplicationCancel}
         viewingApplication={this.state.isApplying}
@@ -115,7 +111,7 @@ class JobPostLayout extends React.Component<JobPostProps, MyState> {
         <Fade key={'post-container'} in={!this.props.currentJobPost.isFetching}>
           {jobPostInfoComponent}
         </Fade>
-        <JobPostEmployerInfoComponent isFetching={this.props.currentJobPost.isFetching} employer={this.props.currentJobPost.employer} loadJob={this.loadNewJob} currentJob={this.props.currentJobPost.id}/>
+        <JobPostEmployerInfoComponent isFetching={this.props.currentJobPost.isFetching} employer={this.props.currentJobPost.employer} loadJob={this.loadNewJob} currentJob={this.props.currentJobPost.job.id}/>
       </div>
     );
 

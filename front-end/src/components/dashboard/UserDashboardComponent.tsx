@@ -48,7 +48,7 @@ class UserDashboardComponent extends React.Component<Props, any> {
   }
 
   /**
-   *  This will handle sending the job post information to the back end.
+   *  This will handle sending the jobPost post information to the back end.
    */
   submitJobPost(jobPost) {
     this.props.saveJobPost(jobPost, this.props.user.id);

@@ -19,7 +19,7 @@ class JobPostUpdatesComponent extends React.Component<IProps, {}> {
   }
 
   handleJobClick(event) {
-    console.log('job has been clicked', event);
+    console.log('jobPost has been clicked', event);
   }
 
   createList() {
@@ -59,9 +59,9 @@ class JobPostUpdatesComponent extends React.Component<IProps, {}> {
 
   render() {
     return (
-      <div className={'job-post-updates-container'}>
+      <div className={'jobPost-post-updates-container'}>
         <h1>Job Post Updates</h1>
-        <div className={'job-post-updates'}>
+        <div className={'jobPost-post-updates'}>
           {this.createList()}
         </div>
       </div>

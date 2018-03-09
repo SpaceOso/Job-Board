@@ -11,10 +11,10 @@ export const EDITING_JOB_POST = 'EDITING_JOB_POST';
 /*What are some of the actions you expect the dashboard to require?
  * Get all jobs
  * Get all applicants
- * view job details
- * edit job details
- * delete job
- * view applicants per job
+ * view jobPost details
+ * edit jobPost details
+ * delete jobPost
+ * view applicants per jobPost
  * view applicant details*/
 
 export function fetchingThisEmployerInfo() {
@@ -41,7 +41,7 @@ export function getThisEmployerJobsSuccess(jobs) {
 export function editingJobPost() {
   return {
     type: EDITING_JOB_POST,
-    payload: 'editing job post',
+    payload: 'editing jobPost post',
   };
 }
 

@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { Job } from '../../../types/index';
+import { JobPost} from '../../../types';
 import SpinnerComponent from '../../spinners/spinnerComponent';
 import { default as JobListItemComponent } from './JobListItemComponent';
 
 export interface Props {
-  jobs: Job[];
+  jobs: JobPost[];
   returnJobList: () => void;
   getJobs: () => any;
   isFetching: false;
@@ -22,7 +22,7 @@ class JobListComponent extends React.Component<Props> {
       Object.keys(this.props.jobs).map((job) => {
         const currentJob = this.props.jobs[ job ];
         if (currentJob !== true) {
-          return <JobListItemComponent key={currentJob.id + 1} job={currentJob}/>;
+          return <JobListItemComponent key={currentJob.job.id + 1} jobPost={currentJob}/>;
         }
       })
     );

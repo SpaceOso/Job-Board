@@ -24,11 +24,11 @@ import UserDashboardComponent from './UserDashboardComponent';
  * Should we pull user info on load?
  * or should we check if the user has an employer?
  * I think you should check that THEN do a get request to get employer info
- * if employer property is not inside then show create/submit job buttons*/
+ * if employer property is not inside then show create/submit jobPost buttons*/
 
 /*What components are you going to need for the dashboard?
  * list of the latest applicants
- * possibly list of job posts with info like when it was posted, total applicant count
+ * possibly list of jobPost posts with info like when it was posted, total applicant count
  * an applicant at a glance component
  * a component to view the applicants resume on click*/
 

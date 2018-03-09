@@ -3,7 +3,7 @@ import chaiHttp = require('chai-http');
 import 'mocha';
 import * as app from '../../app';
 import {default as currentJobPostReducer} from '../reducers/currentJobReducer';
-import {Job} from '../types';
+import {Job, JobPost} from '../types';
 
 const should = chai.should();
 const expect = chai.expect;
@@ -39,49 +39,6 @@ const emptyJobPost = {
 };
 const jobReducer = currentJobPostReducer;
 
-const mockJob: Job = {
-    createdDate: {
-        dayOfMonth: 0,
-        dayOfWeek: '',
-        dayOfYea: 0,
-        month: '',
-        year: 0,
-        monthValue: 0,
-        hour: 0,
-        minute: 0,
-        nano: 0,
-        second: 0,
-        chronology: {
-            id: '',
-            calendarType: ''
-        }
-    },
-    description: 'Mock Test Job',
-    employer: {
-        facebook: 'facebook.com',
-        id: '1234345',
-        linkedIn: 'linked.com',
-        address: {
-            street: '602 mock street',
-            city: 'New York',
-            state: 'mock state',
-            zip: '123456',
-        },
-        logoImg: null,
-        name: 'mock employer',
-        twitter: 'twitter.com',
-        website: 'www.mock.com',
-    },
-    employerId: 'employer1234',
-    id: '1234556',
-    address: {
-        street: '6092 job mock street',
-        city: 'mock city job',
-        state: 'mock state',
-        zip: '1234556',
-    },
-    title: 'mock job title yo',
-};
 
 chai.use(chaiHttp);
 
@@ -108,7 +65,7 @@ describe('/api/v1/jobposts/', () => {
             });
     });
 
-    /* it('should GET a SINGLE job', (done) => {
+    /* it('should GET a SINGLE jobPost', (done) => {
        chai.request(url)
          .get('/api/v1/jobposts/12312312-1234-1234-1234-123412341234')
          .end((err, res) => {

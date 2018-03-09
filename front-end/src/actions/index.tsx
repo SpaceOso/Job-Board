@@ -5,7 +5,7 @@ declare let process: {
 };
 
 // TODO need to move these declerations from this file to either the types file or utils
-let URL_Test = 'https://mr-job-board.herokuapp.com/';
+let URL_Test = 'https://mr-jobPost-board.herokuapp.com/';
 
 if (process.env.NODE_ENV === 'development') {
     URL_Test = 'http://localhost:8080/';

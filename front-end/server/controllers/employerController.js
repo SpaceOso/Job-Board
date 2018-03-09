@@ -8,7 +8,7 @@ module.exports = {
 
     createJob(req, res) {
         "use strict";
-        console.log("in create job");
+        console.log("in create jobPost");
         console.log(req.body);
         return Job
             .create({
