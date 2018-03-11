@@ -21,6 +21,11 @@ public class EmployerController {
         return employerRepository.saveAndFlush(employer);
     }
 
+    @RequestMapping(value = "/private", method = RequestMethod.GET)
+    public String getBackEnd(){
+        return "you've made it to back end";
+    }
+
     public Employer getEmployerById(UUID id){
         return employerRepository.findOne(id);
     }
