@@ -7,6 +7,7 @@ import tech.spaceoso.jobboard.model.Employee;
 import tech.spaceoso.jobboard.repository.EmployeeRepository;
 import tech.spaceoso.jobboard.repository.EmployerRepository;
 
+import java.security.Principal;
 import java.util.UUID;
 
 @RestController
@@ -28,6 +29,12 @@ public class EmployeeController {
         employee.setPassword(bCryptPasswordEncoder.encode(employee.getPassword()));
 
         return employeeRepository.saveAndFlush(employee);
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @ResponseBody
+    public String currentUserName(Principal principal) {
+        return principal.getName();
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
