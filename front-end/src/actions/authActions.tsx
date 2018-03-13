@@ -217,13 +217,23 @@ export function logInUser(user) {
     email
     password
   };*/
+    console.log("logging in with this user:", user);
+    user.username = user.email;
   return (dispatch) => {
 
     dispatch(siteFetch());
     localStorage.clear();
+      const newUser = {
+          username: user.email,
+          password: user.password
+      }
 
-    axios.post(`${ROOT_URL}login`, user)
+    axios.post(`${ROOT_URL}login`, newUser,{
+      method: "post"
+    })
       .then((response) => {
+          console.log("the resposne that we are getting..", response);
+
         // save token to local storage
         const token = response.data.token;
         localStorage.setItem('tkn', token);

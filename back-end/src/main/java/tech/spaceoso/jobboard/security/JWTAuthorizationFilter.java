@@ -1,6 +1,8 @@
 package tech.spaceoso.jobboard.security;
 
 import io.jsonwebtoken.Jwts;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,8 +25,11 @@ import static tech.spaceoso.jobboard.security.SecurityConstants.SECRET;
  */
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter{
+    private final Logger log = LoggerFactory.getLogger(SimpleCORSFilter.class);
+
 
     public JWTAuthorizationFilter(AuthenticationManager authManager) {
+
         super(authManager);
     }
 
@@ -41,7 +46,10 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter{
 
         UsernamePasswordAuthenticationToken authentication = getAuthentication(req);
 
+        log.info("the auth:", authentication);
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        
         chain.doFilter(req, res);
     }
 
