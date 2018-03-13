@@ -18,7 +18,7 @@ public class EmployeeController {
 
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public EmployeeController(EmployerRepository employerRepository, BCryptPasswordEncoder bCryptPasswordEncoder){
+    public EmployeeController(EmployeeRepository employeeRepository, BCryptPasswordEncoder bCryptPasswordEncoder){
         this.employeeRepository = employeeRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
@@ -28,6 +28,11 @@ public class EmployeeController {
         employee.setPassword(bCryptPasswordEncoder.encode(employee.getPassword()));
 
         return employeeRepository.saveAndFlush(employee);
+    }
+
+    @PostMapping("/backend")
+    public String backEnd(){
+        return "You've made it to the backend";
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
