@@ -8,6 +8,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.web.DefaultRedirectStrategy;
+import org.springframework.security.web.RedirectStrategy;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import tech.spaceoso.jobboard.model.Employee;
 
@@ -32,6 +35,9 @@ import static tech.spaceoso.jobboard.security.SecurityConstants.SECRET;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private AuthenticationManager authenticationManager;
+
+    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+    SimpleUrlAuthenticationFailureHandler simpleUrlAuthenticationFailureHandler = new SimpleUrlAuthenticationFailureHandler();
 
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager){
         this.authenticationManager = authenticationManager;
@@ -70,6 +76,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+        redirectStrategy.sendRedirect(req, res, "/employee/getuser");
     }
 
 }

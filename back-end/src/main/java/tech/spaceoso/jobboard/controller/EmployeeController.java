@@ -31,13 +31,14 @@ public class EmployeeController {
         return employeeRepository.saveAndFlush(employee);
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/getuser", method = RequestMethod.GET)
     @ResponseBody
     public String currentUserName(Principal principal) {
         return principal.getName();
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    @ResponseBody
     public Employee getById(@PathVariable UUID id) {
         return employeeRepository.findById(id);
     }
