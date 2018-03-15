@@ -9,5 +9,5 @@ public interface EmployeeRepository extends JpaRepository<Employee, UUID> {
     //    Employee findByLastName(String lastName);
     Employee findByUsername(String username);
 
-    Employee findById(UUID id);
+//    Employee findById(UUID id);
 }

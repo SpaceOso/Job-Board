@@ -37,6 +37,6 @@ public class EmployeeController {
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public Employee getById(@PathVariable UUID id) {
-        return employeeRepository.findById(id);
+        return employeeRepository.getOne(id);
     }
 }

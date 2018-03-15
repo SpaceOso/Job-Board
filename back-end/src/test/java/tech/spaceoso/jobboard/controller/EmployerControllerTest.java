@@ -54,13 +54,13 @@ public class EmployerControllerTest {
         Employer mockEmployer = new Employer(id, new Date(), "Test Tube Employer", new Address("fake street", "fake city", "NY", 12345), "fake.png", "fake.com", "twitter", "facebook", "linkedin", jobList);
 
         // when we search the repo for id return mock mockEmployer
-        when(employerRepository.findOne(id)).thenReturn(mockEmployer);
+        when(employerRepository.getOne(id)).thenReturn(mockEmployer);
 
         // the controller calls the repo.findOne method the above snippet is what returns an mockEmployer to employer
         Employer employer = employerController.getEmployerById(id);
 
         // this checks that the actual method was called
-        verify(employerRepository).findOne(id);
+        verify(employerRepository).getOne(id);
 
         // compare
         assertThat(employer, is(mockEmployer));

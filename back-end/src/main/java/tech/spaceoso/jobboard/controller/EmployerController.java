@@ -27,6 +27,6 @@ public class EmployerController {
     }
 
     public Employer getEmployerById(UUID id){
-        return employerRepository.findOne(id);
+        return employerRepository.getOne(id);
     }
 }

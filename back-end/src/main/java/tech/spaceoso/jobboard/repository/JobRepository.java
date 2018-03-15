@@ -18,4 +18,6 @@ public interface JobRepository extends JpaRepository<Job, UUID> {
     // TODO create list of all jobs with applicants for dashboard which will be different because of auth
     List<Job> findJobsByEmployer_Id(UUID employerId);
 
+    Job getOne(UUID id);
+
 }

@@ -4,6 +4,7 @@ package tech.spaceoso.jobboard.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.spaceoso.jobboard.model.Employer;
@@ -54,7 +55,7 @@ public class JobController {
 
     @RequestMapping(value = "jobposts/{id}", method = RequestMethod.GET)
     public JobWrapper getJobById(@PathVariable UUID id){
-        Job job = jobRepository.findOne(id);
+        Job job = jobRepository.getOne(id);
         JobWrapper wrappedJob = new JobWrapper(job, job.getEmployer().getId());
         wrappedJob.setEmployer(job.getEmployer());
         return wrappedJob;

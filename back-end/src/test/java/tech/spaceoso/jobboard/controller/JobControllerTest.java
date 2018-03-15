@@ -44,11 +44,11 @@ public class JobControllerTest {
     public void testJobControllerGetById() {
         Job job = new Job(id, LocalDateTime.now(),"Fake job", new Address("6df02 fake street", "palmdaless", "NY", 12345), "Test tube job ", ObjectCreator.createEmployer());
 
-        when(jobRepository.findOne(id)).thenReturn(job);
+        when(jobRepository.getOne(id)).thenReturn(job);
 
         JobWrapper jobTest = jobController.getJobById(id);
 
-        verify(jobRepository).findOne(id);
+        verify(jobRepository).getOne(id);
 
         assertThat(jobTest, is(job));
     }
