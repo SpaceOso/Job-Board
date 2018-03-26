@@ -3,6 +3,8 @@ package tech.spaceoso.jobboard.security;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import jdk.nashorn.internal.parser.JSONParser;
+import org.springframework.boot.json.GsonJsonParser;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -12,7 +14,9 @@ import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.ui.ModelMap;
 import tech.spaceoso.jobboard.model.Employee;
+import tech.spaceoso.jobboard.repository.EmployeeRepository;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -35,12 +39,15 @@ import static tech.spaceoso.jobboard.security.SecurityConstants.SECRET;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private AuthenticationManager authenticationManager;
+    private EmployeeRepository employeeRepository;
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+
     SimpleUrlAuthenticationFailureHandler simpleUrlAuthenticationFailureHandler = new SimpleUrlAuthenticationFailureHandler();
 
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager){
+    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, EmployeeRepository employeeRepository){
         this.authenticationManager = authenticationManager;
+        this.employeeRepository = employeeRepository;
     }
 
     @Override
@@ -67,16 +74,30 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             HttpServletResponse res,
                                             FilterChain chain,
                                             Authentication auth) throws IOException, ServletException {
+        String userName = ((User)auth.getPrincipal()).getUsername();
+        Employee employee = employeeRepository.findByUsername(userName);
 
         String token = Jwts.builder()
+                .setSubject(userName)
+                .claim("pasword", employee.getPassword())
                 .setSubject(((User) auth.getPrincipal()).getUsername())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SECRET.getBytes())
                 .compact();
 
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonString = mapper.writeValueAsString(employee);
+        ModelMap model = new ModelMap("token", TOKEN_PREFIX + token);
+        String jsonToken = mapper.writeValueAsString(model);
+
+        res.getWriter().write(jsonString);
+//        res.getWriter().write(jsonToken);
+        res.getWriter().flush();
+        res.getWriter().close();
 
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
-        redirectStrategy.sendRedirect(req, res, "/employee/getuser");
+
+//        redirectStrategy.sendRedirect(req, res, "/employee/getuser");
     }
 
 }

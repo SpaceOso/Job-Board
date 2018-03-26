@@ -228,8 +228,23 @@ export function logInUser(user) {
           password: user.password
       }
 
+      let myHeaders = new Headers();
+      myHeaders.append("Content-Type", "json")
+
+      let myInit = {
+        method: "POST",
+      }
+
+      // fetch(`${ROOT_URL}login`, {
+      //   method: 'post',
+      //     headers: {
+      //     'Accept': 'application/json, text/plain/ */*',
+      //         'Content-Type': 'application/json'
+      //     },
+      //     body: JSON.stringify(newUser)
+      // })
     axios.post(`${ROOT_URL}login`, newUser,{
-      method: "post"
+        method: "post",
     })
       .then((response) => {
           console.log("the resposne that we are getting..", response);

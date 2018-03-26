@@ -16,19 +16,24 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import tech.spaceoso.jobboard.repository.EmployeeRepository;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsServiceImpl userDetailsService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private EmployeeRepository employeeRepository;
 
-    public WebSecurityConfig(UserDetailsServiceImpl userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder){
+    public WebSecurityConfig(UserDetailsServiceImpl userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder, EmployeeRepository employeeRepository) {
         this.userDetailsService = userDetailsService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.employeeRepository = employeeRepository;
 
     }
 
+    @Autowired
+    private RestAuthenticationSuccessHandler authenticationSuccessHandler;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -49,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .loginPage("/login")
 //                .permitAll()
 //                .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
+                .addFilter(new JWTAuthenticationFilter(authenticationManager(), employeeRepository))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()))
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -59,7 +64,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
+        auth
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(bCryptPasswordEncoder);
     }
 
     @Bean

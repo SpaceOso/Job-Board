@@ -14,6 +14,7 @@ import static java.util.Collections.emptyList;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+
     private EmployeeRepository employeeRepository;
 
     public UserDetailsServiceImpl(EmployeeRepository employeeRepository) {
@@ -21,7 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public User loadUserByUsername(String userEmail) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
         Employee employee = employeeRepository.findByUsername(userEmail);
         if (employee == null) {
             throw new UsernameNotFoundException(userEmail);
