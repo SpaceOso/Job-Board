@@ -1,10 +1,9 @@
 package tech.spaceoso.jobboard;
 
 import tech.spaceoso.jobboard.model.Address;
-import tech.spaceoso.jobboard.model.Employer;
+import tech.spaceoso.jobboard.model.Company;
 import tech.spaceoso.jobboard.model.Job;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,22 +36,22 @@ final public class ObjectCreator {
         return new Job(generateId(), LocalDateTime.now(), "Tester title", createAddress(), "fake description", null);
     }
 
-    static public Employer createEmployer() {
+    static public Company createCompany() {
 
-        // generate id for the employer
-        UUID employerId = UUID.randomUUID();
+        // generate id for the company
+        UUID companyId = UUID.randomUUID();
 
-        Employer employer = new Employer(employerId, new Date(), "Test Employer", createAddress(), "noLogo.png", "fake.com", "twitter.com", "facebook", "linkedin.com", null);
+        Company company = new Company(companyId, new Date(), "Test Company", createAddress(), "noLogo.png", "fake.com", "twitter.com", "facebook", "linkedin.com", null);
         // get list of jobs
         List<Job> jobs = createJobs(3);
-        // add this employerId to all jobs that we receive
+        // add this companyId to all jobs that we receive
         for (Job job : jobs) {
-            job.setEmployer(employer);
+            job.setCompany(company);
         }
 
-        // add this job list to the jobs section of the employer
-        employer.setJobs(jobs);
+        // add this job list to the jobs section of the company
+        company.setJobs(jobs);
 
-        return employer;
+        return company;
     }
 }

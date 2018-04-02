@@ -96,9 +96,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         JSONObject  userInfo = new JSONObject();
         JSONObject emloyerInfo = new JSONObject(employee);
         userInfo.put("token", TOKEN_PREFIX + token);
-        //TODO need to get employerId from employee
-        //TODO need to add employerId property to employee model
-        userInfo.put("employerId", JSONObject.NULL);
+        //TODO need to get companyId from employee
+        //TODO need to add companyId property to employee model
+        userInfo.put("companyId", JSONObject.NULL);
         userInfo.put("employee", emloyerInfo);
 
         res.getWriter().write(userInfo.toString());

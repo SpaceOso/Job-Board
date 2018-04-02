@@ -138,7 +138,7 @@ class UserRegisterComponent extends React.Component<MyProps, MyState> {
           {/*Once the user registers it should take them to the dashboard*/}
           {this.props.user.isAuth === true ? this.redirectToDashboard() : null}
           {/*This will display once we register our user*/}
-          {this.props.user.employerId !== null ? this.redirectToDashboard() : null}
+          {this.props.user.companyId !== null ? this.redirectToDashboard() : null}
         </div>
       </div>
     );

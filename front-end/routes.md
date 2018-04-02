@@ -14,6 +14,6 @@
     * like login in
     * and checking url ID with employee id
     
-#/employer
+#/company
 * should handle all job CRUD operations
 * should handle all applicant requests

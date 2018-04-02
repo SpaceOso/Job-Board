@@ -21,7 +21,7 @@ export interface Job {
   id: string;
   title: string;
   description: string;
-  employerId: string;
+    companyId: string;
   address: {
     street: string;
     city: string;
@@ -66,20 +66,20 @@ export interface AuthUser {
 
 /**
  * @type User
- * @property {(string | null)} employerId - This gets set after the user creates an employer account after log-in in
+ * @property {(string | null)} companyId - This gets set after the user creates an company account after log-in in
  * @property {(boolean | null)} isAuth - This gets set after the user logs in or we authenticate the JWT
  * @property {(boolean | null)} isFetching - We use this to display a spinner component if the user is waiting for async operation
  * @property {(string | null)} error - We currently are not using this //todo make sure if save to remove
  */
 export interface User extends AuthUser {
   id: string | null;
-  employerId: string | null;
+    companyId: string | null;
   isAuth: boolean;
   isFetching: boolean | null;
   error: string | null;
 }
 
-export interface Employer {
+export interface Company {
   id: string;
   name: string;
   address: {
@@ -93,14 +93,14 @@ export interface Employer {
   twitter: string;
   facebook: string;
   linkedIn: string;
-  jobs: EmployerJobView[] | null;
+  jobs: CompanyJobView[] | null;
   isFetching: boolean | null;
 }
 
 export interface JobPost {
   isFetching: boolean;
   job: Job;
-  employer: Employer;
+    company: Company;
 }
 
 export interface Applicants {
@@ -119,14 +119,14 @@ export interface Applicants {
   jobId: string;
 }
 
-export interface EmployerJobView extends Job {
+export interface CompanyJobView extends Job {
   Applicants: Applicants[];
 }
 
 export interface StoreState {
   jobs?: Job[];
   user?: User | null;
-  employer?: Employer | null;
+    company?: Company | null;
   currentJobPost?: JobPost;
   siteFetching?: SiteFetching;
   siteErrors?: SiteErrors;

@@ -12,7 +12,7 @@ var bodyParser = require('body-parser');
 const registerRoute = require('./server/routes/registerRoute');
 const loginRoute = require('./server/routes/loginRoute');
 const jobRoutes = require('./server/routes/jobRoutes');
-const employerRoutes = require('./server/routes/employerRoutes');
+const companyRoutes = require('./server/routes/companyRoutes');
 const applicantRoutes = require('./server/routes/applicantRoutes');
 
 //AUTHCHECK
@@ -73,7 +73,7 @@ app.use('/api/jobposts', jobRoutes);
 app.use('/api/register', registerRoute);
 app.use('/login', loginRoute);
 app.use('/api/createapplicant', applicantRoutes);
-app.use('/employer', authCheck, employerRoutes);
+app.use('/company', authCheck, companyRoutes);
 
 //todo need to remove this before shipping
 

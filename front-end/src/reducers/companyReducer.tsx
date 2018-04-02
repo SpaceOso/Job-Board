@@ -2,17 +2,17 @@ import {
   FETCHING_THIS_EMPLOYER_JOBS,
   GET_THIS_EMPLOYER_JOBS_SUCCESS,
   REGISTER_EMPLOYER_SUCCESS,
-} from '../actions/employerDashboardActions';
+} from '../actions/companyDashboardActions';
 
 import {
-  LOG_OUT_EMPLOYER,
-  SET_EMPLOYER,
+    LOG_OUT_COMPANY
+
 } from '../actions/authActions';
 
-import { EDITING_JOB_POST_SUCCESS, EMPLOYER_FETCHING, EMPLOYER_IDLE } from '../actions';
-import { Employer } from '../types';
+import {COMPANY_FETCHING, COMPANY_IDLE, EDITING_JOB_POST_SUCCESS, SET_COMPANY} from '../actions';
+import { Company } from '../types';
 
-const defaultState: Employer = {
+const defaultState: Company = {
   id: '',
   name: '',
   address: {
@@ -58,12 +58,12 @@ function employerReducer(state = defaultState, action): any {
         jobs: [...newArr],
         isFetching: false,
       };
-    case EMPLOYER_FETCHING:
+    case COMPANY_FETCHING:
       return {
         ...state,
         isFetching: true,
       };
-    case EMPLOYER_IDLE:
+    case COMPANY_IDLE:
       return {
         ...state,
         isFetching: false,
@@ -71,11 +71,11 @@ function employerReducer(state = defaultState, action): any {
     case REGISTER_EMPLOYER_SUCCESS:
       // will set employer after we register in the compRegisterComponent
       return state;
-    case LOG_OUT_EMPLOYER:
+    case LOG_OUT_COMPANY:
       return {
         ...defaultState,
       };
-    case SET_EMPLOYER:
+    case SET_COMPANY:
       return {
         ...state,
         ...action.payload,

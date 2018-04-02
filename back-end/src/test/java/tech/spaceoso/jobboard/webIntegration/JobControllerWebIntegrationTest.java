@@ -48,7 +48,7 @@ public class JobControllerWebIntegrationTest {
         assertThat(newJobs, everyItem(isA(Job.class)));
         // check that every address object inside the Job is an Address
         assertThat(newJobs, everyItem(Matchers.<Job>hasProperty("address", isA(Address.class))));
-        // TODO need to implement a check for an employer
+        // TODO need to implement a check for an company
 
         assertThat(newJobs, everyItem(Matchers.<Job>hasProperty("title", isA(String.class))));
         assertThat(newJobs, everyItem(Matchers.<Job>hasProperty("id", isA(UUID.class))));

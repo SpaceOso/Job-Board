@@ -17,7 +17,7 @@ const defaultState: User = {
   lastName: '',
   email: '',
   password: '',
-  employerId: null,
+  companyId: null,
   isAuth: false,
   isFetching: false,
   error: null,

@@ -12,7 +12,7 @@ const emptyJobPost = {
     id: '',
     title: '',
     description: '',
-    employerId: '',
+    companyId: '',
     isFetching: false,
     createdAt: '',
     location: {
@@ -21,7 +21,7 @@ const emptyJobPost = {
         state: '',
         zip: '',
     },
-    Employer: {
+    company: {
         id: '',
         name: '',
         location: {
@@ -43,8 +43,8 @@ const jobReducer = currentJobPostReducer;
 chai.use(chaiHttp);
 
 const url = 'http://localhost:4200';
-const jobKeys = ['id', 'title', 'location', 'description', 'createdAt', 'updatedAt', 'employerId', 'Employer'];
-export const employerKeys = ['id', 'name', 'location', 'logoImg', 'website', 'twitter', 'facebook', 'linkedIn', 'createdAt', 'updatedAt'];
+const jobKeys = ['id', 'title', 'location', 'description', 'createdAt', 'updatedAt', 'companyId', 'company'];
+export const companyKeys = ['id', 'name', 'location', 'logoImg', 'website', 'twitter', 'facebook', 'linkedIn', 'createdAt', 'updatedAt'];
 
 describe('/api/v1/jobposts/', () => {
 
@@ -58,7 +58,7 @@ describe('/api/v1/jobposts/', () => {
                 if (res.body.length > 0) {
                     res.body.map((job) => {
                         expect(job).to.have.all.keys(jobKeys);
-                        expect(job.Employer).to.have.all.keys(employerKeys);
+                        expect(job.company).to.have.all.keys(companyKeys);
                     });
                 }
                 done();

@@ -16,7 +16,7 @@ public interface JobRepository extends JpaRepository<Job, UUID> {
     List<Job> findAllByOrderByCreatedDateDesc();
 
     // TODO create list of all jobs with applicants for dashboard which will be different because of auth
-    List<Job> findJobsByEmployer_Id(UUID employerId);
+    List<Job> findJobsByCompany_Id(UUID companyId);
 
     Job getOne(UUID id);
 

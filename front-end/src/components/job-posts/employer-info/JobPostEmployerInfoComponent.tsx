@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Employer } from '../../../types/index';
+import { Company } from '../../../types/index';
 import { IMG_URL, LOCAL_URL } from '../../../utils/utils';
 import { default as Fade } from '../../animations/Fade';
 import OtherJobsComponent from './OtherJobsComponent';
@@ -9,11 +9,11 @@ import SocialMediaComponent from './SocialMediaComponent';
 /**
  * Styles
  */
-import '../styles/JobPostEmployerInfo.scss';
+import '../styles/JobPostCompanyInfo.scss';
 
 interface MyProps {
   isFetching: boolean;
-  employer: any;
+    company: any;
   loadJob?: (arg: any) => (any);
   currentJob?: string;
 }

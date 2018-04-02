@@ -4,7 +4,7 @@ import { default as SpinnerComponent } from '../../spinners/spinnerComponent';
 import ApplicantInfoComponent from './applicant-info/ApplicantInfoComponent';
 
 import { connect } from 'react-redux';
-import { saveApplicantStatus } from '../../../actions/employerDashboardActions';
+import { saveApplicantStatus } from '../../../actions/companyDashboardActions';
 import './ApplicantViewContainer.scss';
 
 interface MyProps {

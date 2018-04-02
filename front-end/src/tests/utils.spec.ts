@@ -15,7 +15,7 @@ export const emptyJobPost: JobPost = {
         id: '',
         title: '',
         description: '',
-        employerId: '',
+        companyId: '',
         createdDate: null,
         address: {
             street: '',
@@ -24,7 +24,7 @@ export const emptyJobPost: JobPost = {
             zipCode: '',
         },
     },
-    employer: {
+    company: {
         id: '',
         name: '',
         address: {
@@ -71,9 +71,9 @@ export const mockJob: JobPost = {
             state: 'mock state',
             zipCode: '1234556',
         },
-        employerId: 'employer1234',
+        companyId: 'company1234',
     },
-    employer: {
+    company: {
         isFetching: false,
         facebook: 'facebook.com',
         id: '1234345',
@@ -85,7 +85,7 @@ export const mockJob: JobPost = {
             zipCode: '123456',
         },
         logoImg: null,
-        name: 'mock employer',
+        name: 'mock company',
         twitter: 'twitter.com',
         website: 'www.mock.com',
         jobs: null,

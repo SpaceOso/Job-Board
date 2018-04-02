@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { ADD_LOGIN_ERROR, CLEAR_ALL_ERRORS, REMOVE_LOGIN_ERROR, ROOT_URL, SITE_IDLE, SITE_IS_FETCHING } from './index';
 
-import { Employer, User } from '../types';
+import { Company, User } from '../types';
 import { removeAuth, setAuth } from '../utils/utils';
 
 export const REGISTER_USER = 'REGISTER_USER';
@@ -15,8 +15,8 @@ export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
 export const LOGIN_USER_ERROR = 'LOGIN_USER_ERROR';
 
 export const SET_USER = 'SET_USER';
-export const SET_EMPLOYER = 'SET_EMPLOYER';
-export const LOG_OUT_EMPLOYER = 'LOG_OUT_EMPLOYER';
+export const SET_COMPANY = 'SET_COMPANY';
+export const LOG_OUT_COMPANY = 'LOG_OUT_COMPANY';
 
 export const LOG_OUT_USER = 'LOG_OUT_USER';
 
@@ -97,10 +97,10 @@ export function registerUser(userObject) {
 // =============================
 // CLEAR
 // =============================
-export function clearEmployer() {
+export function clearCompany() {
   return {
-    type: LOG_OUT_EMPLOYER,
-    payload: 'log out employer',
+    type: LOG_OUT_COMPANY,
+    payload: 'log out company',
   };
 }
 
@@ -118,7 +118,7 @@ export function logOutUser() {
   removeAuth();
 
   return (dispatch) => {
-    dispatch(clearEmployer());
+    dispatch(clearCompany());
     dispatch(clearUser());
     dispatch(setSiteIdle());
   };
@@ -127,10 +127,10 @@ export function logOutUser() {
 // =============================
 // SETTING EMPLOYER
 // =============================
-export function setEmployer(employer: Employer) {
+export function setCompany(company: Company) {
   return {
-    type: SET_EMPLOYER,
-    payload: employer,
+    type: SET_COMPANY,
+    payload: company,
   };
 }
 
@@ -263,10 +263,10 @@ export function logInUser(user) {
   };
 }
 
-export function setEmployerAndUser(employer, user) {
+export function setEmployerAndUser(company, user) {
   return (dispatch) => {
     dispatch(removeLogInError());
-    dispatch(setEmployer(employer));
+    dispatch(setCompany(company));
     dispatch(logInUserSuccess(user));
     dispatch(setSiteIdle());
   };

@@ -17,7 +17,7 @@ function jobReducer(state: StoreState, action) {
                 let currentJob: JobPost = {
                     isFetching: false,
                     job: {...job.job},
-                    employer: {...job.employer}
+                    company: {...job.company}
                 };
 
                 newJobs[currentJob.job.id] = {...currentJob};

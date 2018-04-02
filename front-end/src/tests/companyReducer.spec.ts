@@ -1,10 +1,10 @@
 import {expect} from 'chai';
 import 'mocha';
-import employerReducer from '../reducers/employerReducer';
-import {Employer} from '../types';
+import companyReducer from '../reducers/companyReducer';
+import {Company} from '../types';
 
 
-const mockEmployer: Employer = {
+const mockCompany: Company = {
     id: '',
     name: '',
     address: {
@@ -22,8 +22,8 @@ const mockEmployer: Employer = {
     isFetching: false,
 };
 
-describe('Employer Reducer', () => {
-    it('should RETURN an empty employer', () => {
-        expect(employerReducer(undefined, {})).eql(mockEmployer);
+describe('company Reducer', () => {
+    it('should RETURN an empty company', () => {
+        expect(companyReducer(undefined, {})).eql(mockCompany);
     });
 });

@@ -4,10 +4,9 @@ package tech.spaceoso.jobboard.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import tech.spaceoso.jobboard.model.Employer;
+import tech.spaceoso.jobboard.model.Company;
 import tech.spaceoso.jobboard.model.Job;
 import tech.spaceoso.jobboard.model.JobWrapper;
 import tech.spaceoso.jobboard.repository.JobRepository;
@@ -39,8 +38,8 @@ public class JobController {
         List<JobWrapper> wrappedJobs = new ArrayList<JobWrapper>();
 
         for(Job job : jobRepository.findAllByOrderByCreatedDateDesc()){
-            JobWrapper newJob = new JobWrapper(job, job.getEmployer().getId());
-            newJob.setEmployer(job.getEmployer());
+            JobWrapper newJob = new JobWrapper(job, job.getCompany().getId());
+            newJob.setCompany(job.getCompany());
             wrappedJobs.add(newJob);
         }
         return wrappedJobs;
@@ -56,32 +55,32 @@ public class JobController {
     @RequestMapping(value = "jobposts/{id}", method = RequestMethod.GET)
     public JobWrapper getJobById(@PathVariable UUID id){
         Job job = jobRepository.getOne(id);
-        JobWrapper wrappedJob = new JobWrapper(job, job.getEmployer().getId());
-        wrappedJob.setEmployer(job.getEmployer());
+        JobWrapper wrappedJob = new JobWrapper(job, job.getCompany().getId());
+        wrappedJob.setCompany(job.getCompany());
         return wrappedJob;
     }
 
 
-    @RequestMapping(value = "jobposts/employer/{employerId}", method = RequestMethod.GET)
-    public List<Job> getJobByEmployer(@PathVariable UUID employerId){
-        logger.info("geting all employer jobs");
-        return jobRepository.findJobsByEmployer_Id(employerId);
+    @RequestMapping(value = "jobposts/company/{companyId}", method = RequestMethod.GET)
+    public List<Job> getJobByCompany(@PathVariable UUID companyId){
+        logger.info("geting all company jobs");
+        return jobRepository.findJobsByCompany_Id(companyId);
     }
 
     @RequestMapping(value = "jobposts/create", method = RequestMethod.POST)
     public JobWrapper create(@RequestBody JobWrapper jobWrapper){
         logger.info("creating a new job with:", jobWrapper);
-        // get employer reference from employerId sent in JSON
-        Employer emp = em.getReference(Employer.class, jobWrapper.getEmployerId());
+        // get company reference from companyId sent in JSON
+        Company emp = em.getReference(Company.class, jobWrapper.getCompanyId());
 
         // create and save a default job
         Job newJob = jobWrapper.getJob();
-        newJob.setEmployer(emp);
+        newJob.setCompany(emp);
         jobRepository.saveAndFlush(newJob);
 
-        // send back the new job with employer info and all other jobs
+        // send back the new job with company info and all other jobs
         JobWrapper wrappedJob = new JobWrapper(newJob, emp.getId());
-        wrappedJob.setEmployer(emp);
+        wrappedJob.setCompany(emp);
 
         return wrappedJob;
     }

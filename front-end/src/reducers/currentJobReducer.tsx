@@ -11,7 +11,7 @@ const thisState: JobPost = {
         id: '',
         title: '',
         description: '',
-        employerId: '',
+        companyId: '',
         createdDate: null,
         address: {
             street: '',
@@ -20,7 +20,7 @@ const thisState: JobPost = {
             zipCode: '',
         },
     },
-    employer: {
+    company: {
         id: '',
         name: '',
         address: {

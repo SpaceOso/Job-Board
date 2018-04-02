@@ -42,7 +42,7 @@ public class JobControllerTest {
 
     @Test
     public void testJobControllerGetById() {
-        Job job = new Job(id, LocalDateTime.now(),"Fake job", new Address("6df02 fake street", "palmdaless", "NY", 12345), "Test tube job ", ObjectCreator.createEmployer());
+        Job job = new Job(id, LocalDateTime.now(),"Fake job", new Address("6df02 fake street", "palmdaless", "NY", 12345), "Test tube job ", ObjectCreator.createCompany());
 
         when(jobRepository.getOne(id)).thenReturn(job);
 
@@ -68,7 +68,7 @@ public class JobControllerTest {
 
     @Test
     public void testJobCreate() {
-        UUID employerId = UUID.randomUUID();
+        UUID companyId = UUID.randomUUID();
 
         //TODO create test
     }

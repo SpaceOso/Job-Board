@@ -4,24 +4,24 @@ import java.util.UUID;
 
 public class JobWrapper {
     private Job job;
-    private UUID employerId;
-    private Employer employer;
+    private UUID companyId;
+    private Company company;
 
     public JobWrapper(){
 
     }
 
-    public JobWrapper(Job job, UUID employerId) {
+    public JobWrapper(Job job, UUID companyId) {
         this.job = job;
-        this.employerId = employerId;
+        this.companyId = companyId;
     }
 
-    public void setEmployer(Employer employer){
-        this.employer = employer;
+    public void setCompany(Company company){
+        this.company = company;
     }
 
-    public Employer getEmployer(){
-        return employer;
+    public Company getCompany(){
+        return company;
     }
 
     public Job getJob() {
@@ -32,12 +32,12 @@ public class JobWrapper {
         this.job = job;
     }
 
-    public UUID getEmployerId() {
-        return employerId;
+    public UUID getCompanyId() {
+        return companyId;
     }
 
-    public void setEmployerId(UUID employerId) {
-        this.employerId = employerId;
+    public void setCompanyId(UUID companyId) {
+        this.companyId = companyId;
     }
 
 

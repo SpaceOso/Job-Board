@@ -1,4 +1,4 @@
-what data does the employer need when login in?
+what data does the company need when login in?
 Total job posts
     applicant count per job post
     status of jobs
@@ -6,7 +6,7 @@ Total job posts
 applicants
     status of applicants
 
-how should the employer know the status of the jobs?
+how should the company know the status of the jobs?
 Set a status column on each job? or a second table?
 
 job =
@@ -41,7 +41,7 @@ jbUser = {
     password
 }
 
-employer = {
+company = {
     id,
     name,
     address{

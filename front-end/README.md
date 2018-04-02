@@ -6,7 +6,7 @@ This project is still farm from finished but if you would like to view the curre
 
 http://mr-job-board.herokuapp.com/
 
-To view the employer dashboard you can either create a new account or use these credentials:
+To view the company dashboard you can either create a new account or use these credentials:
 
 ````
 email: test@gmail.com

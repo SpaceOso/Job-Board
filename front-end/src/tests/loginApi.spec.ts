@@ -2,7 +2,7 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 import 'mocha';
 import * as app from '../../app';
-import { employerKeys } from './jobApi.spec';
+import { companyKeys } from './jobApi.spec';
 
 const should = chai.should();
 const expect = chai.expect;
@@ -18,7 +18,7 @@ describe('/api/login/', () => {
       email: 'testuser@gmail.com',
       password: '123',
     };
-    const userKeys = ['id', 'firstName', 'lastName', 'email', 'employerId'];
+    const userKeys = ['id', 'firstName', 'lastName', 'email', 'companyId'];
 
     chai.request(url)
       .post('/login')
@@ -26,8 +26,8 @@ describe('/api/login/', () => {
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('object');
-        expect(res.body).to.have.all.keys(['user', 'employer', 'token']);
-        expect(res.body.employer).to.have.all.keys(employerKeys);
+        expect(res.body).to.have.all.keys(['user', 'company', 'token']);
+        expect(res.body.company).to.have.all.keys(companyKeys);
         expect(res.body.user).to.have.all.keys(userKeys);
         expect(res.body.token).to.be.a('string');
         // TODO need to test user that does not have an employer saved
@@ -56,9 +56,9 @@ describe('/api/login/', () => {
 
   });
 
-  it('should POST with user who does not have an Employer registered', (done) => {
+  it('should POST with user who does not have an company registered', (done) => {
     const userDetails = {
-      email: 'noemployer@gmail.com',
+      email: 'nocompany@gmail.com',
       password: '123',
     };
     chai.request(url)
@@ -67,7 +67,7 @@ describe('/api/login/', () => {
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('object');
-        expect(res.body).to.have.all.keys(['user', 'employer', 'token']);
+        expect(res.body).to.have.all.keys(['user', 'company', 'token']);
         done();
       });
   });

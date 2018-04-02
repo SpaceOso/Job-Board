@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import jobs from './jobReducer';
 import currentJobPost from './currentJobReducer';
 import user from './userReducer';
-import employer from './employerReducer';
+import employer from './companyReducer';
 import siteFetching from './siteFetchingReducer';
 import siteErrors from './siteErrorReducer';
 

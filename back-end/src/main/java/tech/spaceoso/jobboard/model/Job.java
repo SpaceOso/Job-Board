@@ -2,14 +2,11 @@ package tech.spaceoso.jobboard.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 
@@ -33,20 +30,20 @@ public class Job {
     private Address address;
     private String description;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "employer_id")
+    @JoinColumn(name = "company_id")
     @JsonBackReference
-    private Employer employer;
+    private Company company;
     public Job() {
 
     }
 
-    public Job(UUID id, LocalDateTime createdDate, String title, Address address, String description, Employer employer) {
+    public Job(UUID id, LocalDateTime createdDate, String title, Address address, String description, Company company) {
         this.id = id;
         this.createdDate = createdDate;
         this.title = title;
         this.address = address;
         this.description = description;
-        this.employer = employer;
+        this.company = company;
     }
 
     public UUID getId() {
@@ -97,12 +94,12 @@ public class Job {
         this.description = description;
     }
 
-    public Employer getEmployer() {
-        return employer;
+    public Company getCompany() {
+        return company;
     }
 
-    public void setEmployer(Employer employer) {
-        this.employer = employer;
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     @Override
@@ -114,7 +111,7 @@ public class Job {
                 ", title='" + title + '\'' +
                 ", address=" + address +
                 ", description='" + description + '\'' +
-                ", employer=" + employer.getId() +
+                ", company=" + company.getId() +
                 '}';
     }
 }

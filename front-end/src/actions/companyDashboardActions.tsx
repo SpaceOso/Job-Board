@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { setAuth } from '../utils/utils';
 import { setEmployerAndUser, setSiteIdle, siteFetch } from './authActions';
-import { EDITING_JOB_POST_SUCCESS, EMPLOYER_FETCHING, EMPLOYER_IDLE, ROOT_URL } from './index';
+import {COMPANY_FETCHING, COMPANY_IDLE, EDITING_JOB_POST_SUCCESS, ROOT_URL} from './index';
 
 export const GET_THIS_EMPLOYER_JOBS_SUCCESS = 'GET_THIS_EMPLOYER_JOBS_SUCCESS';
 export const FETCHING_THIS_EMPLOYER_JOBS = 'FETCHING_THIS_EMPLOYER_JOBS';
@@ -48,12 +48,12 @@ export function editingJobPost() {
 export function fetchAllEmployerJobModels(employerId) {
   return (dispatch) => {
     dispatch(siteFetch());
-    dispatch(employerFetching());
+    dispatch(companyFetching());
 
     axios.get(`${ROOT_URL}employer/${employerId}/get-jobs`)
       .then((jobs) => {
         dispatch(getThisEmployerJobsSuccess(jobs));
-        dispatch(employerIdle());
+        dispatch(companyIdle());
       });
   };
 }
@@ -65,16 +65,16 @@ export function editingJobPostSuccess(jobPost) {
   };
 }
 
-export function employerFetching() {
+export function companyFetching() {
   return {
-    type: EMPLOYER_FETCHING,
+    type: COMPANY_FETCHING,
     payload: 'Employer Fetching',
   };
 }
 
-export function employerIdle() {
+export function companyIdle() {
   return {
-    type: EMPLOYER_IDLE,
+    type: COMPANY_IDLE,
     payload: 'Employer Idle',
   };
 }
@@ -88,7 +88,7 @@ export function employerIdle() {
 export function saveJobPost(jobPostInfo, userId) {
   return (dispatch) => {
 
-    dispatch(employerFetching());
+    dispatch(companyFetching());
 
     axios.post(`${ROOT_URL}employer/createJob`, jobPostInfo)
       .then((response) => {

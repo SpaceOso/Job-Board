@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import {
   fetchAllEmployerJobModels, saveJobPost,
   submitEmployerRegistration,
-} from '../../actions/employerDashboardActions';
+} from '../../actions/companyDashboardActions';
 
 // styles
 import './UserDashboardContainer.scss';

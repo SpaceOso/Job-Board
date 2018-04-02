@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Employer {
+public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @org.hibernate.annotations.Type(type = "org.hibernate.type.PostgresUUIDType")
@@ -33,15 +33,15 @@ public class Employer {
     private String twitter;
     private String facebook;
     private String linkedIn;
-    @OneToMany(mappedBy = "employer", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @JsonManagedReference
     private List<Job> jobs;
 
-    public Employer() {
+    public Company() {
 
     }
 
-    public Employer(UUID id, Date date, String name, Address address, String logoImg, String website, String twitter, String facebook, String linkedIn, List<Job> jobs) {
+    public Company(UUID id, Date date, String name, Address address, String logoImg, String website, String twitter, String facebook, String linkedIn, List<Job> jobs) {
         this.id = id;
         this.createdDate = date;
         this.name = name;
@@ -144,7 +144,7 @@ public class Employer {
 
     @Override
     public String toString() {
-        return "Employer{" +
+        return "Company{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", address=" + address +
