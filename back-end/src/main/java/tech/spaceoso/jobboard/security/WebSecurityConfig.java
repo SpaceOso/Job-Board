@@ -35,6 +35,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private RestAuthenticationSuccessHandler authenticationSuccessHandler;
 
+    @Autowired
+    private CustomAuthenticationEntryPoint unauthorizedHandler;
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.debug(true);
@@ -46,6 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and()
                 .csrf().disable()
+
                 .authorizeRequests()
                 .antMatchers("/", "/home", "/api/v1/jobposts/**", "/employee/**").permitAll()
                 .anyRequest().authenticated()
@@ -56,6 +60,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager(), employeeRepository))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()))
+                .exceptionHandling()
+                .authenticationEntryPoint(unauthorizedHandler)
+                .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 //                .logout()

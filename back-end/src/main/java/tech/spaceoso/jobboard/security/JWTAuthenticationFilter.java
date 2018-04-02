@@ -1,9 +1,12 @@
 package tech.spaceoso.jobboard.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.google.gson.Gson;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import jdk.nashorn.internal.parser.JSONParser;
+import org.json.JSONObject;
 import org.springframework.boot.json.GsonJsonParser;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,8 +26,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 
 import static tech.spaceoso.jobboard.security.SecurityConstants.EXPIRATION_TIME;
 import static tech.spaceoso.jobboard.security.SecurityConstants.HEADER_STRING;
@@ -41,9 +43,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private AuthenticationManager authenticationManager;
     private EmployeeRepository employeeRepository;
 
-    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-
-    SimpleUrlAuthenticationFailureHandler simpleUrlAuthenticationFailureHandler = new SimpleUrlAuthenticationFailureHandler();
 
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager, EmployeeRepository employeeRepository){
         this.authenticationManager = authenticationManager;
@@ -74,30 +73,41 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             HttpServletResponse res,
                                             FilterChain chain,
                                             Authentication auth) throws IOException, ServletException {
+
         String userName = ((User)auth.getPrincipal()).getUsername();
         Employee employee = employeeRepository.findByUsername(userName);
 
         String token = Jwts.builder()
                 .setSubject(userName)
-                .claim("pasword", employee.getPassword())
+//                .claim("pasword", employee.getPassword())
                 .setSubject(((User) auth.getPrincipal()).getUsername())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SECRET.getBytes())
                 .compact();
 
         ObjectMapper mapper = new ObjectMapper();
+        Gson gson = new Gson();
+
         String jsonString = mapper.writeValueAsString(employee);
         ModelMap model = new ModelMap("token", TOKEN_PREFIX + token);
         String jsonToken = mapper.writeValueAsString(model);
 
-        res.getWriter().write(jsonString);
-//        res.getWriter().write(jsonToken);
+
+        JSONObject  userInfo = new JSONObject();
+        JSONObject emloyerInfo = new JSONObject(employee);
+        userInfo.put("token", TOKEN_PREFIX + token);
+        //TODO need to get employerId from employee
+        //TODO need to add employerId property to employee model
+        userInfo.put("employerId", JSONObject.NULL);
+        userInfo.put("employee", emloyerInfo);
+
+        res.getWriter().write(userInfo.toString());
         res.getWriter().flush();
         res.getWriter().close();
 
+
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
 
-//        redirectStrategy.sendRedirect(req, res, "/employee/getuser");
     }
 
 }

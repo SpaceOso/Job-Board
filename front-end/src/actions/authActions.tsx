@@ -231,18 +231,7 @@ export function logInUser(user) {
       let myHeaders = new Headers();
       myHeaders.append("Content-Type", "json")
 
-      let myInit = {
-        method: "POST",
-      }
 
-      // fetch(`${ROOT_URL}login`, {
-      //   method: 'post',
-      //     headers: {
-      //     'Accept': 'application/json, text/plain/ */*',
-      //         'Content-Type': 'application/json'
-      //     },
-      //     body: JSON.stringify(newUser)
-      // })
     axios.post(`${ROOT_URL}login`, newUser,{
         method: "post",
     })
@@ -256,15 +245,17 @@ export function logInUser(user) {
         // set the token as part of our request header
         setAuth(token);
 
-        if (response.data.user.employerId !== null) {
+        if (response.data.employee.employerId !== null) {
           dispatch(setEmployerAndUser(response.data.employer, response.data.user));
         } else {
+            console.log("it did equal null now where here");
           dispatch(logInUserSuccess(response.data.user));
           dispatch(setSiteIdle());
         }
 
       })
       .catch((error) => {
+          console.log("we are not finding the user:", error);
         dispatch(setSiteIdle());
         dispatch(logInUserError(error.response.data.message));
 
