@@ -3,7 +3,7 @@ import * as React from 'react';
 import * as bcrypt from 'bcryptjs';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
-import { SiteErrors, SiteFetching, User } from '../../types';
+import { SiteErrors, SiteFetching, Employee } from '../../types';
 import SimpleForm from '../simple-form/SimpleForm';
 import { default as SpinnerComponent } from '../spinners/spinnerComponent';
 
@@ -13,15 +13,15 @@ import { default as SpinnerComponent } from '../spinners/spinnerComponent';
 import './styles/LoginComponent.scss';
 
 interface MyProps {
-  user: User;
-  logInUser: (userInfo) => {};
+    employee: Employee;
+  logInEmployee: (employeeInfo) => {};
   siteFetching: SiteFetching;
   siteErrors: SiteErrors;
 }
 
 interface MyState {
-  userEmail: string;
-  userPassword: string;
+    employeeEmail: string;
+    employeePassword: string;
   redirect: string;
   isFetching: boolean;
   errors: object;
@@ -49,8 +49,8 @@ class LogInComponent extends React.Component<MyProps, MyState> {
     super(props);
 
     this.state = {
-      userEmail: '',
-      userPassword: '',
+        employeeEmail: '',
+        employeePassword: '',
       redirect: '',
       isFetching: false,
       errors: {},
@@ -69,22 +69,22 @@ class LogInComponent extends React.Component<MyProps, MyState> {
     this.setState(keyObject);
   }
 
-  handleSubmit(userObject) {
+  handleSubmit(employeeObject) {
 
-    const user = {
-      email: userObject.email,
-      password: userObject.password,
+    const employee = {
+      email: employeeObject.email,
+      password: employeeObject.password,
     };
 
-    this.props.logInUser(user);
+    this.props.logInEmployee(employee);
   }
 
   handleLoginRoute() {
-    if (this.props.user.isAuth) {
-      if (this.props.user.companyId !== null) {
-        return <Redirect to={`${'/user/dashboard/'}${this.props.user.id}/home`}/>;
+    if (this.props.employee.isAuth) {
+      if (this.props.employee.companyId !== null) {
+        return <Redirect to={`${'/employee/dashboard/'}${this.props.employee.id}/home`}/>;
       }
-      return <Redirect to={`${'/user/dashboard/'}${this.props.user.id}/register`}/>;
+      return <Redirect to={`${'/employee/dashboard/'}${this.props.employee.id}/register`}/>;
     }
 
     return null;
@@ -96,7 +96,7 @@ class LogInComponent extends React.Component<MyProps, MyState> {
 
         <SpinnerComponent/> :
         (
-          <div className="employer-register-Component">
+          <div className="company-register-Component">
             {this.handleLoginRoute()}
             <h3>{this.props.siteErrors.login !== null ? this.props.siteErrors.login.message : null}</h3>
             <div>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Applicants, Employer, SiteFetching, StoreState } from '../../../types/index';
+import { Applicants, Company, SiteFetching, StoreState } from '../../../types/index';
 import { default as SpinnerComponent } from '../../spinners/spinnerComponent';
 import ApplicantInfoComponent from './applicant-info/ApplicantInfoComponent';
 
@@ -9,7 +9,7 @@ import './ApplicantViewContainer.scss';
 
 interface MyProps {
   applicant: Applicants | null;
-  employer: Employer;
+    company: Company;
   siteFetching: SiteFetching;
   updateApplicantInfo: (applicantInfo) => {};
 }
@@ -22,9 +22,9 @@ const applicantViewContainer: React.SFC<MyProps> = (props) => {
   );
 };
 
-function mapStateToProps({ employer, siteFetching }: StoreState) {
+function mapStateToProps({ company, siteFetching }: StoreState) {
   return {
-    employer,
+      company,
     siteFetching,
   };
 }

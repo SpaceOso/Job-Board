@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { EmployerJobView } from '../../../../types';
+import { CompanyJobView } from '../../../../types';
 import DataTable from '../../../data-table/DataTable';
 
 // styles
 import './JobPostUpdatesComponent.scss';
 
 interface IProps {
-  jobs: EmployerJobView[];
+  jobs: CompanyJobView[];
 }
 
 class JobPostUpdatesComponent extends React.Component<IProps, {}> {

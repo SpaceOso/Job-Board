@@ -1,7 +1,7 @@
 import {
-  FETCHING_THIS_EMPLOYER_JOBS,
-  GET_THIS_EMPLOYER_JOBS_SUCCESS,
-  REGISTER_EMPLOYER_SUCCESS,
+  FETCHING_THIS_COMPANY_JOBS,
+  GET_THIS_COMPANY_JOBS_SUCCESS,
+  REGISTER_COMPANY_SUCCESS,
 } from '../actions/companyDashboardActions';
 
 import {
@@ -30,13 +30,13 @@ const defaultState: Company = {
   isFetching: false,
 };
 
-// this deals with with the employer property of the state
-function employerReducer(state = defaultState, action): any {
+// this deals with with the company property of the state
+function companyReducer(state = defaultState, action): any {
 
   switch (action.type) {
-    case FETCHING_THIS_EMPLOYER_JOBS:
+    case FETCHING_THIS_COMPANY_JOBS:
       return state;
-    case GET_THIS_EMPLOYER_JOBS_SUCCESS:
+    case GET_THIS_COMPANY_JOBS_SUCCESS:
       return {
         ...state,
         jobs: [...action.payload.data],
@@ -68,8 +68,8 @@ function employerReducer(state = defaultState, action): any {
         ...state,
         isFetching: false,
       };
-    case REGISTER_EMPLOYER_SUCCESS:
-      // will set employer after we register in the compRegisterComponent
+    case REGISTER_COMPANY_SUCCESS:
+      // will set company after we register in the compRegisterComponent
       return state;
     case LOG_OUT_COMPANY:
       return {
@@ -85,4 +85,4 @@ function employerReducer(state = defaultState, action): any {
   }
 }
 
-export default employerReducer;
+export default companyReducer;

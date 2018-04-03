@@ -7,7 +7,7 @@ authCheck = (req, res, next) => {
 
 	if(req.header('Authorization')){
 		console.log('there was a header');
-		//we only set this token once we verify the token is valid when the user signs in.
+		//we only set this token once we verify the token is valid when the employee signs in.
 		token = req.header('Authorization').split(' ')[1];
 	}
 

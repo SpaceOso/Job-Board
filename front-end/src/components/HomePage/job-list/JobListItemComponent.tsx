@@ -22,7 +22,7 @@ const jobListItemComponent: React.SFC<Props> = (props) => {
         {/*LOGO*/}
         <div className="job-list-logo">
           <img
-            src={jobPost.employer.logoImg ? `${IMG_URL}${jobPost.employer.logoImg}` : require('../../../../images/icon/no-icon.svg')}
+            src={jobPost.company.logoImg ? `${IMG_URL}${jobPost.company.logoImg}` : require('../../../../images/icon/no-icon.svg')}
           />
         </div>
         {/*JOB INFORMATION*/}
@@ -30,14 +30,14 @@ const jobListItemComponent: React.SFC<Props> = (props) => {
           <h1 className="job-title">
             {jobPost.job.title}
           </h1>
-          <p className="job-employer">
-            {jobPost.employer.name}
+          <p className="job-company">
+            {jobPost.company.name}
           </p>
         </div>
         <div className="post-info">
             {/*TODO create a helper function for dates*/}
           <p className="post-date">{moment(new Date(jobPost.job.createdDate.year, jobPost.job.createdDate.monthValue - 1, jobPost.job.createdDate.dayOfMonth, jobPost.job.createdDate.hour, jobPost.job.createdDate.minute)).fromNow()}</p>
-          <p className="post-location">{`${jobPost.employer.address.city}, ${jobPost.employer.address.state}`}</p>
+          <p className="post-location">{`${jobPost.company.address.city}, ${jobPost.company.address.state}`}</p>
         </div>
       </Link>
     </div>

@@ -6,7 +6,7 @@ import SimpleForm from '../../simple-form/SimpleForm';
 interface MyProps {
   jobId: string | null;
   jobTitle: string;
-  employerId: string | null;
+    companyId: string | null;
   handleApplicantInfo: (applicantInfo) => {};
   cancelApplication: (e: React.SyntheticEvent<HTMLInputElement>) => void;
   viewingApplication: boolean;
@@ -75,10 +75,10 @@ class ApplicationComponent extends React.Component<MyProps> {
   }
 
   handleApplicationSubmit(data) {
-    /*We only get the info from the form here. We need to add the employer and jobId info to this.*/
+    /*We only get the info from the form here. We need to add the company and jobId info to this.*/
     const updatedData = {
       ...data,
-      employerId: this.props.employerId,
+        companyId: this.props.companyId,
       jobId: this.props.jobId,
     };
     this.props.handleApplicantInfo(updatedData);

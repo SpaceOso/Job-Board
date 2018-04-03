@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     "use strict";
-    const JbUser = sequelize.define("JbUser", {
+    const JbEmployee = sequelize.define("JbEmployee", {
 		    id: {
 			    allowNull: false,
 			    type: DataTypes.UUID,
@@ -32,9 +32,9 @@ module.exports = (sequelize, DataTypes) => {
             freezeTableName: true,
         });
 
-    JbUser.associate = (models) => {
-        JbUser.belongsTo(models.Employer, {foreignKey: "employerId"});
+    JbEmployee.associate = (models) => {
+        JbEmployee.belongsTo(models.Company, {foreignKey: "companyId"});
     };
 
-    return JbUser;
+    return JbEmployee;
 };

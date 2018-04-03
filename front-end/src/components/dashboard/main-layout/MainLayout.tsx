@@ -3,21 +3,21 @@ import { Route, Switch } from 'react-router-dom';
 
 // components
 import { RouteComponentProps } from 'react-router';
-import { Applicants, Employer, User } from '../../../types';
+import { Applicants, Company, Employee } from '../../../types';
 import ApplicantListComponent from '../applicant-list/ApplicantListComponent';
 import ApplicantViewContainer from '../applicant-view/ApplicantViewContainer';
 import CreateJobComponent from '../jobs/createJob/CreateJobComponent';
 import EditJobsLayout from '../jobs/editJob/EditJobsLayout';
 import UnderConstruction from '../../under-construction/UnderConstruction';
-import UserDashboardHome from '../home/UserDashboardHome';
-import UserDashboardNavMenu from '../nav-menu/UserDashboardNavMenu';
+import EmployeeDashboardHome from '../home/EmployeeDashboardHome';
+import EmployeeDashboardNavMenu from '../nav-menu/EmployeeDashboardNavMenu';
 // styles
 import './styles/MainLyout.scss';
 
 interface Props extends RouteComponentProps<any> {
-  user: User;
-  employer: Employer;
-  saveJobPost: (jobInfo, userId) => {};
+    employee: Employee;
+  company: Company;
+  saveJobPost: (jobInfo, employeeId) => {};
 }
 
 interface State {
@@ -55,8 +55,8 @@ class DashboardMainLayout extends React.Component<Props, any> {
   createJobComponent = () => {
     return (
       <CreateJobComponent
-        userId={this.props.user.id}
-        employer={this.props.employer}
+          employeeId={this.props.employee.id}
+        company={this.props.company}
         submitJobPost={this.props.saveJobPost}
       />
     );
@@ -65,8 +65,8 @@ class DashboardMainLayout extends React.Component<Props, any> {
   editJobsLayout = (props) => {
     return (
       <EditJobsLayout
-        employer={this.props.employer}
-        jobs={this.props.employer.jobs}
+          company={this.props.company}
+        jobs={this.props.company.jobs}
         {...props}
       />
     );
@@ -85,18 +85,18 @@ class DashboardMainLayout extends React.Component<Props, any> {
       <ApplicantListComponent
         {...props}
         handleApplicantSelect={this.handleApplicantSelect}
-        user={this.props.user}
-        jobs={this.props.employer.jobs}
-        employer={this.props.employer}
+        employee={this.props.employee}
+        jobs={this.props.company.jobs}
+        company={this.props.company}
       />
     );
   }
 
-  userDashboardHome = () => {
+    employeeDashboardHome = () => {
     return (
-      <UserDashboardHome
-        user={this.props.user}
-        employer={this.props.employer}
+      <EmployeeDashboardHome
+          employee={this.props.employee}
+        company={this.props.company}
       />
     );
   }
@@ -110,7 +110,7 @@ class DashboardMainLayout extends React.Component<Props, any> {
   render() {
     return (
       <div className="dashboard-layout">
-        {this.state.mobile ? null : <UserDashboardNavMenu match={this.props.match}/>}
+        {this.state.mobile ? null : <EmployeeDashboardNavMenu match={this.props.match}/>}
         <div className="dashboard-info-panel">
           <Switch>
             {/*CREATE JOB COMPONENT*/}
@@ -142,7 +142,7 @@ class DashboardMainLayout extends React.Component<Props, any> {
             {/*DASHBOARD HOME*/}
             <Route
               path={`${this.props.match.path}`}
-              render={this.userDashboardHome}
+              render={this.employeeDashboardHome}
             />
           </Switch>
         </div>

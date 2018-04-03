@@ -1,5 +1,5 @@
 const userController = require('../controllers').userController;
-const employerController = require('../controllers').employerController;
+const companyController = require('../controllers').companyController;
 
 module.exports = (app) => {
   app.get('/api', (req, res) => res.status(200).send({
@@ -8,9 +8,9 @@ module.exports = (app) => {
 
   app.post('/login/logcheck', userController.loadOnLogin);
   app.post('/api/register', userController.create);
-  app.post('/api/user/addEmployer', userController.addEmployer);
-  app.post('/api/listEmployer', employerController.getJobs);
-  app.get('/api/user/list', userController.list);
+  app.post('/api/employee/addCompany', userController.addCompany);
+  app.post('/api/listCompany', companyController.getJobs);
+  app.get('/api/employee/list', userController.list);
 
   app.all('/api/todos/:todoId/items', (req, res) => res.status(405).send({
     message: 'Method Not Allowed',

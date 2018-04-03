@@ -2,7 +2,7 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { JobPost } from '../../types';
 import Fade from '../animations/Fade';
-import JobPostEmployerInfoComponent from './employer-info/JobPostEmployerInfoComponent';
+import JobPostCompanyInfoComponent from './company-info/JobPostCompanyInfoComponent';
 import JobPostInfoComponent from './JobPostInfoComponent';
 
 // styles
@@ -94,7 +94,7 @@ class JobPostLayout extends React.Component<JobPostProps, MyState> {
 
     const applicationComponent = (
       <ApplicationComponent
-        employerId={this.props.currentJobPost.job.employerId}
+          companyId={this.props.currentJobPost.job.companyId}
         jobId={this.props.currentJobPost.job.id}
         jobTitle={this.props.currentJobPost.job.title}
         handleApplicantInfo={this.props.addApplicantToJob}
@@ -111,7 +111,7 @@ class JobPostLayout extends React.Component<JobPostProps, MyState> {
         <Fade key={'post-container'} in={!this.props.currentJobPost.isFetching}>
           {jobPostInfoComponent}
         </Fade>
-        <JobPostEmployerInfoComponent isFetching={this.props.currentJobPost.isFetching} employer={this.props.currentJobPost.employer} loadJob={this.loadNewJob} currentJob={this.props.currentJobPost.job.id}/>
+        <JobPostCompanyInfoComponent isFetching={this.props.currentJobPost.isFetching} company={this.props.currentJobPost.company} loadJob={this.loadNewJob} currentJob={this.props.currentJobPost.job.id}/>
       </div>
     );
 

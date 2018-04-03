@@ -2,8 +2,8 @@ import { combineReducers } from 'redux';
 
 import jobs from './jobReducer';
 import currentJobPost from './currentJobReducer';
-import user from './userReducer';
-import employer from './companyReducer';
+import employee from './employeeReducer';
+import company from './companyReducer';
 import siteFetching from './siteFetchingReducer';
 import siteErrors from './siteErrorReducer';
 
@@ -11,8 +11,8 @@ import siteErrors from './siteErrorReducer';
 const rootReducer = combineReducers({
   jobs,
   currentJobPost,
-  user,
-  employer,
+    employee,
+  company,
   siteFetching,
   siteErrors,
 });

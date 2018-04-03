@@ -9,8 +9,8 @@ import './CreateJobComponent.scss';
 
 interface MyProps {
   submitJobPost;
-  employer;
-  userId;
+  company;
+    employeeId;
 }
 
 interface MyState {
@@ -44,7 +44,7 @@ class CreateJobComponent extends React.Component<MyProps, MyState> {
   }
 
   handleJobSubmit(event: any): void {
-    this.props.submitJobPost({ ...this.state, employerId: this.props.employer.id });
+    this.props.submitJobPost({ ...this.state, companyId: this.props.company.id });
     event.preventDefault();
     this.setState(initialState);
   }
@@ -135,7 +135,7 @@ class CreateJobComponent extends React.Component<MyProps, MyState> {
 
     return (
       <div>
-        {this.props.employer.isFetching ? spinner : form}
+        {this.props.company.isFetching ? spinner : form}
       </div>
     );
   }

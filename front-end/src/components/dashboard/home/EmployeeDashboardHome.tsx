@@ -1,37 +1,37 @@
 import * as React from 'react';
 
 // styles
-import './UserDashboardHome.scss';
+import './EmployeeDashboardHome.scss';
 
 import { IMG_URL } from '../../../utils/utils';
 import { default as SpinnerComponent } from '../../spinners/spinnerComponent';
 import JobPostUpdatesComponent from '../jobs/job-post-updates/JobPostUpdatesComponent';
 
 interface MyProps {
-  user;
-  employer;
+    employee;
+  company;
 }
 
-class UserDashboardHome extends React.Component<MyProps> {
+class EmployeeDashboardHome extends React.Component<MyProps> {
   constructor(props) {
     super(props);
   }
 
   render() {
-    if (this.props.employer.isFeteching === true) {
+    if (this.props.company.isFeteching === true) {
       return <SpinnerComponent/>;
     }
 
     return (
       <div className="dashboard-home">
         <h1 className={'header'}>
-          Welcome {this.props.user.firstName} - {this.props.employer.name}
+          Welcome {this.props.employee.firstName} - {this.props.company.name}
         </h1>
-        <img className={'home-logo'} src={`${IMG_URL}${this.props.employer.logoImg}`} alt=""/>
-        <JobPostUpdatesComponent jobs={this.props.employer.jobs}/>
+        <img className={'home-logo'} src={`${IMG_URL}${this.props.company.logoImg}`} alt=""/>
+        <JobPostUpdatesComponent jobs={this.props.company.jobs}/>
       </div>
     );
   }
 }
 
-export default UserDashboardHome;
+export default EmployeeDashboardHome;

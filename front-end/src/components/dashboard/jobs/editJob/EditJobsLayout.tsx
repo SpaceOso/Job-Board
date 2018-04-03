@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Employer, Job } from '../../../../types/index';
+import { Company, Job } from '../../../../types/index';
 import DataTable from '../../../data-table/DataTable';
 import EditJobComponent from './EditJobComponent';
 
@@ -9,7 +9,7 @@ import './EditJobComponent.scss';
 
 interface MyProps extends RouteComponentProps<any> {
   jobs;
-  employer;
+  company;
 }
 
 interface myState {
@@ -66,12 +66,12 @@ class EditJobsLayout extends React.Component<MyProps, myState> {
                      <h1>Click bellow to edit a job</h1>
                      <h1>Please Select a job</h1>
                      <DataTable
-                       rowData={this.props.employer!.jobs}
+                       rowData={this.props.company!.jobs}
                        columnInfo={dataInfo}
                        specialClasses={null}
                        handleClick={this.onClick}
                        totalRows={10}
-                       itemId={this.props.employer.id}
+                       itemId={this.props.company.id}
                      />
                    </div>
                  )}

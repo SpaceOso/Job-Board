@@ -13,24 +13,24 @@ const url = 'http://localhost:4200';
 
 describe('/api/login/', () => {
 
-  it('should POST user credentials and return logged in user', (done) => {
-    const userDetails = {
-      email: 'testuser@gmail.com',
+  it('should POST employee credentials and return logged in employee', (done) => {
+    const employeeDetails = {
+      email: 'testemployee@gmail.com',
       password: '123',
     };
-    const userKeys = ['id', 'firstName', 'lastName', 'email', 'companyId'];
+    const employeeKeys = ['id', 'firstName', 'lastName', 'email', 'companyId'];
 
     chai.request(url)
       .post('/login')
-      .send(userDetails)
+      .send(employeeDetails)
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('object');
-        expect(res.body).to.have.all.keys(['user', 'company', 'token']);
+        expect(res.body).to.have.all.keys(['employee', 'company', 'token']);
         expect(res.body.company).to.have.all.keys(companyKeys);
-        expect(res.body.user).to.have.all.keys(userKeys);
+        expect(res.body.employee).to.have.all.keys(employeeKeys);
         expect(res.body.token).to.be.a('string');
-        // TODO need to test user that does not have an employer saved
+        // TODO need to test employee that does not have an company saved
         // console.log(res.body);
         done();
       });
@@ -39,7 +39,7 @@ describe('/api/login/', () => {
 
   it('should POST with wrong credentials and return an error message', (done) => {
     const wrongCredentials = {
-      email: 'nouserfound@gmail.com',
+      email: 'noemployeefound@gmail.com',
       password: '12345',
     };
 
@@ -56,18 +56,18 @@ describe('/api/login/', () => {
 
   });
 
-  it('should POST with user who does not have an company registered', (done) => {
-    const userDetails = {
+  it('should POST with employee who does not have an company registered', (done) => {
+    const employeeDetails = {
       email: 'nocompany@gmail.com',
       password: '123',
     };
     chai.request(url)
       .post('/login')
-      .send(userDetails)
+      .send(employeeDetails)
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('object');
-        expect(res.body).to.have.all.keys(['user', 'company', 'token']);
+        expect(res.body).to.have.all.keys(['employee', 'company', 'token']);
         done();
       });
   });

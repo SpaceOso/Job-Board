@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Route, RouteComponentProps, Switch } from 'react-router';
-import { Employer, SiteFetching, User } from '../../types/index';
+import { Company, SiteFetching, Employee } from '../../types/index';
 import NotFoundComponent from '../not-found/NotFoundComponent';
 import { default as SpinnerComponent } from '../spinners/spinnerComponent';
 import CompRegisterComponent from './compRegister/CompRegisterComponent';
@@ -8,15 +8,15 @@ import { default as DashboardMainLayout } from './main-layout/MainLayout';
 
 // redux
 interface Props extends RouteComponentProps<any> {
-  user: User;
-  employer: Employer;
+  employee: Employee;
+  company: Company;
   siteFetching: SiteFetching;
-  fetchEmployerJobs: (employerId) => void;
-  saveJobPost: (jobInfo, userId) => {};
-  submitEmployerRegistration: (userData, file) => {};
+  fetchCompanyJobs: (companyId) => void;
+  saveJobPost: (jobInfo, employeeId) => {};
+  submitCompanyRegistration: (employeeData, file) => {};
 }
 
-class UserDashboardComponent extends React.Component<Props, any> {
+class EmployeeDashboardComponent extends React.Component<Props, any> {
   constructor(props) {
     super(props);
 
@@ -24,41 +24,41 @@ class UserDashboardComponent extends React.Component<Props, any> {
       fetching: true,
     };
 
-    this.handleEmployerRegistration = this.handleEmployerRegistration.bind(this);
+    this.handleCompanyRegistration = this.handleCompanyRegistration.bind(this);
     this.submitJobPost = this.submitJobPost.bind(this);
     this.compRegisterName = this.compRegisterName.bind(this);
     this.dashboardMainLayout = this.dashboardMainLayout.bind(this);
   }
 
   componentWillMount() {
-    if (this.props.employer.id !== null) {
-      this.props.fetchEmployerJobs(this.props.employer.id);
+    if (this.props.company.id !== null) {
+      this.props.fetchCompanyJobs(this.props.company.id);
     }
   }
 
   /**
    *
-   * @param employerData {Employer} - The employer information from CompRegisterComponent
-   * @param file {File} - The logo of the employer
+   * @param companyData {Company} - The company information from CompRegisterComponent
+   * @param file {File} - The logo of the company
    */
-  handleEmployerRegistration(employerData, file) {
-    console.log('handleEmployerRegistration:', employerData, file);
-    const userData = { ...employerData, userId: this.props.user.id };
-    this.props.submitEmployerRegistration(userData, file);
+  handleCompanyRegistration(companyData, file) {
+    console.log('handleCompanyRegistration:', companyData, file);
+    const employeeData = { ...companyData, employeeId: this.props.employee.id };
+    this.props.submitCompanyRegistration(employeeData, file);
   }
 
   /**
    *  This will handle sending the jobPost post information to the back end.
    */
   submitJobPost(jobPost) {
-    this.props.saveJobPost(jobPost, this.props.user.id);
+    this.props.saveJobPost(jobPost, this.props.employee.id);
   }
 
   compRegisterName = (props) => {
     return (
       <CompRegisterComponent
-        submitData={this.handleEmployerRegistration}
-        user={this.props.user}
+        submitData={this.handleCompanyRegistration}
+        employee={this.props.employee}
         {...props}
       />
     );
@@ -67,8 +67,8 @@ class UserDashboardComponent extends React.Component<Props, any> {
   dashboardMainLayout = (props) => {
     return (
       <DashboardMainLayout
-        employer={this.props.employer}
-        user={this.props.user}
+          company={this.props.company}
+          employee={this.props.employee}
         saveJobPost={this.props.saveJobPost}
         {...props}
       />
@@ -78,7 +78,7 @@ class UserDashboardComponent extends React.Component<Props, any> {
   render() {
 
     if (this.state.isFetching === true) {
-      if (this.props.employer.isFetching !== true) {
+      if (this.props.company.isFetching !== true) {
         this.setState({ fetching: false });
       }
       return <SpinnerComponent/>;
@@ -104,4 +104,4 @@ class UserDashboardComponent extends React.Component<Props, any> {
   }
 }
 
-export default UserDashboardComponent;
+export default EmployeeDashboardComponent;

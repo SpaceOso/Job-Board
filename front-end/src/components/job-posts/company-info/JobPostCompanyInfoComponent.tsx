@@ -18,7 +18,7 @@ interface MyProps {
   currentJob?: string;
 }
 
-class JobPostEmployerInfoComponent extends React.Component<MyProps, any> {
+class JobPostCompanyInfoComponent extends React.Component<MyProps, any> {
   constructor(props) {
     super(props);
 
@@ -33,30 +33,30 @@ class JobPostEmployerInfoComponent extends React.Component<MyProps, any> {
   }
 
   render() {
-    if (this.props.employer === undefined) {
+    if (this.props.company === undefined) {
       return null;
     }
 
-    const employer: Employer = this.props.employer;
+    const company: Company = this.props.company;
     let logo: string = `${LOCAL_URL}${require('../../../../images/icon/no-icon.svg')}`;
-    if (employer.logoImg !== null) {
-      if (employer.logoImg.length > 0) {
-        logo = `${IMG_URL}${employer.logoImg}`;
+    if (company.logoImg !== null) {
+      if (company.logoImg.length > 0) {
+        logo = `${IMG_URL}${company.logoImg}`;
       }
     }
 
     return (
-      <aside className="jp-employer-aside">
-        <img className="company-logo panel-shadow" src={logo} alt={`${employer.name} Logo`}/>
+      <aside className="jp-company-aside">
+        <img className="company-logo panel-shadow" src={logo} alt={`${company.name} Logo`}/>
         <div className="info-container panel-shadow" id="about-section">
-          <h1 className="title">About {employer.name}</h1>
-          <p className="jp-employer-location">{`${employer.address.city}, ${employer.address.state}`}</p>
+          <h1 className="title">About {company.name}</h1>
+          <p className="jp-company-location">{`${company.address.city}, ${company.address.state}`}</p>
         </div>
-        <SocialMediaComponent employer={employer}/>
-        <OtherJobsComponent employer={employer} handleClick={this.handleClick} currentJob={this.props.currentJob} isFetching={this.props.isFetching}/>
+        <SocialMediaComponent company={company}/>
+        <OtherJobsComponent company={company} handleClick={this.handleClick} currentJob={this.props.currentJob} isFetching={this.props.isFetching}/>
       </aside>
     );
   }
 }
 
-export default JobPostEmployerInfoComponent;
+export default JobPostCompanyInfoComponent;

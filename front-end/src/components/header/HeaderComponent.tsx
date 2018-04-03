@@ -2,14 +2,14 @@ import * as React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 // actions
-import { User } from '../../types';
+import { Employee } from '../../types';
 import Slide from '../animations/Slide';
 import ModalComponent from '../modal/ModalComponent';
 import SideMenu from '../side-menu/SideMenu';
 
 interface MyProps {
-  user: User;
-  logOutUser: () => {};
+    employee: Employee;
+  logOutEmployee: () => {};
   restProps?: any;
 }
 
@@ -41,13 +41,13 @@ class HeaderComponent extends React.Component<MyProps, MyState> {
   componentDidMount() {
     this.setState({
       mobile: window.innerWidth <= 1046,
-      loggedIn: this.props.user === null,
-      auth: this.props.user.isAuth,
+      loggedIn: this.props.employee === null,
+      auth: this.props.employee.isAuth,
     });
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.props.user.isAuth !== nextProps.user.isAuth) {
+    if (this.props.employee.isAuth !== nextProps.employee.isAuth) {
       return true;
     }
 
@@ -76,32 +76,32 @@ class HeaderComponent extends React.Component<MyProps, MyState> {
   }
 
   logOut(): void {
-    this.props.logOutUser();
+    this.props.logOutEmployee();
   }
 
   /**
-   * This will check if the user has an employer registered or not determine which route the nav menu should link to
+   * This will check if the employee has an company registered or not determine which route the nav menu should link to
    * @return {JSX.Element} - Link element to either /login - dashboard/home - dashboard/register
    */
   displayDashboardLink(): JSX.Element[] {
     const navButtons: JSX.Element[] = [];
 
-    if (this.props.user === null || this.props.user.isAuth === false || this.props.user.isAuth === undefined) {
+    if (this.props.employee === null || this.props.employee.isAuth === false || this.props.employee.isAuth === undefined) {
       navButtons.push(
         <Link to={'/login'} className="nav-item" key={'login-btn'}>
           Log In
         </Link>,
       );
     } else {
-      const dashboardLink = `/user/dashboard/${this.props.user.id}`;
+      const dashboardLink = `/employee/dashboard/${this.props.employee.id}`;
 
-      const dashLink = this.props.user.employerId !== null ? dashboardLink + '/home' : dashboardLink + '/register';
+      const dashLink = this.props.employee.companyId !== null ? dashboardLink + '/home' : dashboardLink + '/register';
 
       if (this.state.mobile) {
         navButtons.push(...this.createMobileLinks(dashboardLink));
 
         navButtons.push(
-          <NavLink key={'log-out'} onClick={this.logOut} className="user-dashboard-btn" activeClassName={'selected'} to={'/'}>
+          <NavLink key={'log-out'} onClick={this.logOut} className="employee-dashboard-btn" activeClassName={'selected'} to={'/'}>
             <i className={`fas fa-sign-out-alt`}/>Log Out
           </NavLink>,
         );
@@ -129,12 +129,12 @@ class HeaderComponent extends React.Component<MyProps, MyState> {
       { title: 'Applicants', link: 'applicants', img: 'fa-users' },
       { title: 'Post a Job', link: 'createjob', img: 'fa-file' },
       { title: 'Edit Postings', link: 'editpostings', img: 'fa-pencil-alt' },
-      { title: 'Profile Edit', link: 'profile', img: ' fa-user-circle' },
+      { title: 'Profile Edit', link: 'profile', img: ' fa-employee-circle' },
     ];
 
     return navAttributes.map((link) => {
       return (
-        <NavLink key={link.link} className="user-dashboard-btn" activeClassName={'selected'} to={`${dashboardLink}/${link.link}`}>
+        <NavLink key={link.link} className="employee-dashboard-btn" activeClassName={'selected'} to={`${dashboardLink}/${link.link}`}>
           <i style={{ fontSize: '23px' }} className={`fas ${link.img}`}/>
           <span style={{ marginLeft: '9px' }}>{link.title}</span>
         </NavLink>

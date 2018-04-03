@@ -1,7 +1,7 @@
 "use strict";
 
 module.exports = (sequelize, DataTypes) => {
-    const Employer = sequelize.define("Employer", {
+    const Company = sequelize.define("Company", {
             id: {
                 allowNull: false,
                 type: DataTypes.UUID,
@@ -39,11 +39,11 @@ module.exports = (sequelize, DataTypes) => {
             freezeTableName: true,
         });
 
-    Employer.associate = (models) => {
-        Employer.hasMany(models.JbUser, {foreignKey: "employerId", as:'users'});
-		Employer.hasMany(models.Job, {foreignKey: 'employerId', as:'jobs'});
-		Employer.hasMany(models.JobApplications, {foreignKey: 'employerId', as:'jobApplicants'});
+    Company.associate = (models) => {
+        Company.hasMany(models.JbUser, {foreignKey: "companyId", as:'users'});
+		Company.hasMany(models.Job, {foreignKey: 'companyId', as:'jobs'});
+		Company.hasMany(models.JobApplications, {foreignKey: 'companyId', as:'jobApplicants'});
     };
 
-    return Employer;
+    return Company;
 };

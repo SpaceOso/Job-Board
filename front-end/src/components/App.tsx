@@ -1,23 +1,23 @@
 import * as React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import UserDashboardContainer from './dashboard/UserDashboardContainer';
+import EmployeeDashboardContainer from './dashboard/EmployeeDashboardContainer';
 import JobListContainer from './HomePage/job-list/JobListContainer';
 import JobPostContainer from './job-posts/JobPostContainer';
 import LayoutComponent from './LayoutComponent';
 import LoginContainer from './log-in/LoginContainer';
 import NotFoundComponent from './not-found/NotFoundComponent';
-import UserRegisterContainer from './register/UserRegisterContainer';
+import EmployeeRegisterContainer from './register/EmployeeRegisterContainer';
 
 // actions
-import { Employer, SiteErrors, SiteFetching, User } from '../types';
+import { Company, SiteErrors, SiteFetching, Employee } from '../types';
 import ProtectedComponent from './dashboard/protected/ProtectedComponent';
 
 interface Props {
   logInOnLoad;
-  logOutUser: () => {};
-  user: User;
-  employer: Employer;
+  logOutEmployee: () => {};
+    employee: Employee;
+    company: Company;
   siteFetching: SiteFetching;
   siteErrors: SiteErrors;
 }
@@ -45,18 +45,18 @@ class App extends React.Component<Props> {
   render() {
     return (
       <BrowserRouter>
-        <LayoutComponent user={this.props.user} logOutUser={this.props.logOutUser}>
+        <LayoutComponent employee={this.props.employee} logOutEmployee={this.props.logOutEmployee}>
           {/*<Route exact path="/" component={JumboTron}/>*/}
           <Switch>
             <Route exact path="/" component={JobListContainer as any}/>
-            <Route exact path="/register" component={UserRegisterContainer as any}/>
+            <Route exact path="/register" component={EmployeeRegisterContainer as any}/>
             <Route exact path="/jobposts/:jobId" component={JobPostContainer as any}/>
             <Route exact path="/login" component={LoginContainer as any}/>
             <ProtectedComponent
-              path="/user/dashboard/:userId"
-              component={UserDashboardContainer}
-              isAuth={this.props.user.isAuth}
-              user={this.props.user}
+              path="/employee/dashboard/:employeeId"
+              component={EmployeeDashboardContainer}
+              isAuth={this.props.employee.isAuth}
+              employee={this.props.employee}
             />
             <Route component={NotFoundComponent}/>
           </Switch>

@@ -13,7 +13,7 @@ export const RESET_CURRENT_JOB = 'RESET_CURRENT_JOB';
 export const SINGLE_JOB_SUCCESS = 'SINGLE_JOB_SUCCESS';
 
 /*These are actions for the main page and jobPost post page. Actions requiring CRUD jobPost operations will be handled in the
-* employerDashboardAction file.*/
+* companyDashboardAction file.*/
 
 export function getJobsSuccess(jobs) {
   return {

@@ -1,6 +1,6 @@
 @import "../../../styles/variables";
 
-.user-dashboard-nav {
+.employee-dashboard-nav {
   background-color: $adminBackground;
   width: 30%;
   max-width: 230px;
@@ -14,7 +14,7 @@
   transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 
 
-  .user-dashboard-btn {
+  .employee-dashboard-btn {
     height: 62px;
     width: 100%;
     text-align: center;

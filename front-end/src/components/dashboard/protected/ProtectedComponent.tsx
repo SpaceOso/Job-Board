@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Redirect, Route } from 'react-router';
 
-function ProtectedComponent({ component: Component, isAuth, user, ...rest }) {
+function ProtectedComponent({ component: Component, isAuth, employee, ...rest }) {
 
   return (
     <Route
       {...rest}
-      render={(props) => isAuth === true && user.id === rest.computedMatch.params.userId ? <Component {...props} /> : <Redirect to={{ pathname: '/' }}/>}
+      render={(props) => isAuth === true && employee.id === rest.computedMatch.params.employeeId ? <Component {...props} /> : <Redirect to={{ pathname: '/' }}/>}
     />
   );
 

@@ -2,14 +2,14 @@ import * as React from 'react';
 
 // styles
 import { Redirect, RouteComponentProps } from 'react-router';
-import { User } from '../../../types';
+import { Employee } from '../../../types';
 import SimpleForm, { SFInput } from '../../simple-form/SimpleForm';
 import { default as SpinnerComponent } from '../../spinners/spinnerComponent';
 import './styles/CompRegisterComponent.scss';
 
 interface CompRegisterProps extends RouteComponentProps<any> {
   submitData;
-  user: User;
+    employee: Employee;
 }
 
 interface MyState {
@@ -103,14 +103,14 @@ class CompRegisterComponent extends React.Component<CompRegisterProps, MyState> 
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleEmployerSubmit = this.handleEmployerSubmit.bind(this);
+    this.handleCompanySubmit = this.handleCompanySubmit.bind(this);
     this.renderRegisterForm = this.renderRegisterForm.bind(this);
   }
 
   /**
    * This well send the update state to the back end
    */
-  handleEmployerSubmit(formData) {
+  handleCompanySubmit(formData) {
     /** If there was a file uploaded update logoImg state property */
     if (formData.logo !== undefined) {
       this.props.submitData(formData, formData.logo);
@@ -131,17 +131,17 @@ class CompRegisterComponent extends React.Component<CompRegisterProps, MyState> 
   renderRegisterForm() {
     return (
       <div className="comp-register">
-        <h1>We need to set up your employer before we can start!</h1>
+        <h1>We need to set up your company before we can start!</h1>
         <div className="form-container">
           <div id="location-group">
             <SimpleForm
-              header={'Employer Information'}
+              header={'Company Information'}
               inputs={this.inputs}
               joined={true}
               style={{width: 'auto'}}
               submitBtnText={'Enter Company'}
               verifyInputs={null}
-              onSubmitCB={this.handleEmployerSubmit}
+              onSubmitCB={this.handleCompanySubmit}
             />
           </div>
         </div>
@@ -150,12 +150,12 @@ class CompRegisterComponent extends React.Component<CompRegisterProps, MyState> 
   }
 
   render() {
-    if (this.props.user.isFetching) {
+    if (this.props.employee.isFetching) {
       return <SpinnerComponent/>;
     }
 
-    if (this.props.user.employerId !== null) {
-      return <Redirect to={`${'/user/dashboard/'}${this.props.user.id}/home `}/>;
+    if (this.props.employee.companyId !== null) {
+      return <Redirect to={`${'/employee/dashboard/'}${this.props.employee.id}/home `}/>;
     }
 
     return this.renderRegisterForm();

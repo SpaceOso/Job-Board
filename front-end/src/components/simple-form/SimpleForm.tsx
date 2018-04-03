@@ -37,7 +37,7 @@ class SimpleForm extends React.Component<MyProps, any> {
     const propObj: any = {};
 
     /**
-     * Crate an object for each input to hold the user input and to know if there is an
+     * Crate an object for each input to hold the employee input and to know if there is an
      * error associated with that input.
      */
     this.props.inputs.map((input) => {
@@ -129,7 +129,7 @@ class SimpleForm extends React.Component<MyProps, any> {
 
   /**
    * Creates and sends a key-value pair object to the onSubmitCB given as props
-   * @property name - Is the id given as the input id in the props, the value is what the user typed in the form
+   * @property name - Is the id given as the input id in the props, the value is what the employee typed in the form
    */
   submitForm(): void {
     const formObject: FormObject = {};

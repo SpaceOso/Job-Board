@@ -101,7 +101,7 @@ if (app.get('env') === 'development') {
 }
 
 // production error handler
-// no stacktraces leaked to user
+// no stacktraces leaked to employee
 app.use(function (err, req, res, next) {
     console.log("in prod error");
     res.render('index');

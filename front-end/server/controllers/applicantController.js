@@ -1,5 +1,5 @@
 const JbUser = require('../models').JbUser;
-const Employer = require('../models').Employer;
+const Company = require('../models').Company;
 const Applicants = require('../models').Applicants;
 const Job = require('../models').Job;
 let uuid = require('uuid');
@@ -7,9 +7,9 @@ let uuid = require('uuid');
 module.exports = {
     create(req, res) {
         "use strict";
-        console.log("user created");
-        console.log("user information:", req.body);
-        console.log("the user files:", req.files);
+        console.log("employee created");
+        console.log("employee information:", req.body);
+        console.log("the employee files:", req.files);
 
         let resume = '';
         let coverLetter = '';
@@ -44,7 +44,7 @@ module.exports = {
                 resume: resume,
                 coverLetter: coverLetter,
                 jobId: req.body.jobId,
-                employerId: req.body.employerId
+                companyId: req.body.companyId
             })
             .then((applicant) => {
                 //TODO need to add applicant to JobApplications

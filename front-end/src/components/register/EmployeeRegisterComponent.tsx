@@ -1,18 +1,18 @@
 import * as React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 
-import { AuthUser, SiteFetching, User } from '../../types';
+import { AuthEmployee, SiteFetching, Employee } from '../../types';
 import SimpleForm from '../simple-form/SimpleForm';
 import { default as SpinnerComponent } from '../spinners/spinnerComponent';
 
 // styles
-import './styles/UserRegister.scss';
+import './styles/EmployeeRegister.scss';
 
 export interface MyProps {
   event: Event;
   redirect: false;
-  registerUser: (user: AuthUser) => any;
-  user: User;
+  registerEmployee: (employee: AuthEmployee) => any;
+  employee: Employee;
   siteFetching: SiteFetching;
   errors: {
     fName: boolean;
@@ -36,7 +36,7 @@ interface MyState {
   redirect: false;
 }
 
-class UserRegisterComponent extends React.Component<MyProps, MyState> {
+class EmployeeRegisterComponent extends React.Component<MyProps, MyState> {
   private inputs: FormInputs[] = [
     {
       label: 'First Name',
@@ -94,29 +94,29 @@ class UserRegisterComponent extends React.Component<MyProps, MyState> {
     this.redirectToDashboard = this.redirectToDashboard.bind(this);
   }
 
-  handleSubmit(userModel: AuthUser) {
+  handleSubmit(employee: AuthEmployee) {
 
-    const newUser: AuthUser = {
-      email: userModel.email,
-      firstName: userModel.firstName,
-      lastName: userModel.lastName,
-      password: userModel.password,
+    const newEmployee: AuthEmployee = {
+      email: employee.email,
+      firstName: employee.firstName,
+      lastName: employee.lastName,
+      password: employee.password,
     };
 
-    console.log('we\'re trying to submit newUser:', newUser);
-    this.props.registerUser(newUser);
+    console.log('we\'re trying to submit newUser:', newEmployee);
+    this.props.registerEmployee(newEmployee);
   }
 
   redirectToDashboard() {
     return (
-      <Redirect to={`/user/dashboard/${this.props.user.id}/register`} push/>
+      <Redirect to={`/employee/dashboard/${this.props.employee.id}/register`} push/>
     );
   }
 
   returnRegisterForm() {
 
     return (
-      <div className="employer-register-Component">
+      <div className="company-register-Component">
         <div className="register-form">
           <SimpleForm
             header="Sign Up"
@@ -135,10 +135,10 @@ class UserRegisterComponent extends React.Component<MyProps, MyState> {
               Login here
             </Link>
           </div>
-          {/*Once the user registers it should take them to the dashboard*/}
-          {this.props.user.isAuth === true ? this.redirectToDashboard() : null}
-          {/*This will display once we register our user*/}
-          {this.props.user.companyId !== null ? this.redirectToDashboard() : null}
+          {/*Once the employee registers it should take them to the dashboard*/}
+          {this.props.employee.isAuth === true ? this.redirectToDashboard() : null}
+          {/*This will display once we register our employee*/}
+          {this.props.employee.companyId !== null ? this.redirectToDashboard() : null}
         </div>
       </div>
     );
@@ -154,4 +154,4 @@ class UserRegisterComponent extends React.Component<MyProps, MyState> {
   }
 }
 
-export default UserRegisterComponent;
+export default EmployeeRegisterComponent;

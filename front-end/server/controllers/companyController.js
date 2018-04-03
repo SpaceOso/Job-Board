@@ -1,4 +1,4 @@
-const Employer = require('../models').Employer;
+const Company = require('../models').Company;
 const Job = require('../models').Job;
 const Applicants = require('../models').Applicants;
 const JobApplications = require('../models').JobApplications;
@@ -19,7 +19,7 @@ module.exports = {
                     zip: req.body.zip
                 },
                 description: req.body.description,
-                employerId: req.body.employerId
+                companyId: req.body.companyId
             })
             .then((job) => {
                 job.dataValues.Applicants = [];
@@ -35,10 +35,10 @@ module.exports = {
         "use strict";
         console.log("getting jobs");
 
-        return Employer
-            .findById(req.params.employerId)
-            .then(employer => {
-                return employer.getJobs({
+        return Company
+            .findById(req.params.companyId)
+            .then(company => {
+                return company.getJobs({
                     include: [Applicants]
                 })
                     .then(jobs => {
@@ -58,7 +58,7 @@ module.exports = {
     },
 
     updateApplicantStatus(req, res) {
-        console.log("inside the employer controller with:");
+        console.log("inside the company controller with:");
         console.log(req.body);
         console.log(req.params);
 

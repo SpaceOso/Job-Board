@@ -1,17 +1,17 @@
 import {
-  REGISTER_USER,
-  FETCHING_USER,
-  REGISTER_USER_ERROR,
-  REGISTER_USER_SUCCESS,
-  LOGIN_USER_SUCCESS,
-  LOGIN_USER_ERROR,
-  LOG_OUT_USER,
-  SET_USER,
-  FETCHING_THIS_USER_ERROR,
+  REGISTER_EMPLOYEE,
+  FETCHING_EMPLOYEE,
+  REGISTER_EMPLOYEE_ERROR,
+  REGISTER_EMPLOYEE_SUCCESS,
+  LOGIN_EMPLOYEE_SUCCESS,
+  LOGIN_EMPLOYEE_ERROR,
+  LOG_OUT_EMPLOYEE,
+  SET_EMPLOYEE,
+  FETCHING_THIS_EMPLOYEE_ERROR,
 } from '../actions/authActions';
-import { User } from "../types/index";
+import { Employee } from "../types/index";
 
-const defaultState: User = {
+const defaultState: Employee = {
   id: null,
   firstName: '',
   lastName: '',
@@ -23,10 +23,10 @@ const defaultState: User = {
   error: null,
 };
 
-function userReducer(state = defaultState, action): any {
-// function userReducer(state, action):User {
+function employeeReducer(state = defaultState, action): any {
+// function employeeReducer(state, action):Employee {
   switch (action.type) {
-    case REGISTER_USER_SUCCESS:
+    case REGISTER_EMPLOYEE_SUCCESS:
       return {
         ...state,
         ...action.payload,
@@ -34,26 +34,26 @@ function userReducer(state = defaultState, action): any {
         isFetching: false,
       };
 
-    case LOGIN_USER_SUCCESS:
+    case LOGIN_EMPLOYEE_SUCCESS:
       return {
         ...state,
         ...action.payload,
         isAuth: true,
         isFetching: false,
       };
-    case LOG_OUT_USER:
+    case LOG_OUT_EMPLOYEE:
 
       return {
         ...defaultState,
       };
-    case FETCHING_USER:
+    case FETCHING_EMPLOYEE:
       return {
         ...state,
         isFetching: true,
       };
 
-    case SET_USER:
-      let set_user: any = {
+    case SET_EMPLOYEE:
+      let set_employee: any = {
         ...state,
         ...action.payload,
         isFetching: false,
@@ -65,20 +65,20 @@ function userReducer(state = defaultState, action): any {
         isFetching: false,
         isAuth: true,
       };
-    case FETCHING_THIS_USER_ERROR:
+    case FETCHING_THIS_EMPLOYEE_ERROR:
       return {
         ...state,
         isFetching: false,
         isAuth: false,
       };
-    case LOGIN_USER_ERROR:
+    case LOGIN_EMPLOYEE_ERROR:
       return {
         ...state,
         error: action.errorMessage,
         isFetching: false,
       };
 
-    case REGISTER_USER_ERROR:
+    case REGISTER_EMPLOYEE_ERROR:
       // todo need to properly handle this case
       return {
         ...state,
@@ -92,4 +92,4 @@ function userReducer(state = defaultState, action): any {
   }
 }
 
-export default userReducer;
+export default employeeReducer;

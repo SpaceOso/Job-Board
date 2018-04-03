@@ -1,12 +1,12 @@
 import * as React from 'react';
 
-import { User } from '../types/';
+import { Employee } from '../types/';
 import { default as FooterComponent } from './footer/footerComponent';
 import HeaderComponent from './header/HeaderComponent';
 
 interface Props {
-  user: User;
-  logOutUser;
+    employee: Employee;
+  logOutEmployee;
 }
 
 class LayoutComponent extends React.Component<Props> {
@@ -17,7 +17,7 @@ class LayoutComponent extends React.Component<Props> {
   render() {
     return (
       <div className="app-wrapper">
-        <HeaderComponent {...this.props} user={this.props.user} logOutUser={this.props.logOutUser} />
+        <HeaderComponent {...this.props} employee={this.props.employee} logOutEmployee={this.props.logOutEmployee} />
         {this.props.children}
         <FooterComponent/>
       </div>

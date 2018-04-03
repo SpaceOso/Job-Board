@@ -2,15 +2,15 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 // components
-import { logInUser } from '../../actions/authActions';
-import { StoreState, User } from '../../types';
+import { logInEmployee } from '../../actions/authActions';
+import { StoreState, Employee } from '../../types';
 import LoginComponent from './LoginComponent';
 // styles
 import './styles/LoginComponent.scss';
 
-function mapStateToProps({ user, siteFetching, siteErrors }: StoreState) {
+function mapStateToProps({ employee, siteFetching, siteErrors }: StoreState) {
   return {
-    user,
+      employee,
     siteFetching,
     siteErrors,
 
@@ -18,8 +18,8 @@ function mapStateToProps({ user, siteFetching, siteErrors }: StoreState) {
 }
 
 const mapDispatchToProps = dispatch => ({
-  logInUser: (userInfo) => {
-    dispatch(logInUser(userInfo));
+  logInEmployee: (employeeInfo) => {
+    dispatch(logInEmployee(employeeInfo));
   },
 });
 

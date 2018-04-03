@@ -5,7 +5,7 @@ const userController = require('../controllers').userController;
 const upload = require('../controllers/uploadController');
 
 
-router.post('/employer', upload.single('file'), userController.addEmployer);
+router.post('/company', upload.single('file'), userController.addCompany);
 router.post('/', userController.create);
 
 module.exports = router;

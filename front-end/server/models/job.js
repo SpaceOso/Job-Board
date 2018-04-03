@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Job.associate = (models) => {
         "use strict";
-		Job.belongsTo(models.Employer, {foreignKey: 'employerId', onDelete: 'CASCADE'});
+		Job.belongsTo(models.Company, {foreignKey: 'companyId', onDelete: 'CASCADE'});
         Job.hasMany(models.Applicants, {foreignKey: 'jobId', onDelete: 'CASCADE'});
     };
     return Job;

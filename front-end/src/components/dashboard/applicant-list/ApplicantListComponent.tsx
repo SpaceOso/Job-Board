@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Employer, EmployerJobView, User } from '../../../types/index';
+import { Company, CompanyJobView, Employee } from '../../../types/index';
 import DataTable from '../../data-table/DataTable';
 
 // styles
@@ -8,15 +8,15 @@ import DropDownComponent from '../../drop-down/DropDownComponent';
 import './ApplicantListComponent.scss';
 
 interface MyProps extends RouteComponentProps<any> {
-  user: User;
-  jobs: EmployerJobView[] | null;
-  employer: Employer;
+    employee: Employee;
+  jobs: CompanyJobView[] | null;
+  company: Company;
   handleApplicantSelect: (applicant) => void;
 }
 
 interface MyState {
-  jobs: EmployerJobView[] | null;
-  currentJob: EmployerJobView | null;
+  jobs: CompanyJobView[] | null;
+  currentJob: CompanyJobView | null;
   applicant: any;
 }
 

@@ -3,7 +3,7 @@ import { Company } from '../../../types';
 import { LOCAL_URL } from '../../../utils/utils';
 
 interface MyProps {
-  // TODO need to pass employer to get correct links
+  // TODO need to pass company to get correct links
     company: Company;
 }
 

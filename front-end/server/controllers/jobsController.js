@@ -1,5 +1,5 @@
 const Job = require('../models').Job;
-const Employer = require('../models').Employer;
+const Company = require('../models').Company;
 
 module.exports = {
 
@@ -7,7 +7,7 @@ module.exports = {
 		"use strict";
 		return Job
 			.findAll({
-				include: [Employer],
+				include: [Company],
 				order: [['createdAt', 'DESC']]
 			})
 			.then((jobs) => {
@@ -23,13 +23,13 @@ module.exports = {
 		return Job
 			.findById(req.params.jobId, {
 				include: [{
-					model: Employer
+					model: Company
 				}]
 			})
 			.then((job) => {
-				job.Employer.getJobs()
-					.then(employerJobs => {
-						job.dataValues.Employer.dataValues.jobs = employerJobs;
+				job.Company.getJobs()
+					.then(companyJobs => {
+						job.dataValues.Company.dataValues.jobs = companyJobs;
 						res.status(200).send(job.dataValues);
 					})
 

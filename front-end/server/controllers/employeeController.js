@@ -1,5 +1,5 @@
 const JbUser = require('../models').JbUser;
-const Employer = require('../models').Employer;
+const Company = require('../models').Company;
 let bcrypt = require('bcryptjs');
 let uuid = require('uuid');
 let jwt = require('jsonwebtoken');
@@ -24,7 +24,7 @@ module.exports = {
                             firstName: user.firstName,
                             lastName: user.lastName,
                             email: user.email,
-                            employerId: null,
+                            companyId: null,
                             id: user.id
                         };
 
@@ -60,7 +60,7 @@ module.exports = {
             if (decoded) {
                 return JbUser
                     .findById(decoded.id, {
-                        include: [Employer],
+                        include: [Company],
                         plain: true,
                         type: sequelize.QueryTypes.SELECT
                     })
@@ -70,21 +70,21 @@ module.exports = {
                                 firstName: response.dataValues.firstName,
                                 lastName: response.dataValues.lastName,
                                 email: response.dataValues.email,
-                                employerId: response.dataValues.employerId === undefined ? null : response.dataValues.employerId
+                                companyId: response.dataValues.companyId === undefined ? null : response.dataValues.companyId
                             };
 
-                            let employer = null;
+                            let company = null;
 
-                            if (response.Employer !== null) {
-                                employer = {...response.Employer.dataValues};
+                            if (response.Company !== null) {
+                                company = {...response.Company.dataValues};
                             }
 
                             let token = jwt.sign(user, process.env.SECRET_KEY, {expiresIn: "2 days"});
 
                             res.status(200).json({
                                 user: user,
-                                employerId: user.employerId,
-                                employer: employer,
+                                companyId: user.companyId,
+                                company: company,
                                 token: token
                             });
                         }
@@ -101,7 +101,7 @@ module.exports = {
                 where: {
                     email: req.body.email
                 },
-                include: [Employer]
+                include: [Company]
             })
             .then((userModel) => {
                 if (!userModel) {
@@ -117,20 +117,20 @@ module.exports = {
                     firstName: userModel.firstName,
                     lastName: userModel.lastName,
                     email: userModel.email,
-                    employerId: userModel.employerId === undefined ? null : userModel.employerId
+                    companyId: userModel.companyId === undefined ? null : userModel.companyId
                 };
 
-                let employer = null;
+                let company = null;
 
-                if (userModel.Employer !== null) {
-                    employer = {...userModel.Employer.dataValues};
+                if (userModel.Company !== null) {
+                    company = {...userModel.Company.dataValues};
                 }
 
                 let token = jwt.sign(user, process.env.SECRET_KEY, {expiresIn: "2 days"});
                 res.status(200).json({
                     user,
-                    // employerId: user.employerId,
-                    employer,
+                    // companyId: employee.companyId,
+                    company: company,
                     token: token
                 });
             })
@@ -140,7 +140,7 @@ module.exports = {
             );
     },
 
-    addEmployer(req, res, next) {
+    addCompany(req, res, next) {
         "use strict";
         //checking to see if we have a logoImg uploaded
         let filename = '';
@@ -156,7 +156,7 @@ module.exports = {
         }
 
 
-        return Employer
+        return Company
             .create({
                 name: req.body.name,
                 logoImg: filename,
@@ -171,39 +171,39 @@ module.exports = {
                 facebook: req.body.facebook,
                 linkedIn: req.body.linkedIn
             })
-            .then((employer) => {
-                return JbUser.update({employerId: employer.id},
+            .then((company) => {
+                return JbUser.update({companyId: company.id},
                     {
-                        where: {id: req.body.userId},
+                        where: {id: req.body.employeeId},
                         returning: true,
                         plain: true
                     })
                     .then((user) => {
                         let localUser = {
-                            employerId: user[1].employerId,
+                            companyId: user[1].companyId,
                             firstName: user[1].firstName,
                             lastName: user[1].lastName,
                             email: user[1].email,
                             id: user[1].id
                         };
 
-                        let localEmployer = {
-                            name: employer.name,
-                            logoImg: employer.logoImg,
-                            id: employer.id,
+                        let localCompany = {
+                            name: company.name,
+                            logoImg: company.logoImg,
+                            id: company.id,
                             jobs: [],
-                            website: employer.website,
-                            twitter: employer.twitter,
-                            facebook: employer.facebook,
-                            linkedIn: employer.linkedIn,
-                            location: employer.location,
+                            website: company.website,
+                            twitter: company.twitter,
+                            facebook: company.facebook,
+                            linkedIn: company.linkedIn,
+                            location: company.location,
                         };
 
                         let token = jwt.sign(localUser, process.env.SECRET_KEY, {expiresIn: "2 days"});
 
                         res.status(200).json({
                             token,
-                            employer: localEmployer,
+                            company: localCompany,
                             user: localUser
                         });
                     });
@@ -217,7 +217,7 @@ module.exports = {
     list(req, res) {
         "use strict";
         return JbUser
-            .findAll({include: [{model: Employer}]})
+            .findAll({include: [{model: Company}]})
             .then(users => {
                 res.status(201).send(users)
             })

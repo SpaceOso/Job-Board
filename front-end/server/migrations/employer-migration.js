@@ -2,7 +2,7 @@
 module.exports = {
     up: (queryInterface, Sequelize) => {
         'use strict';
-        return queryInterface.createTable('Employer', {
+        return queryInterface.createTable('Company', {
             name: {
                 type: Sequelize.STRING,
                 allowNull: false,
@@ -43,6 +43,6 @@ module.exports = {
         });
     },
     down: (queryInterface, Sequelize) => {
-        return queryInterface.dropTable('Employer');
+        return queryInterface.dropTable('Company');
     }
 };

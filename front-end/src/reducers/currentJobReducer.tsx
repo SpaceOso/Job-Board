@@ -56,7 +56,7 @@ function currentJobPostReducer(state = thisState, action) {
             const currentJob: JobPost = {
                 isFetching: false,
                 ...action.payload.data.job,
-                ...action.payload.data.employer,
+                ...action.payload.data.company,
             };
 
             console.log("sending:", currentJob);

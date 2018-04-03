@@ -65,18 +65,5 @@ describe('/api/v1/jobposts/', () => {
             });
     });
 
-    /* it('should GET a SINGLE jobPost', (done) => {
-       chai.request(url)
-         .get('/api/v1/jobposts/12312312-1234-1234-1234-123412341234')
-         .end((err, res) => {
-           const singleJobKey = ['id', 'name', 'street', 'logoImg', 'website', 'twitter', 'facebook', 'linkedIn', 'createdAt', 'updatedAt', 'jobs'];
-           res.should.have.status(200);
-           res.body.should.be.a('object');
-           expect(res.body).to.have.all.keys(jobKeys);
-           expect(res.body.Employer).to.have.all.keys(singleJobKey);
-           res.body.Employer.jobs.should.be.a('array');
-           done();
-         });
-     });*/
 
 });
