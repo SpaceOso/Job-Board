@@ -51,13 +51,16 @@ export interface SiteFetching {
 }
 
 /**
- * @type AuthEmployee
+ * @type Employee
+ * @property {(string | null)} companyId - This gets set after the employee creates an company account after log-in in
  * @property {(string | null)} firstName - The employee first name
  * @property {(string | null)} lastName - The employee last name
  * @property {(string | null)} email - The employee email
  * @property {(string | null)} password - The employee hashed password //todo need to has this
  */
-export interface AuthEmployee {
+export interface Employee {
+  id: string | null;
+  companyId: string | null;
   firstName: string;
   lastName: string;
   email: string;
@@ -65,18 +68,28 @@ export interface AuthEmployee {
 }
 
 /**
- * @type Employee
- * @property {(string | null)} companyId - This gets set after the employee creates an company account after log-in in
+ * @type AuthEmployee
  * @property {(boolean | null)} isAuth - This gets set after the employee logs in or we authenticate the JWT
  * @property {(boolean | null)} isFetching - We use this to display a spinner component if the employee is waiting for async operation
  * @property {(string | null)} error - We currently are not using this //todo make sure if save to remove
  */
-export interface Employee extends AuthEmployee {
-  id: string | null;
-  companyId: string | null;
+export interface AuthEmployee extends Employee {
   isAuth: boolean;
   isFetching: boolean | null;
   error: string | null;
+}
+
+
+/**
+ * @type EmployeeWrapper
+ * @property {Employee} employee - Full employee object
+ * @property {string} companyId - Company UUID that this employer belongs to
+ * @property {Company} company - Company that this employee belongs to
+ */
+export interface EmployeeWrapper {
+  employee: Employee;
+  companyId: string | null;
+  company: Company;
 }
 
 export interface Company {

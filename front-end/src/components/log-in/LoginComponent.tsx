@@ -3,7 +3,7 @@ import * as React from 'react';
 import * as bcrypt from 'bcryptjs';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
-import { SiteErrors, SiteFetching, Employee } from '../../types';
+import {SiteErrors, SiteFetching, Employee, AuthEmployee} from '../../types';
 import SimpleForm from '../simple-form/SimpleForm';
 import { default as SpinnerComponent } from '../spinners/spinnerComponent';
 
@@ -13,7 +13,7 @@ import { default as SpinnerComponent } from '../spinners/spinnerComponent';
 import './styles/LoginComponent.scss';
 
 interface MyProps {
-    employee: Employee;
+  employee: AuthEmployee;
   logInEmployee: (employeeInfo) => {};
   siteFetching: SiteFetching;
   siteErrors: SiteErrors;

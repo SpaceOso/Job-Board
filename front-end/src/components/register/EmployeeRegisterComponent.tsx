@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 
-import { AuthEmployee, SiteFetching, Employee } from '../../types';
+import {AuthEmployee, SiteFetching, Employee} from '../../types';
 import SimpleForm from '../simple-form/SimpleForm';
-import { default as SpinnerComponent } from '../spinners/spinnerComponent';
+import {default as SpinnerComponent} from '../spinners/spinnerComponent';
 
 // styles
 import './styles/EmployeeRegister.scss';
@@ -12,7 +12,7 @@ export interface MyProps {
   event: Event;
   redirect: false;
   registerEmployee: (employee: AuthEmployee) => any;
-  employee: Employee;
+  employee: AuthEmployee;
   siteFetching: SiteFetching;
   errors: {
     fName: boolean;
@@ -37,6 +37,31 @@ interface MyState {
 }
 
 class EmployeeRegisterComponent extends React.Component<MyProps, MyState> {
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
+  }
+
+  componentDidMount(): void {
+  }
+
+  componentDidUpdate(prevProps: Readonly<MyProps>, prevState: Readonly<MyState>, prevContext: any): void {
+  }
+
+  componentWillMount(): void {
+  }
+
+  componentWillReceiveProps(nextProps: Readonly<MyProps>, nextContext: any): void {
+  }
+
+  componentWillUnmount(): void {
+  }
+
+  componentWillUpdate(nextProps: Readonly<MyProps>, nextState: Readonly<MyState>, nextContext: any): void {
+  }
+
+  shouldComponentUpdate(nextProps: Readonly<MyProps>, nextState: Readonly<MyState>, nextContext: any): boolean {
+    return false;
+  }
+
   private inputs: FormInputs[] = [
     {
       label: 'First Name',
@@ -97,10 +122,15 @@ class EmployeeRegisterComponent extends React.Component<MyProps, MyState> {
   handleSubmit(employee: AuthEmployee) {
 
     const newEmployee: AuthEmployee = {
+      id: null,
+      companyId: "",
       email: employee.email,
       firstName: employee.firstName,
       lastName: employee.lastName,
       password: employee.password,
+      isAuth: false,
+      isFetching: false,
+      error: "",
     };
 
     console.log('we\'re trying to submit newUser:', newEmployee);
@@ -123,9 +153,9 @@ class EmployeeRegisterComponent extends React.Component<MyProps, MyState> {
             inputs={this.inputs}
             submitBtnText="Register Account"
             onSubmitCB={this.handleSubmit}
-            verifyInputs={[ 'email', 'password' ]}
+            verifyInputs={['email', 'password']}
             joined={true}
-            style={{ width: '57rem' }}
+            style={{width: '57rem'}}
           />
           <div>
             <p>

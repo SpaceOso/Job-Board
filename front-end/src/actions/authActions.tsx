@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { ADD_LOGIN_ERROR, CLEAR_ALL_ERRORS, REMOVE_LOGIN_ERROR, ROOT_URL, SITE_IDLE, SITE_IS_FETCHING } from './index';
 
-import { Company, Employee } from '../types';
+import {Company, Employee, EmployeeWrapper} from '../types';
 import { removeAuth, setAuth } from '../utils/utils';
 
 export const REGISTER_EMPLOYEE = 'REGISTER_EMPLOYEE';
@@ -64,11 +64,20 @@ export function registerEmployee(employeOjbect) {
    },*/
 
 
+
   return (dispatch) => {
 
     dispatch(siteFetch());
 
-    axios.post(`${ROOT_URL}api/register`, employeOjbect)
+    console.log("going to attempt to create a new employee:", employeOjbect);
+
+    let employeeWrapper : EmployeeWrapper = {
+      company: null,
+      companyId: null,
+      employee: {...employeOjbect}
+    };
+
+    axios.post(`${ROOT_URL}api/v1/employee/create`, employeeWrapper)
       .then((response) => {
         /*response: {employee, token}*/
 

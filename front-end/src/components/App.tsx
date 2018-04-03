@@ -10,14 +10,14 @@ import NotFoundComponent from './not-found/NotFoundComponent';
 import EmployeeRegisterContainer from './register/EmployeeRegisterContainer';
 
 // actions
-import { Company, SiteErrors, SiteFetching, Employee } from '../types';
+import {Company, SiteErrors, SiteFetching, Employee, AuthEmployee} from '../types';
 import ProtectedComponent from './dashboard/protected/ProtectedComponent';
 
 interface Props {
   logInOnLoad;
   logOutEmployee: () => {};
-    employee: Employee;
-    company: Company;
+  employee: AuthEmployee;
+  company: Company;
   siteFetching: SiteFetching;
   siteErrors: SiteErrors;
 }

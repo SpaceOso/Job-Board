@@ -18,7 +18,7 @@ import java.security.Principal;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/employee/")
+@RequestMapping("/api/v1/employee/")
 public class EmployeeController {
 
     @PersistenceContext
@@ -43,19 +43,20 @@ public class EmployeeController {
         // get employee reference
         Employee employee = employeeWrapped.getEmployee();
         // get company reference
-        Company company = em.getReference(Company.class, employeeWrapped.getCompanyId());
+//        Company company = em.getReference(Company.class, employeeWrapped.getCompanyId());
 
         // TODO make sure that it comes encrypted already from the front end
         // encrypt password
         employee.setPassword(bCryptPasswordEncoder.encode(employee.getPassword()));
         // set company
-        employee.setCompany(company);
+//        employee.setCompany(company);
         // save employee with company
         employeeRepository.saveAndFlush(employee);
 
         // send back a fully populated EmployeeWrapper
-        EmployeeWrapper savedWrappedEmployee = new EmployeeWrapper(employee, company.getId());
-        savedWrappedEmployee.setCompany(company);
+        EmployeeWrapper savedWrappedEmployee = new EmployeeWrapper(employee);
+//        EmployeeWrapper savedWrappedEmployee = new EmployeeWrapper(employee, company.getId());
+//        savedWrappedEmployee.setCompany(company);
 
         return savedWrappedEmployee;
     }

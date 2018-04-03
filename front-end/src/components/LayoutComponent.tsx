@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-import { Employee } from '../types/';
+import {AuthEmployee, Employee} from '../types/';
 import { default as FooterComponent } from './footer/footerComponent';
 import HeaderComponent from './header/HeaderComponent';
 
 interface Props {
-    employee: Employee;
+    employee: AuthEmployee;
   logOutEmployee;
 }
 

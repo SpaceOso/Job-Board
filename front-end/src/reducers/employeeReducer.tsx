@@ -9,9 +9,9 @@ import {
   SET_EMPLOYEE,
   FETCHING_THIS_EMPLOYEE_ERROR,
 } from '../actions/authActions';
-import { Employee } from "../types/index";
+import {AuthEmployee} from "../types/index";
 
-const defaultState: Employee = {
+const defaultState: AuthEmployee = {
   id: null,
   firstName: '',
   lastName: '',

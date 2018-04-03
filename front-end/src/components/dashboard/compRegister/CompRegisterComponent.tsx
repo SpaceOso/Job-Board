@@ -2,14 +2,14 @@ import * as React from 'react';
 
 // styles
 import { Redirect, RouteComponentProps } from 'react-router';
-import { Employee } from '../../../types';
+import {AuthEmployee, Employee} from '../../../types';
 import SimpleForm, { SFInput } from '../../simple-form/SimpleForm';
 import { default as SpinnerComponent } from '../../spinners/spinnerComponent';
 import './styles/CompRegisterComponent.scss';
 
 interface CompRegisterProps extends RouteComponentProps<any> {
   submitData;
-    employee: Employee;
+  employee: AuthEmployee;
 }
 
 interface MyState {

@@ -10,6 +10,10 @@ public class EmployeeWrapper {
     // empty constructor for JPA
     public EmployeeWrapper(){}
 
+    public EmployeeWrapper(Employee employee){
+        this.employee = employee;
+    }
+
     public EmployeeWrapper(Employee employee, UUID companyId) {
         this.employee = employee;
         this.companyId = companyId;

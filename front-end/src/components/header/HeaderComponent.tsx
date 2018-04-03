@@ -2,13 +2,13 @@ import * as React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 // actions
-import { Employee } from '../../types';
+import {AuthEmployee, Employee} from '../../types';
 import Slide from '../animations/Slide';
 import ModalComponent from '../modal/ModalComponent';
 import SideMenu from '../side-menu/SideMenu';
 
 interface MyProps {
-    employee: Employee;
+  employee: AuthEmployee;
   logOutEmployee: () => {};
   restProps?: any;
 }
