@@ -1,12 +1,10 @@
 package tech.spaceoso.jobboard.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -26,7 +24,7 @@ public class Employee {
 
     private String firstName;
     private String lastName;
-    private String username;
+    private String email;
     private String password;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
@@ -40,12 +38,12 @@ public class Employee {
     protected Employee() {
     }
 
-    public Employee(UUID id, Date date, String firstName, String lastName, String username, String password) {
+    public Employee(UUID id, Date date, String firstName, String lastName, String email, String password) {
         this.id = id;
         this.createdDate = date;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.username = username;
+        this.email = email;
         this.password = password;
     }
 
@@ -89,12 +87,12 @@ public class Employee {
         this.lastName = lastName;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -121,7 +119,7 @@ public class Employee {
                 ", lastModifiedDate=" + lastModifiedDate +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
                 ", company=" + company.getId() +
                 '}';
     }
