@@ -33,9 +33,8 @@ public class Job {
     @JoinColumn(name = "company_id")
     @JsonBackReference
     private Company company;
-    public Job() {
 
-    }
+    public Job(){}
 
     public Job(UUID id, LocalDateTime createdDate, String title, Address address, String description, Company company) {
         this.id = id;

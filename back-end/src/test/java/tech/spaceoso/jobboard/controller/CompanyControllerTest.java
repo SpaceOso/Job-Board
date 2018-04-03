@@ -8,6 +8,7 @@ import org.mockito.MockitoAnnotations;
 import tech.spaceoso.jobboard.ObjectCreator;
 import tech.spaceoso.jobboard.model.Address;
 import tech.spaceoso.jobboard.model.Company;
+import tech.spaceoso.jobboard.model.Employee;
 import tech.spaceoso.jobboard.model.Job;
 import tech.spaceoso.jobboard.repository.CompanyRepository;
 
@@ -41,6 +42,7 @@ public class CompanyControllerTest {
     private Address testerAddress = new Address("test street", "test city", "NY", 12345);
     private Job jobTest = new Job(UUID.randomUUID(), LocalDateTime.now(), "Tester 1", testerAddress, "Fake job", ObjectCreator.createCompany());
     private List<Job> jobList = new ArrayList<Job>();
+    private List<Employee> employerList = new ArrayList<Employee>();
 
 
 
@@ -51,7 +53,7 @@ public class CompanyControllerTest {
         jobList.add(jobTest);
 
         // create mock mockCompany
-        Company mockCompany = new Company(id, new Date(), "Test Tube Company", new Address("fake street", "fake city", "NY", 12345), "fake.png", "fake.com", "twitter", "facebook", "linkedin", jobList);
+        Company mockCompany = new Company(id, new Date(), "Test Tube Company", new Address("fake street", "fake city", "NY", 12345), "fake.png", "fake.com", "twitter", "facebook", "linkedin", employerList,jobList);
 
         // when we search the repo for id return mock mockCompany
         when(companyRepository.getOne(id)).thenReturn(mockCompany);
@@ -71,7 +73,7 @@ public class CompanyControllerTest {
     public void testCompanyCreate() {
         jobList.add(jobTest);
         // create mockCompany to use within this test
-        Company mockCompany = new Company(UUID.randomUUID(), new Date(), "Test Tube Created", new Address("fake street", "fake city", "NY", 12345), "fake.png", "fake.com", "twitter", "facebook", "linkedin", jobList);
+        Company mockCompany = new Company(UUID.randomUUID(), new Date(), "Test Tube Created", new Address("fake street", "fake city", "NY", 12345), "fake.png", "fake.com", "twitter", "facebook", "linkedin",employerList, jobList);
 
         // when we contact the repo to create return the created company
         when(companyRepository.saveAndFlush(mockCompany)).thenReturn(mockCompany);

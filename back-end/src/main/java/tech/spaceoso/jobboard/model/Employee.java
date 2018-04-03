@@ -1,5 +1,6 @@
 package tech.spaceoso.jobboard.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -16,15 +17,22 @@ public class Employee {
     private UUID id;
 
     @CreationTimestamp
-    private LocalDateTime createdDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
 
     @UpdateTimestamp
-    private LocalDateTime lastModifiedDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastModifiedDate;
 
     private String firstName;
     private String lastName;
     private String username;
     private String password;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "company_id")
+    @JsonBackReference
+    private Company company;
 
     /**
      * JPA requires this to be created because they use POJO's
@@ -32,7 +40,7 @@ public class Employee {
     protected Employee() {
     }
 
-    public Employee(UUID id, LocalDateTime date, String firstName, String lastName, String username, String password) {
+    public Employee(UUID id, Date date, String firstName, String lastName, String username, String password) {
         this.id = id;
         this.createdDate = date;
         this.firstName = firstName;
@@ -41,19 +49,19 @@ public class Employee {
         this.password = password;
     }
 
-    public LocalDateTime getCreatedDate() {
+    public Date getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(LocalDateTime createdDate) {
+    public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
 
-    public LocalDateTime getLastModifiedDate() {
+    public Date getLastModifiedDate() {
         return lastModifiedDate;
     }
 
-    public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
+    public void setLastModifiedDate(Date lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
 
@@ -97,6 +105,14 @@ public class Employee {
         this.password = password;
     }
 
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -106,7 +122,7 @@ public class Employee {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
+                ", company=" + company.getId() +
                 '}';
     }
 }

@@ -14,34 +14,41 @@ import java.util.UUID;
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Company {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @org.hibernate.annotations.Type(type = "org.hibernate.type.PostgresUUIDType")
     private UUID id;
+
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
+
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
-    private String name;
+
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
+    private String name;
     private String logoImg;
     private String website;
     private String twitter;
     private String facebook;
     private String linkedIn;
+
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @JsonManagedReference
+    private List<Employee> employees;
+
     @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @JsonManagedReference
     private List<Job> jobs;
 
-    public Company() {
+    public Company() {}
 
-    }
-
-    public Company(UUID id, Date date, String name, Address address, String logoImg, String website, String twitter, String facebook, String linkedIn, List<Job> jobs) {
+    public Company(UUID id, Date date, String name, Address address, String logoImg, String website, String twitter, String facebook, String linkedIn,List<Employee> employees, List<Job> jobs) {
         this.id = id;
         this.createdDate = date;
         this.name = name;
@@ -51,6 +58,7 @@ public class Company {
         this.twitter = twitter;
         this.facebook = facebook;
         this.linkedIn = linkedIn;
+        this.employees = employees;
         this.jobs = jobs;
     }
 

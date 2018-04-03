@@ -70,17 +70,18 @@ public class JobController {
     @RequestMapping(value = "jobposts/create", method = RequestMethod.POST)
     public JobWrapper create(@RequestBody JobWrapper jobWrapper){
         logger.info("creating a new job with:", jobWrapper);
+
         // get company reference from companyId sent in JSON
-        Company emp = em.getReference(Company.class, jobWrapper.getCompanyId());
+        Company company = em.getReference(Company.class, jobWrapper.getCompanyId());
 
         // create and save a default job
         Job newJob = jobWrapper.getJob();
-        newJob.setCompany(emp);
+        newJob.setCompany(company);
         jobRepository.saveAndFlush(newJob);
 
         // send back the new job with company info and all other jobs
-        JobWrapper wrappedJob = new JobWrapper(newJob, emp.getId());
-        wrappedJob.setCompany(emp);
+        JobWrapper wrappedJob = new JobWrapper(newJob, company.getId());
+        wrappedJob.setCompany(company);
 
         return wrappedJob;
     }

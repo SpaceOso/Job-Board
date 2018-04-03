@@ -41,7 +41,7 @@ final public class ObjectCreator {
         // generate id for the company
         UUID companyId = UUID.randomUUID();
 
-        Company company = new Company(companyId, new Date(), "Test Company", createAddress(), "noLogo.png", "fake.com", "twitter.com", "facebook", "linkedin.com", null);
+        Company company = new Company(companyId, new Date(), "Test Company", createAddress(), "noLogo.png", "fake.com", "twitter.com", "facebook", "linkedin.com", null, null);
         // get list of jobs
         List<Job> jobs = createJobs(3);
         // add this companyId to all jobs that we receive
