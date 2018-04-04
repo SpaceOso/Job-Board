@@ -80,6 +80,8 @@ export function registerEmployee(employeOjbect) {
     axios.post(`${ROOT_URL}api/v1/employee/create`, employeeWrapper)
       .then((response) => {
         /*response: {employee, token}*/
+        console.log("this is the reponse we get when we register:", response);
+
 
         localStorage.setItem('tkn', response.data.token);
 

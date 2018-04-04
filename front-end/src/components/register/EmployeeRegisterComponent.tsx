@@ -121,6 +121,7 @@ class EmployeeRegisterComponent extends React.Component<MyProps, MyState> {
 
   handleSubmit(employee: AuthEmployee) {
 
+    //TODO this is wher eyou want to encrypt password on the client side
     const newEmployee: AuthEmployee = {
       id: null,
       companyId: "",
@@ -133,7 +134,8 @@ class EmployeeRegisterComponent extends React.Component<MyProps, MyState> {
       error: "",
     };
 
-    console.log('we\'re trying to submit newUser:', newEmployee);
+
+    console.log('we\'re trying to submit newEmployee:', newEmployee);
     this.props.registerEmployee(newEmployee);
   }
 
