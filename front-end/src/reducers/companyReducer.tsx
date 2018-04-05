@@ -13,19 +13,14 @@ import {COMPANY_FETCHING, COMPANY_IDLE, EDITING_JOB_POST_SUCCESS, SET_COMPANY} f
 import { Company } from '../types';
 
 const defaultState: Company = {
-  id: '',
-  name: '',
-  address: {
-    street: '',
-    city: '',
-    state: '',
-    zipCode: '',
-  },
-  logoImg: '',
-  website: '',
-  twitter: '',
-  facebook: '',
-  linkedIn: '',
+  id: null,
+  name: null,
+  address: null,
+  logoImg: null,
+  website: null,
+  twitter: null,
+  facebook: null,
+  linkedIn: null,
   jobs: null,
   isFetching: false,
 };

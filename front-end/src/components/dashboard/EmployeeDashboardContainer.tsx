@@ -37,8 +37,8 @@ import EmployeeDashboardComponent from './EmployeeDashboardComponent';
 // function mapStateToProps({employee, company}: StoreState, {...props} ) {
 function mapStateToProps({ employee, company, siteFetching }: StoreState) {
   return {
-      employee,
-      company,
+    employee,
+    company,
     siteFetching,
   };
 }

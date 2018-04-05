@@ -17,17 +17,19 @@ export interface createdDate{
     }
 }
 
+export interface Address{
+  street: string;
+  city: string;
+  state: string;
+  zipCode: string;
+}
+
 export interface Job {
   id: string;
   title: string;
   description: string;
-    companyId: string;
-  address: {
-    street: string;
-    city: string;
-    state: string;
-    zipCode: string;
-  };
+  companyId: string;
+  address: Address | null
   createdDate: createdDate | null;
 }
 
@@ -92,20 +94,28 @@ export interface EmployeeWrapper {
   company: Company;
 }
 
+/**
+ * @type Company
+ * @property {string | null} id - Company UUID
+ * @property {string | null} name - Company name
+ * @property {Address | null} address - Company address
+ * @property {string | null} logoImg - File name and extension of company logo
+ * @property {string | null} website - URL of company
+ * @property {string | null} twitter - URL of twitter account of company
+ * @property {string | null} facebook - URL of facebook account of company
+ * @property {string | null} linkedIn - URL of linkedIn account of company
+ * @property {CompanyJobView[] | null} jobs - list of jobs created by this company
+ * @property {boolean | null} isFetching - indicates if we are currently fetching the server for information
+ */
 export interface Company {
-  id: string;
-  name: string;
-  address: {
-    street: string;
-    city: string;
-    state: string;
-    zipCode: string;
-  };
-  logoImg: string;
-  website: string;
-  twitter: string;
-  facebook: string;
-  linkedIn: string;
+  id: string | null;
+  name: string | null;
+  address: Address | null;
+  logoImg: string | null;
+  website: string | null;
+  twitter: string | null;
+  facebook: string | null;
+  linkedIn: string | null;
   jobs: CompanyJobView[] | null;
   isFetching: boolean | null;
 }
