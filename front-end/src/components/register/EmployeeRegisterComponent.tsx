@@ -37,30 +37,6 @@ interface MyState {
 }
 
 class EmployeeRegisterComponent extends React.Component<MyProps, MyState> {
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
-  }
-
-  componentDidMount(): void {
-  }
-
-  componentDidUpdate(prevProps: Readonly<MyProps>, prevState: Readonly<MyState>, prevContext: any): void {
-  }
-
-  componentWillMount(): void {
-  }
-
-  componentWillReceiveProps(nextProps: Readonly<MyProps>, nextContext: any): void {
-  }
-
-  componentWillUnmount(): void {
-  }
-
-  componentWillUpdate(nextProps: Readonly<MyProps>, nextState: Readonly<MyState>, nextContext: any): void {
-  }
-
-  shouldComponentUpdate(nextProps: Readonly<MyProps>, nextState: Readonly<MyState>, nextContext: any): boolean {
-    return false;
-  }
 
   private inputs: FormInputs[] = [
     {
@@ -140,6 +116,7 @@ class EmployeeRegisterComponent extends React.Component<MyProps, MyState> {
   }
 
   redirectToDashboard() {
+    console.log("redirectToDashboard...");
     return (
       <Redirect to={`/employee/dashboard/${this.props.employee.id}/register`} push/>
     );

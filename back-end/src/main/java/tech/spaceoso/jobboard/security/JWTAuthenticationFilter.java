@@ -73,8 +73,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String token = Jwts.builder()
                 .setSubject(email)
-//                .claim("pasword", employee.getPassword())
                 .setSubject(((User) auth.getPrincipal()).getUsername())
+                .claim("firstName", employee.getFirstName())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SECRET.getBytes())
                 .compact();

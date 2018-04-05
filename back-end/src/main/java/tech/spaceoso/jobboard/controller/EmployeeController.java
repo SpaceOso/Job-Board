@@ -1,8 +1,11 @@
 package tech.spaceoso.jobboard.controller;
 
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +18,11 @@ import tech.spaceoso.jobboard.repository.EmployeeRepository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.security.Principal;
+import java.util.Date;
 import java.util.UUID;
+
+import static tech.spaceoso.jobboard.security.SecurityConstants.EXPIRATION_TIME;
+import static tech.spaceoso.jobboard.security.SecurityConstants.SECRET;
 
 @RestController
 @RequestMapping("/api/v1/employee/")
@@ -42,24 +49,34 @@ public class EmployeeController {
 
         // get employee reference
         Employee employee = employeeWrapped.getEmployee();
-        // get company reference
-//        Company company = em.getReference(Company.class, employeeWrapped.getCompanyId());
 
         // TODO make sure that it comes encrypted already from the front end
         // encrypt password
         employee.setPassword(bCryptPasswordEncoder.encode(employee.getPassword()));
-        // set company
-//        employee.setCompany(company);
-        // save employee with company
+
+        // save employee
         employeeRepository.saveAndFlush(employee);
 
         // send back a fully populated EmployeeWrapper
         EmployeeWrapper savedWrappedEmployee = new EmployeeWrapper(employee);
-//        EmployeeWrapper savedWrappedEmployee = new EmployeeWrapper(employee, company.getId());
-//        savedWrappedEmployee.setCompany(company);
+
+        String token = Jwts.builder()
+                .setSubject(employee.getEmail())
+                .claim("firstName", employee.getFirstName())
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .signWith(SignatureAlgorithm.HS512, SECRET.getBytes())
+                .compact();
+
+        savedWrappedEmployee.setToken(token);
+        /*
+            TODO we need to create a token at this step, one way to do it is to do it manually by using the JWT buildier
+        */
+
+
 
         return savedWrappedEmployee;
     }
+
 
     @RequestMapping(value = "/getuser", method = RequestMethod.GET)
     public ModelMap backEnd(Principal principal, ModelMap model){

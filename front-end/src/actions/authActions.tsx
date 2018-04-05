@@ -23,7 +23,6 @@ export const LOG_OUT_EMPLOYEE = 'LOG_OUT_EMPLOYEE';
 // this get's called after the server registers a new employee
 export function registerEmployeeSuccess(employee) {
 
-
   return {
     type: REGISTER_EMPLOYEE_SUCCESS,
     payload: employee,

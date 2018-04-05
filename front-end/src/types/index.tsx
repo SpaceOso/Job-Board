@@ -138,8 +138,8 @@ export interface CompanyJobView extends Job {
 
 export interface StoreState {
   jobs?: Job[];
-    employee?: Employee | null;
-    company?: Company | null;
+  employee?: AuthEmployee | null;
+  company?: Company | null;
   currentJobPost?: JobPost;
   siteFetching?: SiteFetching;
   siteErrors?: SiteErrors;

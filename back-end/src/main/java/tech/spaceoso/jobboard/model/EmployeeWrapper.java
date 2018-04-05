@@ -6,6 +6,7 @@ public class EmployeeWrapper {
     private Employee employee;
     private UUID companyId;
     private Company company;
+    private String token;
 
     // empty constructor for JPA
     public EmployeeWrapper(){}
@@ -14,9 +15,12 @@ public class EmployeeWrapper {
         this.employee = employee;
     }
 
-    public EmployeeWrapper(Employee employee, UUID companyId) {
+
+    public EmployeeWrapper(Employee employee, UUID companyId, String token) {
         this.employee = employee;
         this.companyId = companyId;
+        this.token = token;
+
     }
 
     public Employee getEmployee() {
@@ -41,5 +45,13 @@ public class EmployeeWrapper {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

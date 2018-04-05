@@ -27,6 +27,7 @@ function employeeReducer(state = defaultState, action): any {
 // function employeeReducer(state, action):Employee {
   switch (action.type) {
     case REGISTER_EMPLOYEE_SUCCESS:
+      console.log("REGISTER_EMPLOYE_SUCCESS");
       return {
         ...state,
         ...action.payload,
