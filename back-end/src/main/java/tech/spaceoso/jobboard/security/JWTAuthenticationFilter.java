@@ -71,13 +71,15 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String email = ((User)auth.getPrincipal()).getUsername();
         Employee employee = employeeRepository.findByEmail(email);
 
-        String token = Jwts.builder()
+       /* String token = Jwts.builder()
                 .setSubject(email)
                 .setSubject(((User) auth.getPrincipal()).getUsername())
                 .claim("firstName", employee.getFirstName())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SECRET.getBytes())
-                .compact();
+                .compact();*/
+
+        String token = JWTBuilder.buildToken(email, employee);
 
         ObjectMapper mapper = new ObjectMapper();
         Gson gson = new Gson();
