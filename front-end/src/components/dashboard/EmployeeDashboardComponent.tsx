@@ -63,7 +63,7 @@ class EmployeeDashboardComponent extends React.Component<Props, any> {
         {...props}
       />
     );
-  }
+  };
 
   dashboardMainLayout = (props) => {
     return (
@@ -74,7 +74,7 @@ class EmployeeDashboardComponent extends React.Component<Props, any> {
         {...props}
       />
     );
-  }
+  };
 
   render() {
 

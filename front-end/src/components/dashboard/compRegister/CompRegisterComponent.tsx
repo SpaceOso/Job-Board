@@ -2,7 +2,7 @@ import * as React from 'react';
 
 // styles
 import { Redirect, RouteComponentProps } from 'react-router';
-import {AuthEmployee, Employee} from '../../../types';
+import {AuthEmployee, Company, Employee} from '../../../types';
 import SimpleForm, { SFInput } from '../../simple-form/SimpleForm';
 import { default as SpinnerComponent } from '../../spinners/spinnerComponent';
 import './styles/CompRegisterComponent.scss';
@@ -69,7 +69,7 @@ class CompRegisterComponent extends React.Component<CompRegisterProps, MyState> 
       required: true,
       type: 'address',
       placeHolder: 'address',
-      id: 'address',
+      id: 'street',
     },
     {
       label: 'city:',
@@ -111,12 +111,41 @@ class CompRegisterComponent extends React.Component<CompRegisterProps, MyState> 
    * This well send the update state to the back end
    */
   handleCompanySubmit(formData) {
-    /** If there was a file uploaded update logoImg state property */
-    if (formData.logo !== undefined) {
+    // testing what the object we're sending the back end looks like:
+    let company : Company = {
+      id: null,
+      address: {
+        street: formData.street,
+        city: formData.city,
+        state: formData.state,
+        zipCode: formData.zip,
+      },
+      facebook: formData.facebook,
+      twitter: formData.twitter,
+      website: formData.website,
+      linkedIn: formData.linkedIn,
+      jobs: null,
+      isFetching: null,
+      logoImg: formData.logo,
+      name: formData.name
+    };
+
+
+    let companyWrapper = {
+      company: company,
+      employeeId: this.props.employee.id
+    }
+
+    console.log(companyWrapper);
+
+    this.props.submitData(companyWrapper, formData.logo);
+
+    /* If there was a file uploaded update logoImg state property */
+   /* if (formData.logo !== undefined) {
       this.props.submitData(formData, formData.logo);
     } else {
       this.props.submitData(formData, null);
-    }
+    }*/
 
   }
 
@@ -154,6 +183,7 @@ class CompRegisterComponent extends React.Component<CompRegisterProps, MyState> 
       return <SpinnerComponent/>;
     }
 
+    // if the user does have a companyId associated with account
     if (this.props.employee.companyId !== null) {
       return <Redirect to={`${'/employee/dashboard/'}${this.props.employee.id}/home `}/>;
     }

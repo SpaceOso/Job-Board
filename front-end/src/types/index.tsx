@@ -154,3 +154,8 @@ export interface StoreState {
   siteFetching?: SiteFetching;
   siteErrors?: SiteErrors;
 }
+
+export interface CompanyDTO{
+  address : Address;
+
+}

@@ -2,6 +2,8 @@ import axios from 'axios';
 import { setAuth } from '../utils/utils';
 import {setCompanyAndEmployee, setSiteIdle, siteFetch} from './authActions';
 import {COMPANY_FETCHING, COMPANY_IDLE, EDITING_JOB_POST_SUCCESS, ROOT_URL} from './index';
+import * as moment from "moment";
+import _date = moment.unitOfTime._date;
 
 export const GET_THIS_COMPANY_JOBS_SUCCESS = 'GET_THIS_COMPANY_JOBS_SUCCESS';
 export const FETCHING_THIS_COMPANY_JOBS = 'FETCHING_THIS_COMPANY_JOBS';
@@ -134,7 +136,9 @@ export function submitCompanyRegistration(companyInfo, file: File) {
 
     dispatch(siteFetch());
 
-    axios.post(`${ROOT_URL}api/register/company`, data)
+    console.log("about to register a new company with:", companyInfo);
+
+    axios.post(`${ROOT_URL}secured/company/create`, companyInfo)
       .then((response) => {
 
         console.log('response from the server:', response);
