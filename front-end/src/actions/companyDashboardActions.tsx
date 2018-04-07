@@ -163,6 +163,7 @@ export function submitCompanyRegistration(companyInfo) {
         console.log('response from the server:', response);
         /*recieving {token, company}*/
         setAuth(response.data.token);
+        response.data.employee.id = response.data.companyId;
 
         dispatch(setCompanyAndEmployee(response.data.company, response.data.employee));
       })

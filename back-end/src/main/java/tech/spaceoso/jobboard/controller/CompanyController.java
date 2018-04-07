@@ -11,6 +11,7 @@ import tech.spaceoso.jobboard.model.Employee;
 import tech.spaceoso.jobboard.model.EmployeeWrapper;
 import tech.spaceoso.jobboard.repository.CompanyRepository;
 import tech.spaceoso.jobboard.repository.EmployeeRepository;
+import tech.spaceoso.jobboard.security.JWTBuilder;
 import tech.spaceoso.jobboard.service.AmazonClient;
 
 import javax.persistence.EntityManager;
@@ -73,6 +74,9 @@ public class CompanyController {
         employeeRepository.saveAndFlush(employee);
 
         EmployeeWrapper updatedEmployee = new EmployeeWrapper(employee, newlySavedCompany.getId(), newlySavedCompany);
+
+        String updatedToken = JWTBuilder.buildCompanyToken(employee.getEmail(), employee);
+        updatedEmployee.setToken(updatedToken);
 
         return updatedEmployee;
     }
