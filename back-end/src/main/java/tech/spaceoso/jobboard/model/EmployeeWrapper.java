@@ -20,7 +20,12 @@ public class EmployeeWrapper {
         this.employee = employee;
         this.companyId = companyId;
         this.token = token;
+    }
 
+    public EmployeeWrapper(Employee employee, UUID companyId, Company company){
+        this.employee = employee;
+        this.companyId = companyId;
+        this.company = company;
     }
 
     public Employee getEmployee() {

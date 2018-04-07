@@ -1,15 +1,18 @@
 package tech.spaceoso.jobboard.model;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.UUID;
 
 public class CompanyWrapper {
     private Company company;
     private UUID employeeId;
 
+
     public CompanyWrapper() {
     }
 
-    public CompanyWrapper(Company company, UUID employeeId) {
+    public CompanyWrapper(Company company, UUID employeeId, MultipartFile logoFile) {
         this.company = company;
         this.employeeId = employeeId;
     }
@@ -29,4 +32,6 @@ public class CompanyWrapper {
     public void setEmployeeId(UUID employeeId) {
         this.employeeId = employeeId;
     }
+
+
 }

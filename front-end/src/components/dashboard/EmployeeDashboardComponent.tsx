@@ -13,7 +13,7 @@ interface Props extends RouteComponentProps<any> {
   siteFetching: SiteFetching;
   fetchCompanyJobs: (companyId) => void;
   saveJobPost: (jobInfo, employeeId) => {};
-  submitCompanyRegistration: (employeeData, file) => {};
+  submitCompanyRegistration: (employeeData) => {};
 }
 
 class EmployeeDashboardComponent extends React.Component<Props, any> {
@@ -44,8 +44,8 @@ class EmployeeDashboardComponent extends React.Component<Props, any> {
    */
   handleCompanyRegistration(companyData, file) {
     console.log('handleCompanyRegistration:', companyData, file);
-    const employeeData = { ...companyData, employeeId: this.props.employee.id };
-    this.props.submitCompanyRegistration(employeeData, file);
+    const employeeData = { ...companyData, employeeId: this.props.employee.id, logoFile: file };
+    this.props.submitCompanyRegistration(employeeData);
   }
 
   /**

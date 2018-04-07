@@ -4,6 +4,7 @@ import {setCompanyAndEmployee, setSiteIdle, siteFetch} from './authActions';
 import {COMPANY_FETCHING, COMPANY_IDLE, EDITING_JOB_POST_SUCCESS, ROOT_URL} from './index';
 import * as moment from "moment";
 import _date = moment.unitOfTime._date;
+import {company} from "aws-sdk/clients/importexport";
 
 export const GET_THIS_COMPANY_JOBS_SUCCESS = 'GET_THIS_COMPANY_JOBS_SUCCESS';
 export const FETCHING_THIS_COMPANY_JOBS = 'FETCHING_THIS_COMPANY_JOBS';
@@ -106,6 +107,24 @@ export function saveJobPost(jobPostInfo, employeeId) {
 
 }
 
+function createFormData(object: Object, form?: FormData, namespace?: string): FormData {
+  const formData = form || new FormData();
+  for (let property in object) {
+    if (!object.hasOwnProperty(property) || !object[property]) {
+      continue;
+    }
+    const formKey = namespace ? `${namespace}[${property}]` : property;
+    if (object[property] instanceof Date) {
+      formData.append(formKey, object[property].toISOString());
+    } else if (typeof object[property] === 'object' && !(object[property] instanceof File)) {
+      createFormData(object[property], formData, formKey);
+    } else {
+      formData.append(formKey, object[property]);
+    }
+  }
+  return formData;
+}
+
 /**
  *
  * @param companyInfo {object}                   - The company information created after registration of a new employee
@@ -113,32 +132,32 @@ export function saveJobPost(jobPostInfo, employeeId) {
  * @property companyInfo.employeeId {string}         - The current employee id who is trying to register a new company
  * @return {(dispatch) => any}
  */
-export function submitCompanyRegistration(companyInfo, file: File) {
+export function submitCompanyRegistration(companyInfo) {
+
+  console.log("companyInfo before formdata", companyInfo);
+  const companyWrapper = {
+    company: {...companyInfo.company},
+    employeeId: companyInfo.employeeId,
+    // logoFile: companyInfo.logoFile !== undefined ? companyInfo.logoFile : null,
+  };
 
   const data = new FormData();
-  if (file !== null) {
-    data.append('file', file);
+  if (companyInfo.logoFile !== null) {
+    data.append('logoFile', companyInfo.logoFile);
   }
 
-  for (const entries in companyInfo) {
-    if (companyInfo.hasOwnProperty(entries)) {
+  data.append("companyWrapper",
+    new Blob([JSON.stringify(companyWrapper)], {type: "application/json"}));
 
-      if (entries === 'logo') {
-        data.append(entries, '');
-      } else {
-        data.append(entries, companyInfo[ entries ]);
-      }
-
-    }
-  }
+  console.log("the blob:", JSON.stringify(companyWrapper));
 
   return (dispatch) => {
 
     dispatch(siteFetch());
 
-    console.log("about to register a new company with:", companyInfo);
+    console.log("about to register a new company with:", data);
 
-    axios.post(`${ROOT_URL}secured/company/create`, companyInfo)
+    axios.post(`${ROOT_URL}secured/company/create`, data)
       .then((response) => {
 
         console.log('response from the server:', response);
@@ -147,7 +166,7 @@ export function submitCompanyRegistration(companyInfo, file: File) {
 
         dispatch(setCompanyAndEmployee(response.data.company, response.data.employee));
       })
-      .catch(error => console.log(error));
+      .catch(error => console.log("we got an error", error));
   };
 }
 

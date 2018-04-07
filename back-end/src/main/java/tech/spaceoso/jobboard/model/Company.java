@@ -5,8 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -48,7 +50,7 @@ public class Company {
 
     public Company() {}
 
-    public Company(UUID id, Date date, String name, Address address, String logoImg, String website, String twitter, String facebook, String linkedIn,List<Employee> employees, List<Job> jobs) {
+    public Company(UUID id, Date date, String name, Address address, String logoImg, String website, String twitter, String facebook, String linkedIn,List<Employee> employees, List<Job> jobs ) {
         this.id = id;
         this.createdDate = date;
         this.name = name;

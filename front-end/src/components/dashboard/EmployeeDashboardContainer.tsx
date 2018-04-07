@@ -50,8 +50,8 @@ const mapDispatchToProps = dispatch => ({
   fetchCompanyJobs: (companyId) => {
     dispatch(fetchAllCompanyJobModels(companyId));
   },
-  submitCompanyRegistration: (companyData, file: File) => {
-    dispatch(submitCompanyRegistration(companyData, file));
+  submitCompanyRegistration: (companyData) => {
+    dispatch(submitCompanyRegistration(companyData));
   },
 });
 

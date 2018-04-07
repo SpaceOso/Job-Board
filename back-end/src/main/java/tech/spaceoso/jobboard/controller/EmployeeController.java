@@ -61,21 +61,10 @@ public class EmployeeController {
         // send back a fully populated EmployeeWrapper
         EmployeeWrapper savedWrappedEmployee = new EmployeeWrapper(employee);
 
-        /*String token = Jwts.builder()
-                .setSubject(employee.getEmail())
-                .claim("firstName", employee.getFirstName())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(SignatureAlgorithm.HS512, SECRET.getBytes())
-                .compact();*/
 
         String token = JWTBuilder.buildToken(employee.getEmail(), employee);
 
         savedWrappedEmployee.setToken(token);
-        /*
-            TODO we need to create a token at this step, one way to do it is to do it manually by using the JWT buildier
-        */
-
-
 
         return savedWrappedEmployee;
     }

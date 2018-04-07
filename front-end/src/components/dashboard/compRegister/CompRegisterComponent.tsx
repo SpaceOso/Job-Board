@@ -126,17 +126,18 @@ class CompRegisterComponent extends React.Component<CompRegisterProps, MyState> 
       linkedIn: formData.linkedIn,
       jobs: null,
       isFetching: null,
-      logoImg: formData.logo,
+      logoImg: formData.logo !== undefined ? formData.logo.name : null,
       name: formData.name
     };
 
 
     let companyWrapper = {
       company: company,
-      employeeId: this.props.employee.id
-    }
+      employeeId: this.props.employee.id,
+      logoFile: formData.logo
+    };
 
-    console.log(companyWrapper);
+    console.log("CompRegisterComponent", companyWrapper);
 
     this.props.submitData(companyWrapper, formData.logo);
 

@@ -267,6 +267,7 @@ export function logInEmployee(employee) {
 }
 
 export function setCompanyAndEmployee(company, employee) {
+  console.log("setCompanyAndEmployee", company, employee);
   return (dispatch) => {
     dispatch(removeLogInError());
     dispatch(setCompany(company));
