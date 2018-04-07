@@ -28,10 +28,7 @@ public class CompanyController {
 
     final Logger logger = LoggerFactory.getLogger(CompanyController.class);
 
-//    @Autowired
     private CompanyRepository companyRepository;
-
-//    @Autowired
     private EmployeeRepository employeeRepository;
     private AmazonClient amazonClient;
 
