@@ -54,7 +54,7 @@ export interface SiteFetching {
 
 /**
  * @type Employee
- * @property {(string | null)} companyId - This gets set after the employee creates an company account after log-in in
+ * @property {(string | null)} companyIdentifier - This gets set after the employee creates an company account after log-in in
  * @property {(string | null)} firstName - The employee first name
  * @property {(string | null)} lastName - The employee last name
  * @property {(string | null)} email - The employee email
@@ -62,7 +62,7 @@ export interface SiteFetching {
  */
 export interface Employee {
   id: string | null;
-  companyId: string | null;
+  companyIdentifier: string | null;
   firstName: string;
   lastName: string;
   email: string;
@@ -85,7 +85,7 @@ export interface AuthEmployee extends Employee {
 /**
  * @type EmployeeWrapper
  * @property {Employee} employee - Full employee object
- * @property {string} companyId - Company UUID that this employer belongs to
+ * @property {string} companyIdentifier - Company UUID that this employer belongs to
  * @property {Company} company - Company that this employee belongs to
  */
 export interface EmployeeWrapper {

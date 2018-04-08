@@ -184,8 +184,8 @@ class CompRegisterComponent extends React.Component<CompRegisterProps, MyState> 
       return <SpinnerComponent/>;
     }
 
-    // if the user does have a companyId associated with account
-    if (this.props.employee.companyId !== null) {
+    // if the user does have a companyIdentifier associated with account
+    if (this.props.employee.companyIdentifier !== null) {
       return <Redirect to={`${'/employee/dashboard/'}${this.props.employee.id}/home `}/>;
     }
 

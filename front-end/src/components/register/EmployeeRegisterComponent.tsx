@@ -100,7 +100,7 @@ class EmployeeRegisterComponent extends React.Component<MyProps, MyState> {
     //TODO this is wher eyou want to encrypt password on the client side
     const newEmployee: AuthEmployee = {
       id: null,
-      companyId: "",
+      companyIdentifier: "",
       email: employee.email,
       firstName: employee.firstName,
       lastName: employee.lastName,
@@ -147,7 +147,7 @@ class EmployeeRegisterComponent extends React.Component<MyProps, MyState> {
           {/*Once the employee registers it should take them to the dashboard*/}
           {this.props.employee.isAuth === true ? this.redirectToDashboard() : null}
           {/*This will display once we register our employee*/}
-          {this.props.employee.companyId !== null ? this.redirectToDashboard() : null}
+          {this.props.employee.companyIdentifier !== null ? this.redirectToDashboard() : null}
         </div>
       </div>
     );

@@ -81,7 +81,7 @@ class LogInComponent extends React.Component<MyProps, MyState> {
 
   handleLoginRoute() {
     if (this.props.employee.isAuth) {
-      if (this.props.employee.companyId !== null) {
+      if (this.props.employee.companyIdentifier !== null) {
         return <Redirect to={`${'/employee/dashboard/'}${this.props.employee.id}/home`}/>;
       }
       return <Redirect to={`${'/employee/dashboard/'}${this.props.employee.id}/register`}/>;

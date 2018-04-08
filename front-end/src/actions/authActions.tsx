@@ -198,7 +198,7 @@ export function logInOnLoad(token) {
 
         console.log("login/logcheck", response);
 
-        if (response.data.employee.companyId !== null) {
+        if (response.data.employee.companyIdentifier !== null) {
           dispatch(setCompanyAndEmployee(response.data.company, response.data.employee));
         } else {
           dispatch(logInEmployeeSuccess(response.data.employee));
@@ -253,7 +253,7 @@ export function logInEmployee(employee) {
         // set the token as part of our request header
         setAuth(token);
 
-        if (response.data.employee.companyId !== null) {
+        if (response.data.employee.companyIdentifier !== null) {
           dispatch(setCompanyAndEmployee(response.data.company, response.data.employee));
         } else {
             console.log("it did equal null now where here");

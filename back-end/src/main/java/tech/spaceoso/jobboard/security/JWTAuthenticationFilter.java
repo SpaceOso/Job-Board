@@ -67,7 +67,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String token = JWTBuilder.buildToken(email, employee);
 
-
         JSONObject  userInfo = new JSONObject();
         JSONObject emloyerInfo = new JSONObject(employee);
         userInfo.put("token", TOKEN_PREFIX + token);

@@ -17,7 +17,7 @@ const defaultState: AuthEmployee = {
   lastName: '',
   email: '',
   password: '',
-  companyId: null,
+  companyIdentifier: null,
   isAuth: false,
   isFetching: false,
   error: null,

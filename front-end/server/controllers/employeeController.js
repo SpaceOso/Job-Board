@@ -129,7 +129,7 @@ module.exports = {
                 let token = jwt.sign(user, process.env.SECRET_KEY, {expiresIn: "2 days"});
                 res.status(200).json({
                     user,
-                    // companyId: employee.companyId,
+                    // companyIdentifier: employee.companyIdentifier,
                     company: company,
                     token: token
                 });

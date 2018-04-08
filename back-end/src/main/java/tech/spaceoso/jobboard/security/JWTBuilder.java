@@ -24,12 +24,10 @@ public final class JWTBuilder {
 
         String token = Jwts.builder()
                 .setSubject(email)
-//                .setSubject(((User) auth.getPrincipal()).getUsername())
                 .claim("firstName", employee.getFirstName())
                 .claim("lastName", employee.getLastName())
-//                .claim("email", employee.getEmail())
-//                .claim("companyId", employee.getCompany().getId())
-//                .claim("id", employee.getId())
+                .claim("email", employee.getEmail())
+                .claim("id", employee.getId())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SECRET.getBytes())
                 .compact();

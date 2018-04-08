@@ -95,7 +95,7 @@ class HeaderComponent extends React.Component<MyProps, MyState> {
     } else {
       const dashboardLink = `/employee/dashboard/${this.props.employee.id}`;
 
-      const dashLink = this.props.employee.companyId !== null ? dashboardLink + '/home' : dashboardLink + '/register';
+      const dashLink = this.props.employee.companyIdentifier !== null ? dashboardLink + '/home' : dashboardLink + '/register';
 
       if (this.state.mobile) {
         navButtons.push(...this.createMobileLinks(dashboardLink));

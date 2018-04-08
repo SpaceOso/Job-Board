@@ -61,7 +61,6 @@ public class EmployeeController {
         // send back a fully populated EmployeeWrapper
         EmployeeWrapper savedWrappedEmployee = new EmployeeWrapper(employee);
 
-
         String token = JWTBuilder.buildToken(employee.getEmail(), employee);
 
         savedWrappedEmployee.setToken(token);

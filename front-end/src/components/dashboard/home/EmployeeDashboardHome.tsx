@@ -27,7 +27,7 @@ class EmployeeDashboardHome extends React.Component<MyProps> {
         <h1 className={'header'}>
           Welcome {this.props.employee.firstName} - {this.props.company.name}
         </h1>
-        <img className={'home-logo'} src={`${IMG_URL}${this.props.company.logoImg}`} alt=""/>
+        <img className={'home-logo'} src={`${this.props.company.logoImg}`} alt=""/>
         <JobPostUpdatesComponent jobs={this.props.company.jobs}/>
       </div>
     );
