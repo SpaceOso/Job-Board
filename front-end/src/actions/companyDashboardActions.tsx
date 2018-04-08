@@ -53,7 +53,7 @@ export function fetchAllCompanyJobModels(companyId) {
     dispatch(siteFetch());
     dispatch(companyFetching());
 
-    axios.get(`${ROOT_URL}company/${companyId}/get-jobs`)
+    axios.get(`${ROOT_URL}secured/company/${companyId}/get-jobss`)
       .then((jobs) => {
         dispatch(getThisCompanyJobsSuccess(jobs));
         dispatch(companyIdle());

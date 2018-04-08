@@ -21,9 +21,9 @@ public final class JWTBuilder {
     }
 
     public static String buildToken(String email, Employee employee){
-
+        System.out.println("BUILDING REGULAR TOKEN TOKEN!!!! " + email);
         String token = Jwts.builder()
-                .setSubject(email)
+                .setSubject(employee.getEmail())
                 .claim("firstName", employee.getFirstName())
                 .claim("lastName", employee.getLastName())
                 .claim("email", employee.getEmail())
@@ -36,8 +36,9 @@ public final class JWTBuilder {
     }
 
     public static String buildCompanyToken(String email, Employee employee) {
+        System.out.println("BUILDING COMPANY TOKEN!!!! " + email);
         String token = Jwts.builder()
-                .setSubject(email)
+                .setSubject(employee.getEmail())
                 .claim("firstName", employee.getFirstName())
                 .claim("lastName", employee.getLastName())
                 .claim("email", employee.getEmail())
@@ -50,8 +51,9 @@ public final class JWTBuilder {
     }
 
     public static String buildFromClaims(Map<String, Object> claims){
+        System.out.println("building from claims "+ claims.get("email").toString());
         String token = Jwts.builder()
-//                .setSubject(email)
+                .setSubject(claims.get("email").toString())
                 .setClaims(claims)
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SECRET.getBytes())

@@ -55,12 +55,12 @@ class DashboardMainLayout extends React.Component<Props, any> {
   createJobComponent = () => {
     return (
       <CreateJobComponent
-          employeeId={this.props.employee.id}
+        employeeId={this.props.employee.id}
         company={this.props.company}
         submitJobPost={this.props.saveJobPost}
       />
     );
-  }
+  };
 
   editJobsLayout = (props) => {
     return (
@@ -70,7 +70,7 @@ class DashboardMainLayout extends React.Component<Props, any> {
         {...props}
       />
     );
-  }
+  };
 
   applicantVewContainer = () => {
     return (
@@ -78,7 +78,7 @@ class DashboardMainLayout extends React.Component<Props, any> {
         applicant={this.state.selectedApplicant}
       />
     );
-  }
+  };
 
   applicantListComponent = (props) => {
     return (
@@ -90,7 +90,7 @@ class DashboardMainLayout extends React.Component<Props, any> {
         company={this.props.company}
       />
     );
-  }
+  };
 
     employeeDashboardHome = () => {
     return (
@@ -99,7 +99,7 @@ class DashboardMainLayout extends React.Component<Props, any> {
         company={this.props.company}
       />
     );
-  }
+  };
 
   underConstruction = () => {
     return (

@@ -74,6 +74,7 @@ function companyReducer(state = defaultState, action): any {
       return {
         ...state,
         ...action.payload,
+        isFetching: false
       };
     default:
       return state;

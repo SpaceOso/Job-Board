@@ -83,6 +83,14 @@ public class CompanyController {
         return "you've made it to back end";
     }
 
+    @RequestMapping(value = "/{companyId}/get-jobs", method = RequestMethod.GET)
+    public String getCompanyJobs(@PathVariable UUID companyId){
+        System.out.println("looking to get jobs for: " + companyId);
+
+        return "you've made it to the backend" + companyId;
+    }
+
+
     public Company getCompanyById(UUID id){
         return companyRepository.getOne(id);
     }

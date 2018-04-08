@@ -256,7 +256,7 @@ export function logInEmployee(employee) {
         if (response.data.employee.companyIdentifier !== null) {
           dispatch(setCompanyAndEmployee(response.data.company, response.data.employee));
         } else {
-            console.log("it did equal null now where here");
+          console.log("it did equal null now where here");
           dispatch(logInEmployeeSuccess(response.data.employee));
           dispatch(setSiteIdle());
         }

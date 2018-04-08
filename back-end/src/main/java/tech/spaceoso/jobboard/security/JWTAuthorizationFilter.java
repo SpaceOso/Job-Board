@@ -1,5 +1,7 @@
 package tech.spaceoso.jobboard.security;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,8 +64,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter{
                     .setSigningKey(SECRET.getBytes())
                     .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
                     .getBody()
-                    .getSubject();
-            logger.info("the user information is:" + user);
+                    .get("email").toString();
 
             if (user != null) {
                 return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());

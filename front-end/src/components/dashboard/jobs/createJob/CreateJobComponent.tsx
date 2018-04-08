@@ -55,7 +55,7 @@ class CreateJobComponent extends React.Component<MyProps, MyState> {
 
   handleEditorChange = (e) => {
     // console.log('Content was updated:', e.target.getContent());
-  }
+  };
 
   handleJobDescriptionChange(content) {
     const updatedContent = content.replace(/style="([^"]*)"/g, '');
