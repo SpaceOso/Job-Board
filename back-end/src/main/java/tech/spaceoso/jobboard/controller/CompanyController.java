@@ -5,17 +5,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import tech.spaceoso.jobboard.model.Company;
-import tech.spaceoso.jobboard.model.CompanyWrapper;
-import tech.spaceoso.jobboard.model.Employee;
-import tech.spaceoso.jobboard.model.EmployeeWrapper;
+import tech.spaceoso.jobboard.model.*;
 import tech.spaceoso.jobboard.repository.CompanyRepository;
 import tech.spaceoso.jobboard.repository.EmployeeRepository;
+import tech.spaceoso.jobboard.repository.JobRepository;
 import tech.spaceoso.jobboard.security.JWTBuilder;
 import tech.spaceoso.jobboard.service.AmazonClient;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -31,12 +30,17 @@ public class CompanyController {
     private CompanyRepository companyRepository;
     private EmployeeRepository employeeRepository;
     private AmazonClient amazonClient;
+    private JobRepository jobRepository;
 
     @Autowired
-    CompanyController(CompanyRepository companyRepository, EmployeeRepository employeeRepository, AmazonClient amazonClient){
+    CompanyController(CompanyRepository companyRepository,
+                      EmployeeRepository employeeRepository,
+                      AmazonClient amazonClient,
+                      JobRepository jobRepository){
         this.companyRepository = companyRepository;
         this.employeeRepository = employeeRepository;
         this.amazonClient = amazonClient;
+        this.jobRepository = jobRepository;
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -84,10 +88,10 @@ public class CompanyController {
     }
 
     @RequestMapping(value = "/{companyId}/get-jobs", method = RequestMethod.GET)
-    public String getCompanyJobs(@PathVariable UUID companyId){
+    public List<Job> getCompanyJobs(@PathVariable UUID companyId){
         System.out.println("looking to get jobs for: " + companyId);
 
-        return "you've made it to the backend" + companyId;
+        return jobRepository.findJobsByCompany_Id(companyId);
     }
 
 
