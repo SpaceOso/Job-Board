@@ -232,15 +232,15 @@ export function logInEmployee(employee) {
     dispatch(siteFetch());
     localStorage.clear();
       const newEmployee = {
-          username: employee.email,
+          email: employee.email,
           password: employee.password
-      }
+      };
 
       let myHeaders = new Headers();
       myHeaders.append("Content-Type", "json")
 
 
-    axios.post(`${ROOT_URL}login`, newEmployee,{
+    axios.post(`${ROOT_URL}auth/login/employee`, newEmployee,{
         method: "post",
     })
       .then((response) => {
