@@ -8,9 +8,11 @@ import org.springframework.stereotype.Component;
 import tech.spaceoso.jobboard.model.Employee;
 
 import java.util.Date;
+import java.util.Map;
 
 import static tech.spaceoso.jobboard.security.SecurityConstants.EXPIRATION_TIME;
 import static tech.spaceoso.jobboard.security.SecurityConstants.SECRET;
+import static tech.spaceoso.jobboard.security.SecurityConstants.TOKEN_PREFIX;
 
 //@Component
 public final class JWTBuilder {
@@ -47,5 +49,27 @@ public final class JWTBuilder {
                 .signWith(SignatureAlgorithm.HS512, SECRET.getBytes())
                 .compact();
         return token;
+    }
+
+    public static String buildFromClaims(Map<String, Object> claims){
+        String token = Jwts.builder()
+//                .setSubject(email)
+                .setClaims(claims)
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .signWith(SignatureAlgorithm.HS512, SECRET.getBytes())
+                .compact();
+        return token;
+    }
+
+    public static String decipherToken(String token) {
+        String newToken = "";
+
+        String user = Jwts.parser()
+                .setSigningKey(SECRET.getBytes())
+                .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
+                .getBody()
+                .getSubject();
+
+        return newToken;
     }
 }

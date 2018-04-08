@@ -184,14 +184,19 @@ export function logInEmployeeSuccess(data) {
 
 // gets the token passed from localStorage
 export function logInOnLoad(token) {
+
+  console.log("loginOnLoad with:", token);
+
   return (dispatch) => {
 
     dispatch(siteFetch());
-    axios.post(`${ROOT_URL}login/logcheck`, { token })
+    axios.post(`${ROOT_URL}/auth/login/logcheck`, token )
       .then((response) => {
         // response contains uer, which is our decoded token
         // set token as part of our request headers
         setAuth(token);
+
+        console.log("login/logcheck", response);
 
         if (response.data.employee.companyId !== null) {
           dispatch(setCompanyAndEmployee(response.data.company, response.data.employee));

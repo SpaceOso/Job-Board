@@ -31,6 +31,7 @@ public class Employee {
     @JoinColumn(name = "company_id")
     @JsonBackReference
     private Company company;
+    private UUID companyIdentifier;
 
     /**
      * JPA requires this to be created because they use POJO's
@@ -109,6 +110,14 @@ public class Employee {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public UUID getCompanyIdentifier() {
+        return companyIdentifier;
+    }
+
+    public void setCompanyIdentifier(UUID companyIdentifier) {
+        this.companyIdentifier = companyIdentifier;
     }
 
     @Override

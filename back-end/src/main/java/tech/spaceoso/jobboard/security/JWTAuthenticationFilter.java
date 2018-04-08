@@ -1,9 +1,6 @@
 package tech.spaceoso.jobboard.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.json.JSONObject;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,7 +8,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.ui.ModelMap;
 import tech.spaceoso.jobboard.model.Employee;
 import tech.spaceoso.jobboard.repository.EmployeeRepository;
 
@@ -22,10 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
-import static tech.spaceoso.jobboard.security.SecurityConstants.EXPIRATION_TIME;
 import static tech.spaceoso.jobboard.security.SecurityConstants.HEADER_STRING;
 import static tech.spaceoso.jobboard.security.SecurityConstants.TOKEN_PREFIX;
-import static tech.spaceoso.jobboard.security.SecurityConstants.SECRET;
 
 /**
  * Code for this came from tutorial fond:
