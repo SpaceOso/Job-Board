@@ -1,15 +1,19 @@
 package tech.spaceoso.jobboard.controller;
 
+import com.amazonaws.services.xray.model.Http;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import tech.spaceoso.jobboard.model.Company;
 import tech.spaceoso.jobboard.model.Employee;
+import tech.spaceoso.jobboard.model.JobWrapper;
 import tech.spaceoso.jobboard.model.UserLogin;
 import tech.spaceoso.jobboard.repository.EmployeeRepository;
 import tech.spaceoso.jobboard.security.JWTAuthenticationFilter;
@@ -19,6 +23,7 @@ import tech.spaceoso.jobboard.service.JsonObjectCreator;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -119,27 +124,33 @@ public class AuthController {
     }
 
     @RequestMapping(value = "login/employee", method = RequestMethod.POST)
-    private Map<String, Object> loginEmployee(@RequestBody UserLogin user) throws AuthExceptions {
+    private ResponseEntity<Map<String, Object>> loginEmployee(@RequestBody UserLogin user) throws AuthExceptions {
         // TODO there is a way to automatically add a user to security context
         System.out.println(user.toString());
         Map<String, Object> loggedInEmploye = new HashMap<String, Object>();
         try{
             Employee employee = this.employeeRepository.findByEmail(user.getEmail());
 
+            if(employee == null){
+                throw new AuthExceptions("no employee");
+            }
+
             if(bCryptPasswordEncoder.matches(user.getPassword(), employee.getPassword())){
                 System.out.println("We found an employee:" + employee.getLastName());
-                loggedInEmploye =returnedLoggedInEmployee(employee);
+                loggedInEmploye = returnedLoggedInEmployee(employee);
             } else {
-                // TODO this is where we throw an exception
-                System.out.println("WRONG CREDENTIALS");
+
                 throw new AuthExceptions("Wrong Credentials");
             }
 
         }catch (AuthExceptions e1){
             e1.printStackTrace();
+            System.out.println("we are sending an error..");
+            loggedInEmploye = JsonObjectCreator.createSingleMessageObject("message", "Either email or password is invalid.").toMap();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(loggedInEmploye);
         }
 
-        return loggedInEmploye;
+        return new ResponseEntity<>(loggedInEmploye, HttpStatus.OK);
     }
 
 }

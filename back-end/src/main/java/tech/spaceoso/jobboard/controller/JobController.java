@@ -4,6 +4,8 @@ package tech.spaceoso.jobboard.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.spaceoso.jobboard.model.Company;
@@ -54,13 +56,13 @@ public class JobController {
     }
 
     @RequestMapping(value = "jobposts/{id}", method = RequestMethod.GET)
-    public JobWrapper getJobById(@PathVariable UUID id){
+    public ResponseEntity<JobWrapper> getJobById(@PathVariable UUID id){
         Job job = jobRepository.getOne(id);
         System.out.println(job.getCreatedDate().toString());
 
         JobWrapper wrappedJob = new JobWrapper(job, job.getCompany().getId());
         wrappedJob.setCompany(job.getCompany());
-        return wrappedJob;
+        return new ResponseEntity<>(wrappedJob, HttpStatus.FOUND);
     }
 
 
