@@ -46,22 +46,7 @@ export const emptyJobPost: JobPost = {
 export const mockJob: JobPost = {
     isFetching: false,
     job: {
-        createdDate: {
-            dayOfMonth: 0,
-            dayOfWeek: '',
-            dayOfYea: 0,
-            month: '',
-            year: 0,
-            monthValue: 0,
-            hour: 0,
-            minute: 0,
-            nano: 0,
-            second: 0,
-            chronology: {
-                id: '',
-                calendarType: ''
-            }
-        },
+        createdDate: "sometimes",
         id: '1234556',
         title: 'mock jobPost title yo',
         description: 'Mock Test Job',

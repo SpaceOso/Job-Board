@@ -30,7 +30,7 @@ export interface Job {
   description: string;
   companyId: string;
   address: Address | null
-  createdDate: createdDate | null;
+  createdDate: string | null;
 }
 
 export interface SiteError {
@@ -123,7 +123,7 @@ export interface Company {
 export interface JobPost {
   isFetching: boolean;
   job: Job;
-    company: Company;
+  company: Company;
 }
 
 export interface Applicants {

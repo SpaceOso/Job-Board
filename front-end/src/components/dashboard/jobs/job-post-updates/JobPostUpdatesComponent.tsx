@@ -23,6 +23,7 @@ class JobPostUpdatesComponent extends React.Component<IProps, {}> {
   }
 
   createList() {
+    console.log("CREATING LISTS");
     if (this.props.jobs === null || this.props.jobs === undefined || this.props.jobs.length <= 0) {
       return this.createEmptyMessageComponent();
     }
@@ -34,15 +35,15 @@ class JobPostUpdatesComponent extends React.Component<IProps, {}> {
       {
         join: true,
         property: 'city',
-        properties: [ 'location.city', 'location.state' ],
+        properties: [ 'address.city', 'address.state' ],
         connector: ', ',
         header: 'Location',
       },
-      {
-        property: 'Applicants',
-        special: 'count',
-        header: 'Applicants',
-      },
+      // {
+      //   property: 'Applicants',
+      //   special: 'count',
+      //   header: 'Applicants',
+      // },
     ];
     return (
       <DataTable rowData={this.props.jobs} columnInfo={dataInfo} handleClick={this.handleJobClick} totalRows={5} specialClasses={null} itemId={'2343'}/>

@@ -42,6 +42,7 @@ public class JobController {
             newJob.setCompany(job.getCompany());
             wrappedJobs.add(newJob);
         }
+
         return wrappedJobs;
     }
 
@@ -55,6 +56,8 @@ public class JobController {
     @RequestMapping(value = "jobposts/{id}", method = RequestMethod.GET)
     public JobWrapper getJobById(@PathVariable UUID id){
         Job job = jobRepository.getOne(id);
+        System.out.println(job.getCreatedDate().toString());
+
         JobWrapper wrappedJob = new JobWrapper(job, job.getCompany().getId());
         wrappedJob.setCompany(job.getCompany());
         return wrappedJob;

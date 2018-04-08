@@ -41,7 +41,7 @@ class JobPostCompanyInfoComponent extends React.Component<MyProps, any> {
     let logo: string = `${LOCAL_URL}${require('../../../../images/icon/no-icon.svg')}`;
     if (company.logoImg !== null) {
       if (company.logoImg.length > 0) {
-        logo = `${IMG_URL}${company.logoImg}`;
+        logo = `${company.logoImg}`;
       }
     }
 

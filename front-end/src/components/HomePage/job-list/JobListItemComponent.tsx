@@ -15,6 +15,7 @@ export interface Props {
 
 const jobListItemComponent: React.SFC<Props> = (props) => {
   const { jobPost } = props;
+  console.log("JOBPOST", jobPost);
   return (
     // LOGO
     <div className="job-list-item panel-shadow">
@@ -22,7 +23,7 @@ const jobListItemComponent: React.SFC<Props> = (props) => {
         {/*LOGO*/}
         <div className="job-list-logo">
           <img
-            src={jobPost.company.logoImg ? `${IMG_URL}${jobPost.company.logoImg}` : require('../../../../images/icon/no-icon.svg')}
+            src={jobPost.company.logoImg ? `${jobPost.company.logoImg}` : require('../../../../images/icon/no-icon.svg')}
           />
         </div>
         {/*JOB INFORMATION*/}
@@ -36,7 +37,7 @@ const jobListItemComponent: React.SFC<Props> = (props) => {
         </div>
         <div className="post-info">
             {/*TODO create a helper function for dates*/}
-          <p className="post-date">{moment(new Date(jobPost.job.createdDate.year, jobPost.job.createdDate.monthValue - 1, jobPost.job.createdDate.dayOfMonth, jobPost.job.createdDate.hour, jobPost.job.createdDate.minute)).fromNow()}</p>
+          <p className="post-date">{moment(new Date(jobPost.job.createdDate)).fromNow()}</p>
           <p className="post-location">{`${jobPost.company.address.city}, ${jobPost.company.address.state}`}</p>
         </div>
       </Link>
