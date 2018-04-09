@@ -62,7 +62,7 @@ public class JobController {
 
         JobWrapper wrappedJob = new JobWrapper(job, job.getCompany().getId());
         wrappedJob.setCompany(job.getCompany());
-        return new ResponseEntity<>(wrappedJob, HttpStatus.FOUND);
+        return new ResponseEntity<>(wrappedJob, HttpStatus.OK);
     }
 
 
