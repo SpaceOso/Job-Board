@@ -19,6 +19,7 @@ import tech.spaceoso.jobboard.repository.EmployeeRepository;
 import tech.spaceoso.jobboard.security.JWTAuthenticationFilter;
 import tech.spaceoso.jobboard.security.JWTBuilder;
 import tech.spaceoso.jobboard.service.JsonObjectCreator;
+import tech.spaceoso.jobboard.service.ResourceNotFoundException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -124,7 +125,7 @@ public class AuthController {
     }
 
     @RequestMapping(value = "login/employee", method = RequestMethod.POST)
-    private ResponseEntity<Map<String, Object>> loginEmployee(@RequestBody UserLogin user) throws AuthExceptions {
+    private ResponseEntity<Map<String, Object>> loginEmployee(@RequestBody UserLogin user) throws ResourceNotFoundException {
         // TODO there is a way to automatically add a user to security context
         System.out.println(user.toString());
         Map<String, Object> loggedInEmploye = new HashMap<String, Object>();
@@ -132,7 +133,7 @@ public class AuthController {
             Employee employee = this.employeeRepository.findByEmail(user.getEmail());
 
             if(employee == null){
-                throw new AuthExceptions("no employee");
+                throw new ResourceNotFoundException("no employee");
             }
 
             if(bCryptPasswordEncoder.matches(user.getPassword(), employee.getPassword())){
@@ -140,14 +141,15 @@ public class AuthController {
                 loggedInEmploye = returnedLoggedInEmployee(employee);
             } else {
 
-                throw new AuthExceptions("Wrong Credentials");
+                throw new ResourceNotFoundException("Wrong Credentials");
             }
 
-        }catch (AuthExceptions e1){
+        }catch (ResourceNotFoundException e1){
             e1.printStackTrace();
             System.out.println("we are sending an error..");
             loggedInEmploye = JsonObjectCreator.createSingleMessageObject("message", "Either email or password is invalid.").toMap();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(loggedInEmploye);
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(loggedInEmploye);
+            throw new ResourceNotFoundException("yeah it's not working");
         }
 
         return new ResponseEntity<>(loggedInEmploye, HttpStatus.OK);

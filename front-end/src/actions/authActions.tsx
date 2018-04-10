@@ -263,7 +263,7 @@ export function logInEmployee(employee) {
 
       })
       .catch((error) => {
-        console.log("we are not finding the employee:", error.response.data.message);
+        console.log("we are not finding the employee:", error.response.data);
         dispatch(setSiteIdle());
         dispatch(logInEmployeeError(error.response.data.message));
 
