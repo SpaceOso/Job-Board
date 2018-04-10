@@ -1,6 +1,5 @@
-package tech.spaceoso.jobboard.service;
+package tech.spaceoso.jobboard.exception;
 
-import net.bytebuddy.implementation.bytecode.Throw;
 
 public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException() {

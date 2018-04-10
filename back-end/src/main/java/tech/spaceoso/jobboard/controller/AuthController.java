@@ -1,30 +1,24 @@
 package tech.spaceoso.jobboard.controller;
 
-import com.amazonaws.services.xray.model.Http;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import tech.spaceoso.jobboard.model.Company;
 import tech.spaceoso.jobboard.model.Employee;
-import tech.spaceoso.jobboard.model.JobWrapper;
 import tech.spaceoso.jobboard.model.UserLogin;
 import tech.spaceoso.jobboard.repository.EmployeeRepository;
-import tech.spaceoso.jobboard.security.JWTAuthenticationFilter;
 import tech.spaceoso.jobboard.security.JWTBuilder;
 import tech.spaceoso.jobboard.service.JsonObjectCreator;
-import tech.spaceoso.jobboard.service.ResourceNotFoundException;
+import tech.spaceoso.jobboard.exception.ResourceNotFoundException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
