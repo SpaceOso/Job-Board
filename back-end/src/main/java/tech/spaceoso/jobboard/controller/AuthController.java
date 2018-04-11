@@ -141,9 +141,7 @@ public class AuthController {
         }catch (ResourceNotFoundException e1){
             e1.printStackTrace();
             System.out.println("we are sending an error..");
-            loggedInEmploye = JsonObjectCreator.createSingleMessageObject("message", "Either email or password is invalid.").toMap();
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(loggedInEmploye);
-            throw new ResourceNotFoundException("yeah it's not working");
+            throw new ResourceNotFoundException("Email or password are invalid. It's ok. We all make mistakes.");
         }
 
         return new ResponseEntity<>(loggedInEmploye, HttpStatus.OK);

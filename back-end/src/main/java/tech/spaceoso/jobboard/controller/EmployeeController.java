@@ -2,13 +2,18 @@ package tech.spaceoso.jobboard.controller;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.postgresql.util.PSQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import tech.spaceoso.jobboard.exception.ResourceNotFoundException;
 import tech.spaceoso.jobboard.model.Company;
 import tech.spaceoso.jobboard.model.Employee;
 import tech.spaceoso.jobboard.model.EmployeeWrapper;
@@ -45,7 +50,7 @@ public class EmployeeController {
     }
 
     @RequestMapping(value = "create", method = RequestMethod.POST)
-    public EmployeeWrapper create(@RequestBody EmployeeWrapper employeeWrapped) {
+    public ResponseEntity<Object> create(@RequestBody EmployeeWrapper employeeWrapped) throws ResourceNotFoundException{
         logger.info("creating a new employee with:" + employeeWrapped.toString());
 
         // get employee reference
@@ -56,7 +61,17 @@ public class EmployeeController {
         employee.setPassword(bCryptPasswordEncoder.encode(employee.getPassword()));
 
         // save employee
-        employeeRepository.saveAndFlush(employee);
+        try{
+            employeeRepository.saveAndFlush(employee);
+//            System.out.println("the status of the employeetest: " + employeetest);
+//            if(employeetest == null){
+//                throw new ResourceNotFoundException("Sorry we already have a user with that email address");
+//            }
+        } catch (DataAccessException e1){
+            e1.printStackTrace();
+            System.out.println("ERROR SAVING NEW USER");
+            throw new ResourceNotFoundException("Sorry yo, please use a new email address");
+        }
 
         // send back a fully populated EmployeeWrapper
         EmployeeWrapper savedWrappedEmployee = new EmployeeWrapper(employee);
@@ -65,7 +80,7 @@ public class EmployeeController {
 
         savedWrappedEmployee.setToken(token);
 
-        return savedWrappedEmployee;
+        return new ResponseEntity<>(savedWrappedEmployee, HttpStatus.OK);
     }
 
 

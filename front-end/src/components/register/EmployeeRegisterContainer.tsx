@@ -7,10 +7,11 @@ import EmployeeRegisterComponent from './EmployeeRegisterComponent';
 // styles
 import './styles/EmployeeRegister.scss';
 
-function mapStateToProps({ employee, siteFetching }: StoreState) {
+function mapStateToProps({ employee, siteFetching, siteErrors }: StoreState) {
   return {
     employee,
     siteFetching,
+    siteErrors
   };
 }
 

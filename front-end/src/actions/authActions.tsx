@@ -91,7 +91,10 @@ export function registerEmployee(employeOjbect) {
 
       })
       .catch((error) => {
-        dispatch(registerEmployeeError(error));
+        console.log("we got an error on saving a new user: ", error);
+        dispatch(setSiteIdle());
+        // dispatch(registerEmployeeError(error));
+        dispatch(logInEmployeeError(error.response.data.message));
 
       });
   };

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Link, Redirect} from 'react-router-dom';
 
-import {AuthEmployee, SiteFetching, Employee} from '../../types';
+import {AuthEmployee, SiteFetching, Employee, SiteErrors} from '../../types';
 import SimpleForm from '../simple-form/SimpleForm';
 import {default as SpinnerComponent} from '../spinners/spinnerComponent';
 
@@ -14,6 +14,7 @@ export interface MyProps {
   registerEmployee: (employee: AuthEmployee) => any;
   employee: AuthEmployee;
   siteFetching: SiteFetching;
+  siteErrors: SiteErrors;
   errors: {
     fName: boolean;
     lName: boolean;
@@ -127,6 +128,7 @@ class EmployeeRegisterComponent extends React.Component<MyProps, MyState> {
     return (
       <div className="company-register-Component">
         <div className="register-form">
+          <h3>{this.props.siteErrors.login !== null ? this.props.siteErrors.login.message : null}</h3>
           <SimpleForm
             header="Sign Up"
             inputs={this.inputs}
