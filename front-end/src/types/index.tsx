@@ -157,5 +157,9 @@ export interface StoreState {
 
 export interface CompanyDTO{
   address : Address;
+}
 
+export interface JobDTO{
+  job: Job;
+  companyId: String;
 }

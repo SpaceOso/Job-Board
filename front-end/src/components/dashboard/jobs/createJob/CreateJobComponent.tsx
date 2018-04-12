@@ -6,16 +6,18 @@ import { default as SpinnerComponent } from '../../../spinners/spinnerComponent'
 import TinymceComponent from '../../../tinymce/TinymceComponent';
 
 import './CreateJobComponent.scss';
+import {JobDTO} from "../../../../types";
 
 interface MyProps {
   submitJobPost;
   company;
-    employeeId;
+  employeeId;
 }
 
 interface MyState {
   title: string;
   description: string;
+  street: string;
   city: string;
   state: string;
   zip: string;
@@ -24,6 +26,7 @@ interface MyState {
 
 const initialState: MyState = {
   title: '',
+  street: '',
   city: '',
   state: '',
   zip: '',
@@ -44,7 +47,25 @@ class CreateJobComponent extends React.Component<MyProps, MyState> {
   }
 
   handleJobSubmit(event: any): void {
-    this.props.submitJobPost({ ...this.state, companyId: this.props.company.id });
+
+    const jobWrapper: JobDTO  = {
+      job: {
+        id: null,
+        title: this.state.title,
+        description: this.state.description,
+        companyId: this.props.company.id,
+        createdDate: null,
+        address: {
+          street: this.state.street,
+          city: this.state.city,
+          state: this.state.state,
+          zipCode: this.state.zip
+        }
+      },
+      companyId: this.props.company.id,
+    };
+
+    this.props.submitJobPost(jobWrapper);
     event.preventDefault();
     this.setState(initialState);
   }
@@ -80,6 +101,15 @@ class CreateJobComponent extends React.Component<MyProps, MyState> {
             />
             <div>
               <h3>Job Location</h3>
+              <label htmlFor="job-street">Street</label>
+              <input
+                type="text"
+                required
+                id="job-street"
+                placeholder="Enter Job Street"
+                value={this.state.street}
+                onChange={(event) => this.handleChange(this.state, 'street', event.target.value)}
+              />
               <label htmlFor="job-city">City</label>
               <input
                 type="text"

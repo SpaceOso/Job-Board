@@ -15,9 +15,9 @@ import EmployeeDashboardNavMenu from '../nav-menu/EmployeeDashboardNavMenu';
 import './styles/MainLyout.scss';
 
 interface Props extends RouteComponentProps<any> {
-    employee: Employee;
+  employee: Employee;
   company: Company;
-  saveJobPost: (jobInfo, employeeId) => {};
+  saveJobPost: (jobInfo) => {};
 }
 
 interface State {

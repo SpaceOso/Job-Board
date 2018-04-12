@@ -92,18 +92,21 @@ export function companyIdle() {
  * @param employeeId{string}
  * @return {(dispatch) => any}
  */
-export function saveJobPost(jobPostInfo, employeeId) {
+export function saveJobPost(jobPostInfo) {
   return (dispatch) => {
+
+    console.log("trying to post a new job ", jobPostInfo);
 
     dispatch(companyFetching());
 
-    axios.post(`${ROOT_URL}company/createJob`, jobPostInfo)
+    axios.post(`${ROOT_URL}secured/company/jobposts/create`, jobPostInfo)
       .then((response) => {
+        console.log("the resposne that we get", response);
         dispatch(editingJobPostSuccess(response.data));
         dispatch(setSiteIdle());
       })
       .catch((error) => {
-        console.log(error);
+        console.log("error creating a new job ", error);
         // TODO need to add an error handlers
         dispatch(setSiteIdle());
       });

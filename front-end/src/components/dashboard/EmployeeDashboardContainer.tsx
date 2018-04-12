@@ -44,8 +44,8 @@ function mapStateToProps({ employee, company, siteFetching }: StoreState) {
 }
 
 const mapDispatchToProps = dispatch => ({
-  saveJobPost: (jobInfo, employeeId) => {
-    dispatch(saveJobPost(jobInfo, employeeId));
+  saveJobPost: (jobInfo) => {
+    dispatch(saveJobPost(jobInfo));
   },
   fetchCompanyJobs: (companyId) => {
     dispatch(fetchAllCompanyJobModels(companyId));
