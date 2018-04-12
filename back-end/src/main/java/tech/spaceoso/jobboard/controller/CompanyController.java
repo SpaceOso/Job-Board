@@ -44,7 +44,7 @@ public class CompanyController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public EmployeeWrapper create(@RequestPart CompanyWrapper companyWrapper, @RequestPart(value = "logoFile") Optional<MultipartFile> file){
+    public EmployeeWrapper createNewCompany(@RequestPart CompanyWrapper companyWrapper, @RequestPart(value = "logoFile") Optional<MultipartFile> file){
 
         String logoUrl = "";
 
@@ -100,7 +100,7 @@ public class CompanyController {
      * @return
      */
     @RequestMapping(value = "/jobposts/create", method = RequestMethod.POST)
-    public JobWrapper create(@RequestBody JobWrapper jobWrapper){
+    public JobWrapper createNewJob(@RequestBody JobWrapper jobWrapper){
         logger.info("creating a new job with:", jobWrapper);
         
         // get company reference from companyId sent in JSON

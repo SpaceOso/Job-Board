@@ -8,8 +8,8 @@ import tech.spaceoso.jobboard.controller.HomeController;
 
 import static junit.framework.Assert.assertEquals;
 
-//@RunWith(SpringRunner.class)
-//@SpringBootTest
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class AppTest {
 
     @Test

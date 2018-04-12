@@ -17,7 +17,7 @@ final public class ObjectCreator {
     }
 
     static public Address createAddress() {
-        return new Address("Test Tube ville", "Fakertown", "NY", 12345);
+        return new Address("Test Tube ville", "Fakertown", "NY", "12345");
     }
 
     static public List<Job> createJobs(int totalJobs) {
