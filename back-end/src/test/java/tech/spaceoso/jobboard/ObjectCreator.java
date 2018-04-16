@@ -1,9 +1,12 @@
 package tech.spaceoso.jobboard;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import tech.spaceoso.jobboard.model.Address;
 import tech.spaceoso.jobboard.model.Company;
+import tech.spaceoso.jobboard.model.Employee;
 import tech.spaceoso.jobboard.model.Job;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,14 +38,19 @@ final public class ObjectCreator {
     static public Job createJobs() {
         return new Job(generateId(), LocalDateTime.now(), "Tester title", createAddress(), "fake description", null);
     }
+    
+    static public Employee createEmployee(){
+        return new Employee(UUID.randomUUID(), LocalDateTime.now(), "Tester", "Employee", "tester@email.com", "123abc" );
+        
+    }
 
     static public Company createCompany() {
 
         // generate id for the company
         UUID companyId = UUID.randomUUID();
 
-        Company company = new Company(companyId, new Date(), "Test Company", createAddress(), "noLogo.png", "fake.com", "twitter.com", "facebook", "linkedin.com", null, null);
-        // get list of jobs
+        Company company = new Company(companyId, LocalDateTime.now(), "Test Company", createAddress(), "noLogo.png", "fake.com", "twitter.com", "facebook", "linkedin.com", null, null);
+        /*// get list of jobs
         List<Job> jobs = createJobs(3);
         // add this companyId to all jobs that we receive
         for (Job job : jobs) {
@@ -50,8 +58,16 @@ final public class ObjectCreator {
         }
 
         // add this job list to the jobs section of the company
-        company.setJobs(jobs);
+        company.setJobs(jobs);*/
 
         return company;
+    }
+    
+    public static String asJsonString(final Object obj) throws Exception{
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

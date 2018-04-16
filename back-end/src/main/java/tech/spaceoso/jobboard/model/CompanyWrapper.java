@@ -12,7 +12,7 @@ public class CompanyWrapper {
     public CompanyWrapper() {
     }
 
-    public CompanyWrapper(Company company, UUID employeeId, MultipartFile logoFile) {
+    public CompanyWrapper(Company company, UUID employeeId) {
         this.company = company;
         this.employeeId = employeeId;
     }

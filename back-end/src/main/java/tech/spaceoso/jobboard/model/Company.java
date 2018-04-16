@@ -9,6 +9,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.io.File;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -23,12 +25,10 @@ public class Company {
     private UUID id;
 
     @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    private LocalDateTime createdDate;
 
     @UpdateTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModifiedDate;
+    private LocalDateTime lastModifiedDate;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
@@ -50,7 +50,7 @@ public class Company {
 
     public Company() {}
 
-    public Company(UUID id, Date date, String name, Address address, String logoImg, String website, String twitter, String facebook, String linkedIn,List<Employee> employees, List<Job> jobs ) {
+    public Company(UUID id, LocalDateTime date, String name, Address address, String logoImg, String website, String twitter, String facebook, String linkedIn,List<Employee> employees, List<Job> jobs ) {
         this.id = id;
         this.createdDate = date;
         this.name = name;
@@ -72,19 +72,19 @@ public class Company {
         this.id = id;
     }
 
-    public Date getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
-    public Date getLastModifiedDate() {
+    public LocalDateTime getLastModifiedDate() {
         return lastModifiedDate;
     }
 
-    public void setLastModifiedDate(Date lastModifiedDate) {
+    public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
 

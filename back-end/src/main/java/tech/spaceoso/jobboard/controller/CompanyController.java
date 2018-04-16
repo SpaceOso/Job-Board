@@ -45,7 +45,7 @@ public class CompanyController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public EmployeeWrapper createNewCompany(@RequestPart CompanyWrapper companyWrapper, @RequestPart(value = "logoFile") Optional<MultipartFile> file){
-
+        System.out.println("createNewCompany Loaded" + companyWrapper.getEmployeeId().toString());
         String logoUrl = "";
 
         //TODO need to check that there is a file being uploaded
@@ -54,27 +54,37 @@ public class CompanyController {
             logger.info(file.toString());
         }
 
-        logger.info("the wrapper:" + companyWrapper.toString());
+        logger.info("the wrapper id:" + companyWrapper.getEmployeeId().toString());
+        logger.info("the wrapper company:" + companyWrapper.getCompany().toString());
 
         // create company object from wrapper
         Company company = companyWrapper.getCompany();
-
+    
+        System.out.println("company built " + company.toString());
+        
         // update the logo for the company
         company.setLogoImg(logoUrl);
-
+    
+        System.out.println("employee ref bout to be grabbed...");
+        
         // get reference to employee object from wrapper employeeId
         Employee employee = em.getReference(Employee.class, companyWrapper.getEmployeeId());
-
+    
+        System.out.println("employee grabbed " + employee.toString());
         // save and return company to get it's auto generated ID
-        Company newlySavedCompany = companyRepository.saveAndFlush(company);
-
+        companyRepository.saveAndFlush(company);
+    
+        System.out.println("newSavedCOmpany crated : " + company);
+        
         // update the employee reference with the newly saved company
-        employee.setCompany(newlySavedCompany);
+        employee.setCompany(company);
+    
+        System.out.println("employee company set : " + employee.toString());
 
         // save the updated employee object
         employeeRepository.saveAndFlush(employee);
 
-        EmployeeWrapper updatedEmployee = new EmployeeWrapper(employee, newlySavedCompany.getId(), newlySavedCompany);
+        EmployeeWrapper updatedEmployee = new EmployeeWrapper(employee, company.getId(), company);
 
         String updatedToken = JWTBuilder.buildCompanyToken(employee.getEmail(), employee);
         updatedEmployee.setToken(updatedToken);
@@ -119,7 +129,15 @@ public class CompanyController {
         return wrappedJob;
     }
 
-    public Company getCompanyById(UUID id){
+    @RequestMapping(value = "/getsinglecompany{id}")
+    public Company getCompanyById(@PathVariable UUID id){
         return companyRepository.getOne(id);
+    }
+    
+    @RequestMapping(value = "/getname/{id}", method = RequestMethod.GET)
+    public String getCompanyName(@PathVariable UUID id) {
+        Company comp = new Company();
+        comp = companyRepository.getOne(id);
+        return comp.getName();
     }
 }

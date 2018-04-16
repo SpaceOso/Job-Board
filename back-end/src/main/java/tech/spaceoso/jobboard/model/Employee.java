@@ -5,6 +5,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -15,12 +17,10 @@ public class Employee {
     private UUID id;
 
     @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    private LocalDateTime createdDate;
 
     @UpdateTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModifiedDate;
+    private LocalDateTime lastModifiedDate;
 
     private String firstName;
     private String lastName;
@@ -40,7 +40,7 @@ public class Employee {
     protected Employee() {
     }
 
-    public Employee(UUID id, Date date, String firstName, String lastName, String email, String password) {
+    public Employee(UUID id, LocalDateTime date, String firstName, String lastName, String email, String password) {
         this.id = id;
         this.createdDate = date;
         this.firstName = firstName;
@@ -49,19 +49,19 @@ public class Employee {
         this.password = password;
     }
 
-    public Date getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
-    public Date getLastModifiedDate() {
+    public LocalDateTime getLastModifiedDate() {
         return lastModifiedDate;
     }
 
-    public void setLastModifiedDate(Date lastModifiedDate) {
+    public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
 
@@ -120,7 +120,7 @@ public class Employee {
     public void setCompanyIdentifier(UUID companyIdentifier) {
         this.companyIdentifier = companyIdentifier;
     }
-
+    
     @Override
     public String toString() {
         return "Employee{" +
@@ -130,7 +130,9 @@ public class Employee {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", company=" + company.getId() +
+                ", password='" + password + '\'' +
+                ", company=" + company +
+                ", companyIdentifier=" + companyIdentifier +
                 '}';
     }
 }
