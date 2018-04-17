@@ -3,6 +3,8 @@ package tech.spaceoso.jobboard.controller;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,6 +33,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -124,6 +127,7 @@ public class CompanyControllerTest {
         // when we find a user when the id
         when(entityManager.getReference(Employee.class, employee.getId())).thenReturn(employee);
 
+        Company newSaved = new Company();
         // when we update the company to create a UUID
         Answer<Company> newlySavedAnswer = new Answer<Company>() {
             @Override
@@ -141,11 +145,16 @@ public class CompanyControllerTest {
         
         MockMultipartFile companyMultiPart = new MockMultipartFile("companyWrapper", "", "application/json", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json).getBytes());
         System.out.println("newWrapper.tostring() : " + mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json));
-        
+
         this.mockMvc.perform(
                 multipart("/secured/company/create")
                         .file(companyMultiPart))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$.company.name", Matchers.is("Test Company")))
+//                .andExpect(jsonPath("$", Matchers.hasProperty("tester")))
+                .andExpect(jsonPath("$.employee.*", Matchers.hasProperty("id")))
+                .andExpect(jsonPath("$.company").exists());
     }
     
     @Test
