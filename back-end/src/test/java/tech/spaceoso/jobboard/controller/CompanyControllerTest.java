@@ -129,6 +129,8 @@ public class CompanyControllerTest {
         when(entityManager.getReference(Employee.class, employee.getId())).thenReturn(employee);
 
         Company newSaved = new Company();
+        newSaved.setId(ObjectCreator.generateId());
+        newSaved.setName("Yo new company");
         // when we update the company to create a UUID
         Answer<Company> newlySavedAnswer = new Answer<Company>() {
             @Override
@@ -136,12 +138,18 @@ public class CompanyControllerTest {
                 System.out.println("The invocation :" + invocation);
                 Company newComp = ObjectCreator.createCompany();
                 newComp.setId(UUID.randomUUID());
+                newComp.setName("Answer Company");
                 return newComp;
             }
         };
-        
-        when(companyRepository.saveAndFlush(company)).thenAnswer(newlySavedAnswer);
-        
+
+
+
+//        when(companyRepository.saveAndFlush(company)).thenAnswer(newlySavedAnswer);
+        when(companyRepository.saveAndFlush(any(Company.class))).thenReturn(newSaved);
+
+        System.out.println("The newSaved mock is: " + newSaved);
+
         JsonNode json = mapper.valueToTree(newWrapper);
         
         MockMultipartFile companyMultiPart = new MockMultipartFile("companyWrapper", "", "application/json", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json).getBytes());
@@ -151,11 +159,12 @@ public class CompanyControllerTest {
                 multipart("/secured/company/create")
                         .file(companyMultiPart))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType("text/plain;charset=ISO-8859-1"))
-                .andExpect(jsonPath("$.company.name", Matchers.is("Test Company")))
-                .andExpect(jsonPath("$.company", Matchers.hasProperty("id")) )
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andDo(print())
-                .andExpect(jsonPath("$.company").exists());
+                .andExpect(jsonPath("$.company.name", Matchers.is("Test Company")))
+                .andExpect(jsonPath("$.company").exists() )
+//                .andExpect(jsonPath("$.company.id", Matchers.hasValue(anyString())))
+                .andExpect(jsonPath("$.employee").exists());
     }
     
     @Test

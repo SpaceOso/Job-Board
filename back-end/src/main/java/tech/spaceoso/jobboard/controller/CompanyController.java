@@ -72,19 +72,22 @@ public class CompanyController {
     
         System.out.println("employee grabbed " + employee.toString());
         // save and return company to get it's auto generated ID
-        companyRepository.saveAndFlush(company);
-    
-        System.out.println("newSavedCOmpany crated : " + company);
+//        companyRepository.saveAndFlush(company);
+
+        Company newSaved = new Company();
+        newSaved = companyRepository.saveAndFlush(company);
+
+        System.out.println("newSavedCOmpany crated : " + newSaved);
         
         // update the employee reference with the newly saved company
-        employee.setCompany(company);
+        employee.setCompany(newSaved);
     
         System.out.println("employee company set : " + employee.toString());
 
         // save the updated employee object
         employeeRepository.saveAndFlush(employee);
 
-        EmployeeWrapper updatedEmployee = new EmployeeWrapper(employee, company.getId(), company);
+        EmployeeWrapper updatedEmployee = new EmployeeWrapper(employee, newSaved.getId(), newSaved);
 
         String updatedToken = JWTBuilder.buildCompanyToken(employee.getEmail(), employee);
         updatedEmployee.setToken(updatedToken);
