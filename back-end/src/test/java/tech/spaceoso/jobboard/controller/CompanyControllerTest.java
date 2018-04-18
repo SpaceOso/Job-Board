@@ -32,6 +32,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -150,10 +151,10 @@ public class CompanyControllerTest {
                 multipart("/secured/company/create")
                         .file(companyMultiPart))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(content().contentType("text/plain;charset=ISO-8859-1"))
                 .andExpect(jsonPath("$.company.name", Matchers.is("Test Company")))
-//                .andExpect(jsonPath("$", Matchers.hasProperty("tester")))
-                .andExpect(jsonPath("$.employee.*", Matchers.hasProperty("id")))
+                .andExpect(jsonPath("$.company", Matchers.hasProperty("id")) )
+                .andDo(print())
                 .andExpect(jsonPath("$.company").exists());
     }
     
