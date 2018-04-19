@@ -3,6 +3,7 @@ package tech.spaceoso.jobboard.controller;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -17,6 +18,7 @@ import org.mockito.stubbing.Answer;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import tech.spaceoso.jobboard.ObjectCreator;
 import tech.spaceoso.jobboard.model.*;
@@ -113,68 +115,66 @@ public class CompanyControllerTest {
         
         // create mock company and employee
         Company company = ObjectCreator.createCompany();
+        // set to null to mock how it is received from the client
         company.setId(null);
-        // Company company = mock(Company.class);
+        
+        // employee is already created at this point so it's id is ok
         Employee employee = ObjectCreator.createEmployee();
         
         Map<String, Object> newWrapper = new HashMap<>();
         newWrapper.put("company", company);
         newWrapper.put("employeeId", employee.getId());
         
-        Company savedFlushed = ObjectCreator.createCompany();
-    
         System.out.println("The employee id before we ship" + newWrapper.get("employeeId"));
         
         // when we find a user when the id
         when(entityManager.getReference(Employee.class, employee.getId())).thenReturn(employee);
-
-        Company newSaved = new Company();
+        
+        // when we save the company to create the UUID
+        Company newSaved = company;
         newSaved.setId(ObjectCreator.generateId());
-        newSaved.setName("Yo new company");
-        // when we update the company to create a UUID
-        Answer<Company> newlySavedAnswer = new Answer<Company>() {
-            @Override
-            public Company answer(InvocationOnMock invocation) throws Throwable {
-                System.out.println("The invocation :" + invocation);
-                Company newComp = ObjectCreator.createCompany();
-                newComp.setId(UUID.randomUUID());
-                newComp.setName("Answer Company");
-                return newComp;
-            }
-        };
-
-
-
-//        when(companyRepository.saveAndFlush(company)).thenAnswer(newlySavedAnswer);
         when(companyRepository.saveAndFlush(any(Company.class))).thenReturn(newSaved);
-
+        
         System.out.println("The newSaved mock is: " + newSaved);
-
+        
         JsonNode json = mapper.valueToTree(newWrapper);
         
         MockMultipartFile companyMultiPart = new MockMultipartFile("companyWrapper", "", "application/json", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json).getBytes());
         System.out.println("newWrapper.tostring() : " + mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json));
-
-        this.mockMvc.perform(
+    
+        MvcResult result = this.mockMvc.perform(
                 multipart("/secured/company/create")
                         .file(companyMultiPart))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andDo(print())
-                .andExpect(jsonPath("$.company.name", Matchers.is("Test Company")))
-                .andExpect(jsonPath("$.company").exists() )
-//                .andExpect(jsonPath("$.company.id", Matchers.hasValue(anyString())))
-                .andExpect(jsonPath("$.employee").exists());
+                .andExpect(jsonPath("$.company").exists())
+                .andExpect(jsonPath("$.company.id").value(Matchers.isA(String.class)))
+                .andExpect(jsonPath("$.employee").exists())
+                .andExpect(jsonPath("$.token").exists())
+                .andExpect(jsonPath("$.token").value(Matchers.isA(String.class)))
+                .andExpect(jsonPath("$.employee.password").doesNotExist())
+                .andReturn();
+        
+        // get a string version of the response to then conver to each individual class
+        String content = result.getResponse().getContentAsString();
+    
+        JsonNode root = mapper.readTree(content);
+        Company nodeComp = mapper.readValue(root.path("company").toString(), Company.class);
+        Address nodeAddress = mapper.readValue(root.path("company").path("address").toString(), Address.class);
+        Employee nodeEmployee = mapper.readValue(root.path("employee").toString(), Employee.class);
+        System.out.println("The Employee from the return object is + " + nodeEmployee);
+        
     }
     
     @Test
-    public void getCompanyName() throws Exception{
+    public void getCompanyName() throws Exception {
         UUID id = UUID.fromString("3cbec9db-cb65-4137-862f-a3d532c949a4");
-    
+        
         Company comp = ObjectCreator.createCompany();
         
         when(companyRepository.getOne(id)).thenReturn(comp);
-    
+        
         this.mockMvc.perform(
                 get("/secured/company/getname/" + id)
         ).andExpect(status().isOk());
@@ -210,10 +210,10 @@ public class CompanyControllerTest {
     }
     
     @Test
-    public void getCompanyById() throws Exception{
+    public void getCompanyById() throws Exception {
         UUID companyId = UUID.fromString("270db49c-7e89-4966-88ac-dc13affbf3f6");
         Company newComp = ObjectCreator.createCompany();
-    
+        
         when(companyRepository.getOne(companyId)).thenReturn(newComp);
         this.mockMvc.perform(
                 get("/secured/company/getsinglecompany")

@@ -1,6 +1,7 @@
 package tech.spaceoso.jobboard.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -26,6 +27,7 @@ public class Employee {
     private String lastName;
     @Column(unique = true)
     private String email;
+    @JsonIgnore
     private String password;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
