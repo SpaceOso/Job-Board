@@ -4,8 +4,10 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import org.apache.tomcat.jni.Local;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
+import org.json.JSONArray;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -150,20 +152,21 @@ public class CompanyControllerTest {
                 .andDo(print())
                 .andExpect(jsonPath("$.company").exists())
                 .andExpect(jsonPath("$.company.id").value(Matchers.isA(String.class)))
+                .andExpect(jsonPath("$.company.name").value(Matchers.isA(String.class)))
+                .andExpect(jsonPath("$.company.logoImg").value(Matchers.isA(String.class)))
+                .andExpect(jsonPath("$.company.website").value(Matchers.isA(String.class)))
+                .andExpect(jsonPath("$.company.createdDate").value(Matchers.isA(net.minidev.json.JSONArray.class)))
+                .andExpect(jsonPath("$.company.address").exists())
                 .andExpect(jsonPath("$.employee").exists())
+                .andExpect(jsonPath("$.employee.id").value(Matchers.isA(String.class)))
+                .andExpect(jsonPath("$.employee.firstName").value(Matchers.isA(String.class)))
+                .andExpect(jsonPath("$.employee.lastName").value(Matchers.isA(String.class)))
+                .andExpect(jsonPath("$.employee.email").value(Matchers.isA(String.class)))
+                .andExpect(jsonPath("$.employee.createdDate").value(Matchers.isA(net.minidev.json.JSONArray.class)))
                 .andExpect(jsonPath("$.token").exists())
                 .andExpect(jsonPath("$.token").value(Matchers.isA(String.class)))
                 .andExpect(jsonPath("$.employee.password").doesNotExist())
                 .andReturn();
-        
-        // get a string version of the response to then conver to each individual class
-        String content = result.getResponse().getContentAsString();
-    
-        JsonNode root = mapper.readTree(content);
-        Company nodeComp = mapper.readValue(root.path("company").toString(), Company.class);
-        Address nodeAddress = mapper.readValue(root.path("company").path("address").toString(), Address.class);
-        Employee nodeEmployee = mapper.readValue(root.path("employee").toString(), Employee.class);
-        System.out.println("The Employee from the return object is + " + nodeEmployee);
         
     }
     
