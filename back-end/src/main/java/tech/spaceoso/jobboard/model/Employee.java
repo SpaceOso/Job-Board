@@ -2,6 +2,7 @@ package tech.spaceoso.jobboard.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -27,7 +28,7 @@ public class Employee {
     private String lastName;
     @Column(unique = true)
     private String email;
-    @JsonIgnore
+    // @JsonIgnore
     private String password;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
@@ -99,10 +100,12 @@ public class Employee {
         this.email = email;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
 
+    @JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }

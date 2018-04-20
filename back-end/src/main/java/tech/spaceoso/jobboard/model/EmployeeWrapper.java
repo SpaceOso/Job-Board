@@ -59,4 +59,14 @@ public class EmployeeWrapper {
     public void setToken(String token) {
         this.token = token;
     }
+    
+    @Override
+    public String toString() {
+        return "EmployeeWrapper{" +
+                "employee=" + employee +
+                ", companyId=" + companyId +
+                ", company=" + company +
+                ", token='" + token + '\'' +
+                '}';
+    }
 }

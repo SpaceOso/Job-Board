@@ -7,7 +7,7 @@ import {
   LOGIN_EMPLOYEE_ERROR,
   LOG_OUT_EMPLOYEE,
   SET_EMPLOYEE,
-  FETCHING_THIS_EMPLOYEE_ERROR,
+  FETCHING_THIS_EMPLOYEE_ERROR, SET_COMPANY_ID_AFTER_REGISTRATION,
 } from '../actions/authActions';
 import {AuthEmployee} from "../types/index";
 
@@ -34,7 +34,13 @@ function employeeReducer(state = defaultState, action): any {
         isAuth: true,
         isFetching: false,
       };
-
+    case SET_COMPANY_ID_AFTER_REGISTRATION:
+      return {
+        ...state,
+        ...action.payload,
+        isAuth: true,
+        isFetching: false,
+      };
     case LOGIN_EMPLOYEE_SUCCESS:
       return {
         ...state,

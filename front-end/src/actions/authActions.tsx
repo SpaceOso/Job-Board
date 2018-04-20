@@ -13,6 +13,7 @@ export const REGISTER_EMPLOYEE_SUCCESS = 'REGISTER_EMPLOYEE_SUCCESS';
 
 export const LOGIN_EMPLOYEE_SUCCESS = 'LOGIN_EMPLOYEE_SUCCESS';
 export const LOGIN_EMPLOYEE_ERROR = 'LOGIN_EMPLOYEE_ERROR';
+export const SET_COMPANY_ID_AFTER_REGISTRATION = 'SET_COMPANY_ID_AFTER_REGISTRATION';
 
 export const SET_EMPLOYEE = 'SET_EMPLOYEE';
 export const SET_COMPANY = 'SET_COMPANY';
@@ -93,7 +94,7 @@ export function registerEmployee(employeOjbect) {
       .catch((error) => {
         console.log("we got an error on saving a new user: ", error);
         dispatch(setSiteIdle());
-        // dispatch(registerEmployeeError(error));
+        dispatch(registerEmployeeError(error));
         dispatch(logInEmployeeError(error.response.data.message));
 
       });
@@ -174,6 +175,14 @@ export function clearAllErrors() {
   return {
     type: CLEAR_ALL_ERRORS,
   };
+}
+
+// updated the employee model with company id after one is registered
+export function setCompanyIdAfterRegistration(data){
+  return{
+    type: SET_COMPANY_ID_AFTER_REGISTRATION,
+    payload: data,
+  }
 }
 
 // requires a employee and token property
@@ -279,7 +288,8 @@ export function setCompanyAndEmployee(company, employee) {
   return (dispatch) => {
     dispatch(removeLogInError());
     dispatch(setCompany(company));
-    dispatch(logInEmployeeSuccess(employee));
+    dispatch(setCompanyIdAfterRegistration({companyIdentifier: company.id}));
+    // dispatch(logInEmployeeSuccess(employee));
     dispatch(setSiteIdle());
   };
 }
