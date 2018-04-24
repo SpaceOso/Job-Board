@@ -38,10 +38,11 @@ function employeeReducer(state = defaultState, action): any {
       return {
         ...state,
         ...action.payload,
-        isAuth: true,
+        // isAuth: true,
         isFetching: false,
       };
     case LOGIN_EMPLOYEE_SUCCESS:
+        console.log("updating login employee sucess with:", action.payload);
       return {
         ...state,
         ...action.payload,

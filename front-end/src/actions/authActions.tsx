@@ -211,8 +211,10 @@ export function logInOnLoad(token) {
         console.log("login/logcheck", response);
 
         if (response.data.employee.companyIdentifier !== null) {
+            console.log("was not null calling setCompanyAndEmployee");
           dispatch(setCompanyAndEmployee(response.data.company, response.data.employee));
         } else {
+            console.log("was null so we're calling logInEmployeeSuccess with : ", response.data.employee);
           dispatch(logInEmployeeSuccess(response.data.employee));
           dispatch(setSiteIdle());
         }
@@ -289,7 +291,7 @@ export function setCompanyAndEmployee(company, employee) {
     dispatch(removeLogInError());
     dispatch(setCompany(company));
     dispatch(setCompanyIdAfterRegistration({companyIdentifier: company.id}));
-    // dispatch(logInEmployeeSuccess(employee));
+    dispatch(logInEmployeeSuccess(employee));
     dispatch(setSiteIdle());
   };
 }

@@ -172,7 +172,7 @@ export function submitCompanyRegistration(companyInfo) {
         setAuth(response.data.token);
         response.data.employee.companyIdentifier = response.data.companyId;
 
-        dispatch(setCompanyAndEmployee(response.data.company, response.data.companyId));
+        dispatch( setCompanyAndEmployee(response.data.company, response.data.companyId));
       })
       .catch(error => console.log("we got an error", error));
   };
