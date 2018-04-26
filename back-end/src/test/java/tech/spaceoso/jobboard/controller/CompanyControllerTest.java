@@ -33,7 +33,10 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.emptyIterable;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.iterableWithSize;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -57,7 +60,6 @@ public class CompanyControllerTest {
     // injects this into companyController
     @Mock
     CompanyRepository companyRepository;
-    // injects this into companyController
     @Mock
     EmployeeRepository employeeRepository;
     @Mock
@@ -68,7 +70,6 @@ public class CompanyControllerTest {
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
-        // entityManager = mock(EntityManager.class);
         mockMvc = MockMvcBuilders
                 .standaloneSetup(companyController)
                 .build();
@@ -79,31 +80,6 @@ public class CompanyControllerTest {
     private Job jobTest = new Job(UUID.randomUUID(), LocalDateTime.now(), "Tester 1", testerAddress, "Fake job", ObjectCreator.createCompany());
     private List<Job> jobList = new ArrayList<Job>();
     private List<Employee> employerList = new ArrayList<Employee>();
-    
-    
-    @Test
-    public void testCompanyControllerGetById() {
-        // create and save id for later use
-        
-        jobList.add(jobTest);
-        
-        // create mock mockCompany
-        Company mockCompany = new Company(id, LocalDateTime.now(), "Test Tube Company", new Address("fake street", "fake city", "NY", "12345"), "fake.png", "fake.com", "twitter", "facebook", "linkedin", employerList, jobList);
-        
-        // when we search the repo for id return mock mockCompany
-        when(companyRepository.getOne(id)).thenReturn(mockCompany);
-        
-        
-        // the controller calls the repo.findOne method the above snippet is what returns an mockCompany to company
-        Company company = companyController.getCompanyById(id);
-        
-        // this checks that the actual method was called
-        verify(companyRepository).getOne(id);
-        
-        // compare
-        assertThat(company, is(mockCompany));
-        
-    }
     
     @Test
     public void testCreateNewCompany() throws Exception {
@@ -184,43 +160,31 @@ public class CompanyControllerTest {
     }
     
     @Test
-    public void createNewCompany() {
-    }
-    
-    @Test
-    public void getBackEnd() {
-    }
-    
-    @Test
-    public void getCompanyJobs() throws Exception {
-        UUID companyId = UUID.fromString("270db49c-7e89-4966-88ac-dc13affbf3f6");
+    public void testGetCompanyJobs() throws Exception {
+        Company company = ObjectCreator.createCompany();
         
         List<Job> jobs = new ArrayList<>();
         Job job1 = ObjectCreator.createJobs();
         Job job2 = ObjectCreator.createJobs();
         jobs.add(job1);
         jobs.add(job2);
-        
-        when(jobRepository.findAll()).thenReturn(jobs);
-        
-        this.mockMvc.perform(
-                get("/api/v1/jobposts/list")
-        ).andExpect(status().isOk());
+
+        company.setJobs(jobs);
+
+        when(jobRepository.findJobsByCompany_Id(company.getId())).thenReturn(jobs);
+
+        assertThat(companyController.getCompanyJobs(company.getId()), is(iterableWithSize(2)));
+        assertThat(jobs, is(companyController.getCompanyJobs(company.getId())));
+    }
+
+    @Test
+    public void testGetCompanyJobsFail() throws Exception{
+        UUID uuid = ObjectCreator.generateId();
+        assertThat(jobRepository.findJobsByCompany_Id(uuid), is(emptyIterable()));
     }
     
     @Test
     public void createNewJob() {
     }
-    
-    @Test
-    public void getCompanyById() throws Exception {
-        UUID companyId = UUID.fromString("270db49c-7e89-4966-88ac-dc13affbf3f6");
-        Company newComp = ObjectCreator.createCompany();
-        
-        when(companyRepository.getOne(companyId)).thenReturn(newComp);
-        this.mockMvc.perform(
-                get("/secured/company/getsinglecompany")
-        ).andExpect(status().isOk());
-        
-    }
+
 }

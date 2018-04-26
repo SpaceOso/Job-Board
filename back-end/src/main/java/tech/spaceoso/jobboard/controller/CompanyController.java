@@ -93,11 +93,11 @@ public class CompanyController {
         return updatedEmployee;
     }
 
-    @RequestMapping(value = "/private", method = RequestMethod.GET)
-    public String getBackEnd(){
-        return "you've made it to back end";
-    }
-
+    /**
+     * Called when logging into dashboard
+     * @param companyId
+     * @return
+     */
     @RequestMapping(value = "/{companyId}/get-jobs", method = RequestMethod.GET)
     public List<Job> getCompanyJobs(@PathVariable UUID companyId){
         System.out.println("looking to get jobs for: " + companyId);
@@ -130,15 +130,4 @@ public class CompanyController {
         return wrappedJob;
     }
 
-    @RequestMapping(value = "/getsinglecompany{id}")
-    public Company getCompanyById(@PathVariable UUID id){
-        return companyRepository.getOne(id);
-    }
-    
-    @RequestMapping(value = "/getname/{id}", method = RequestMethod.GET)
-    public String getCompanyName(@PathVariable UUID id) {
-        Company comp = new Company();
-        comp = companyRepository.getOne(id);
-        return comp.getName();
-    }
 }
