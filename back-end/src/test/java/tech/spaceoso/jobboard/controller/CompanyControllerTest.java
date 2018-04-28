@@ -184,7 +184,33 @@ public class CompanyControllerTest {
     }
     
     @Test
-    public void createNewJob() {
+    public void testCreateNewJob() {
+        // create wrapper that front-end sends
+        JobWrapper jobWrapper = new JobWrapper();
+
+        Company company = ObjectCreator.createCompany();
+
+        Job job1 = ObjectCreator.createJobs();
+        job1.setId(null);
+
+        jobWrapper.setCompanyId(company.getId().toString());
+        jobWrapper.setJob(job1);
+
+        when(entityManager.getReference(Company.class, company.getId())).thenReturn(company);
+
+
+        Job jobWithId = ObjectCreator.createJobs();
+        jobWithId.setCompany(company);
+        jobWithId.setTitle("Job With ID");
+
+        when(jobRepository.saveAndFlush(any(Job.class))).thenReturn(jobWithId);
+
+        JobWrapper response = companyController.createNewJob(jobWrapper);
+        System.out.println("The response that we get " + jobWithId);
+
+        assertThat(response, Matchers.isA(JobWrapper.class));
+        assertThat(response.getJob().getId(), isNotNull());
+        assertThat(response.getJob().getCompany(), Matchers.isA(Company.class));
     }
 
 }
