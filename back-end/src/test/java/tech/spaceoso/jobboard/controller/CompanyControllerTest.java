@@ -7,6 +7,8 @@ import com.google.gson.Gson;
 import org.apache.tomcat.jni.Local;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.IsNot;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import org.json.JSONArray;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,6 +38,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyIterable;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.iterableWithSize;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -197,8 +200,7 @@ public class CompanyControllerTest {
         jobWrapper.setJob(job1);
 
         when(entityManager.getReference(Company.class, company.getId())).thenReturn(company);
-
-
+        
         Job jobWithId = ObjectCreator.createJobs();
         jobWithId.setCompany(company);
         jobWithId.setTitle("Job With ID");
@@ -206,11 +208,12 @@ public class CompanyControllerTest {
         when(jobRepository.saveAndFlush(any(Job.class))).thenReturn(jobWithId);
 
         JobWrapper response = companyController.createNewJob(jobWrapper);
-        System.out.println("The response that we get " + jobWithId);
+        System.out.println("The response that we get " + response.getJob().getId());
 
         assertThat(response, Matchers.isA(JobWrapper.class));
-        assertThat(response.getJob().getId(), isNotNull());
+        assertThat(response.getJob().getId(), is(notNullValue()));
         assertThat(response.getJob().getCompany(), Matchers.isA(Company.class));
+        assertThat(response.getJob(), Matchers.isA(Job.class));
     }
 
 }

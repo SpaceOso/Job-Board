@@ -121,7 +121,8 @@ public class CompanyController {
         // create and save a default job
         Job newJob = jobWrapper.getJob();
         newJob.setCompany(company);
-        jobRepository.saveAndFlush(newJob);
+        
+        newJob = jobRepository.saveAndFlush(newJob);
         
         // send back the new job with company info and all other jobs
         JobWrapper wrappedJob = new JobWrapper(newJob, company.getId().toString());

@@ -102,6 +102,9 @@ export function saveJobPost(jobPostInfo) {
     axios.post(`${ROOT_URL}secured/company/jobposts/create`, jobPostInfo)
       .then((response) => {
         console.log("the resposne that we get", response);
+        if(response.data.job === null || response.data.job === undefined){
+          throw new Error("Sorry couldn't not create your new job. Please make sure you have an internet connection");
+        }
         dispatch(editingJobPostSuccess(response.data));
         dispatch(setSiteIdle());
       })
