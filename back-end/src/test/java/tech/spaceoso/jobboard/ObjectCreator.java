@@ -1,10 +1,7 @@
 package tech.spaceoso.jobboard;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import tech.spaceoso.jobboard.model.Address;
-import tech.spaceoso.jobboard.model.Company;
-import tech.spaceoso.jobboard.model.Employee;
-import tech.spaceoso.jobboard.model.Job;
+import tech.spaceoso.jobboard.model.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -42,6 +39,10 @@ final public class ObjectCreator {
     static public Employee createEmployee(){
         return new Employee(UUID.randomUUID(), LocalDateTime.now(), "Tester", "Employee", "tester@email.com", "123abc" );
         
+    }
+    
+    static public Applicant createApplicant(){
+        return new Applicant(UUID.randomUUID(), LocalDateTime.now(), LocalDateTime.now(), createAddress(), "Test", "Applicant", "test@gmail.com", "1234567", "word.pdf", "www.test.com", false, null, null);
     }
 
     static public Company createCompany() {

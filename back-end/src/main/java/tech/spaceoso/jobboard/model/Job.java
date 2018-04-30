@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import tech.spaceoso.jobboard.App;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -33,6 +35,12 @@ public class Job {
     @JoinColumn(name = "company_id")
     @JsonBackReference
     private Company company;
+    
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "applicant_id")
+    @JsonBackReference
+    private List<Applicant> applicants;
+    
 
     public Job(){}
 
@@ -100,7 +108,15 @@ public class Job {
     public void setCompany(Company company) {
         this.company = company;
     }
-
+    
+    public List<Applicant> getApplicants() {
+        return applicants;
+    }
+    
+    public void setApplicants(List<Applicant> applicants) {
+        this.applicants = applicants;
+    }
+    
     @Override
     public String toString() {
         return "Job{" +
@@ -109,6 +125,7 @@ public class Job {
                 ", lastModifiedDate=" + lastModifiedDate +
                 ", title='" + title + '\'' +
                 ", address=" + address +
+                ", applicants=" + applicants +
                 ", description='" + description + '\'' +
                 ", company=" + company.getId() +
                 '}';
