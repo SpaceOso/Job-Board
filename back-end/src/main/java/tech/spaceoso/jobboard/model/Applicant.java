@@ -33,6 +33,7 @@ public class Applicant {
     private String phoneNumber;
     private String resume;
     private String website;
+    private String status;
     private Boolean reviewed;
     private String coverLetter;
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})

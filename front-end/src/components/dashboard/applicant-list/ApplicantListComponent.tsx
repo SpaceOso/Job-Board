@@ -8,7 +8,7 @@ import DropDownComponent from '../../drop-down/DropDownComponent';
 import './ApplicantListComponent.scss';
 
 interface MyProps extends RouteComponentProps<any> {
-    employee: Employee;
+  employee: Employee;
   jobs: CompanyJobView[] | null;
   company: Company;
   handleApplicantSelect: (applicant) => void;

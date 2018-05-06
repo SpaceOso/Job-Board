@@ -32,8 +32,6 @@ function companyReducer(state = defaultState, action): any {
     case FETCHING_THIS_COMPANY_JOBS:
       return state;
     case GET_THIS_COMPANY_JOBS_SUCCESS:
-      console.log("GET_THIS_COMPANY_JOBS_SUCCESS", state);
-      console.log("jobs:", action.payload.data);
       return {
         ...state,
         jobs: [...action.payload.data],

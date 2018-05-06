@@ -33,7 +33,7 @@ public class Job {
     private String description;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "company_id")
-    @JsonBackReference
+    @JsonBackReference(value ="job-company")
     private Company company;
     
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

@@ -137,8 +137,8 @@ export interface Applicants {
   status: string;
   reviewed: boolean;
   coverLetter: string;
-  createdAt: string;
-  updatedAt: string;
+  createdDate: string;
+  lastModifiedDate: string;
   jobId: string;
 }
 

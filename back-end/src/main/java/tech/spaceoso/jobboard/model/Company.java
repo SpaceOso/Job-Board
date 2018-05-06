@@ -41,11 +41,11 @@ public class Company {
     private String linkedIn;
 
     @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    @JsonManagedReference
+    @JsonManagedReference(value = "employee-company")
     private List<Employee> employees;
 
     @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    @JsonManagedReference
+    @JsonManagedReference(value="job-company")
     private List<Job> jobs;
 
     public Company() {}

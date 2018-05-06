@@ -33,7 +33,7 @@ public class Employee {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @JoinColumn(name = "company_id")
-    @JsonBackReference
+    @JsonBackReference(value="employee-company")
     private Company company;
     private UUID companyIdentifier;
 
