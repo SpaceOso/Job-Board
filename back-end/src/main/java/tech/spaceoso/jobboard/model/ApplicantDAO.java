@@ -27,4 +27,12 @@ public class ApplicantDAO {
     public void setJobId(String jobId) {
         this.jobId = jobId;
     }
+    
+    @Override
+    public String toString() {
+        return "ApplicantDAO{" +
+                "applicant=" + applicant +
+                ", jobId='" + jobId + '\'' +
+                '}';
+    }
 }

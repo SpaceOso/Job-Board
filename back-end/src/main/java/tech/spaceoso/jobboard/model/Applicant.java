@@ -32,10 +32,12 @@ public class Applicant {
     private String email;
     private String phoneNumber;
     private String resume;
+    private String resumeUrl;
+    private String coverLetter;
+    private String coverLetterUrl;
     private String website;
     private String status;
     private Boolean reviewed;
-    private String coverLetter;
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @JoinTable(
             name="JOBS_APPLIED",
@@ -176,5 +178,51 @@ public class Applicant {
     
     public void setJobs(List<Job> jobs) {
         this.jobs = jobs;
+    }
+    
+    public String getResumeUrl() {
+        return resumeUrl;
+    }
+    
+    public void setResumeUrl(String resumeUrl) {
+        this.resumeUrl = resumeUrl;
+    }
+    
+    public String getCoverLetterUrl() {
+        return coverLetterUrl;
+    }
+    
+    public void setCoverLetterUrl(String coverLetterUrl) {
+        this.coverLetterUrl = coverLetterUrl;
+    }
+    
+    public String getStatus() {
+        return status;
+    }
+    
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
+    @Override
+    public String toString() {
+        return "Applicant{" +
+                "id=" + id +
+                ", createdDate=" + createdDate +
+                ", lastModifiedDate=" + lastModifiedDate +
+                ", address=" + address +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", resume='" + resume + '\'' +
+                ", resumeUrl='" + resumeUrl + '\'' +
+                ", coverLetter='" + coverLetter + '\'' +
+                ", coverLetterUrl='" + coverLetterUrl + '\'' +
+                ", website='" + website + '\'' +
+                ", status='" + status + '\'' +
+                ", reviewed=" + reviewed +
+                ", jobs=" + jobs +
+                '}';
     }
 }

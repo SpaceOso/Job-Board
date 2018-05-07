@@ -2,11 +2,12 @@ import * as React from 'react';
 
 import ModalComponent from '../../modal/ModalComponent';
 import SimpleForm from '../../simple-form/SimpleForm';
+import {Applicants} from "../../../types";
 
 interface MyProps {
   jobId: string | null;
   jobTitle: string;
-    companyId: string | null;
+  companyId: string | null;
   handleApplicantInfo: (applicantInfo) => {};
   cancelApplication: (e: React.SyntheticEvent<HTMLInputElement>) => void;
   viewingApplication: boolean;
@@ -19,14 +20,14 @@ class ApplicationComponent extends React.Component<MyProps> {
       required: true,
       type: 'text',
       placeHolder: 'First Name',
-      id: 'fName',
+      id: 'firstName',
     },
     {
       label: 'Last Name',
       required: true,
       type: 'text',
       placeHolder: 'Last Name',
-      id: 'lName',
+      id: 'lastName',
     },
     {
       label: 'email',
@@ -56,7 +57,7 @@ class ApplicationComponent extends React.Component<MyProps> {
       name: 'resume',
       accept: '.pdf',
       placeHolder: 'upload your resume',
-      id: 'resume',
+      id: 'resumeFile',
     },
     {
       label: 'Cover Letter',
@@ -64,7 +65,7 @@ class ApplicationComponent extends React.Component<MyProps> {
       type: 'file',
       accept: '.pdf',
       placeHolder: 'upload your resume',
-      id: 'coverLetter',
+      id: 'coverLetterFile',
     },
   ];
 
@@ -75,13 +76,21 @@ class ApplicationComponent extends React.Component<MyProps> {
   }
 
   handleApplicationSubmit(data) {
+    // back end expects a string for these properties
+    data.resume = data.resumeFile.name;
+    data.coverLetter = data.coverLetterFile.name;
+    console.log("Adding application submition here: ", data);
+
     /*We only get the info from the form here. We need to add the company and jobId info to this.*/
-    const updatedData = {
-      ...data,
-        companyId: this.props.companyId,
+
+    let applicantDAO = {
+      applicant: data,
+      resume: data.resume,
+      coverLetter: data.coverLetter,
       jobId: this.props.jobId,
     };
-    this.props.handleApplicantInfo(updatedData);
+
+    this.props.handleApplicantInfo(applicantDAO);
   }
 
   render() {

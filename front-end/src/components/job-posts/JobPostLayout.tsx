@@ -94,7 +94,7 @@ class JobPostLayout extends React.Component<JobPostProps, MyState> {
 
     const applicationComponent = (
       <ApplicationComponent
-          companyId={this.props.currentJobPost.job.companyId}
+        companyId={this.props.currentJobPost.job.companyId}
         jobId={this.props.currentJobPost.job.id}
         jobTitle={this.props.currentJobPost.job.title}
         handleApplicantInfo={this.props.addApplicantToJob}

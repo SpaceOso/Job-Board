@@ -85,17 +85,36 @@ export function getJobs() {
 
 export function addApplicantToJob(applicantInfo) {
 
+  console.log("The applicant info before we send to server: ", applicantInfo);
   const data = new FormData();
+  //TODO need to update this
+  applicantInfo.applicant.resume = "testResume.doc";
 
-  for (const entries in applicantInfo) {
+  const applicantDAO = {
+    applicant: {...applicantInfo.applicant},
+    jobId: applicantInfo.jobId
+  };
+
+  data.append("applicantDao",
+    new Blob([JSON.stringify(applicantDAO)], {type: "application/json"}));
+
+  if (applicantInfo.applicant.coverLetterFile !== null) {
+    console.log("coverletter was not empty adding: ", applicantInfo.applicant.coverLetterFile);
+    data.append("coverLetter", applicantInfo.applicant.coverLetterFile);
+  }
+
+
+  /*for (const entries in applicantInfo) {
     if (applicantInfo.hasOwnProperty(entries)) {
       data.set(entries, applicantInfo[ entries ]);
     }
-  }
+  }*/
+
+  console.log("the data when creating new applicant: " + applicantInfo);
 
   return (dispatch) => {
     dispatch(fetchingJobs());
-    axios.post(`${ROOT_URL}api/createapplicant`, data)
+    axios.post(`${ROOT_URL}api/v1/applicant/create`, data)
       .then((response) => {
         dispatch(doneFetchingJobs());
       })
