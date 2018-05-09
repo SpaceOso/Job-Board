@@ -43,9 +43,6 @@ public class ApplicantController {
     public ApplicantDAO CrateApplicant(@RequestPart ApplicantDAO applicantDao,
                                        @RequestPart(value = "coverLetter")Optional<MultipartFile> coverLetter,
                                        @RequestPart(value = "resume")Optional<MultipartFile> resume){
-        System.out.println("Inside the createApplicant call");
-        System.out.println("AppcliantDAO: " + applicantDao.toString());
-        System.out.println("The cover letter " + coverLetter);
         
         // applicantRepository.
         Applicant applicant = applicantDao.getApplicant();

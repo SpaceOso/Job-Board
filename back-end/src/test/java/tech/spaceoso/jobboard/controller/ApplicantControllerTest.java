@@ -1,11 +1,14 @@
 package tech.spaceoso.jobboard.controller;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import tech.spaceoso.jobboard.ObjectCreator;
 import tech.spaceoso.jobboard.model.Applicant;
@@ -15,10 +18,7 @@ import tech.spaceoso.jobboard.repository.ApplicantRepository;
 import tech.spaceoso.jobboard.repository.JobRepository;
 
 import javax.persistence.EntityManager;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.isA;
@@ -47,39 +47,58 @@ public class ApplicantControllerTest {
     
     @Test
     public void crateApplicant() {
-    
+
+        // configure the mapper
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
+        mapper.findAndRegisterModules();
+
+        // ***FROM CLIENT ***
         // job information
         Job refJob = ObjectCreator.createJobs();
         String jobId = refJob.getId().toString();
-        
         // applicant information
-        Applicant testApplicant = ObjectCreator.createApplicant();
-        // will not have an idea when coming from client
-        testApplicant.setId(null);
-        
-        // create version of applicant that will have id after being saved
-        Applicant savedApplicant = ObjectCreator.createApplicant();
-        // create job list to add to applicant
+        Applicant clientSideApplicant = ObjectCreator.createApplicant();
+        // will not have an id when coming from client
+        clientSideApplicant.setId(null);
+
+        Map<String, Object> applicantDaoWrapper = new HashMap<>();
+        applicantDaoWrapper.put("applicant", clientSideApplicant);
+        applicantDaoWrapper.put("jobId", jobId);
+
+        // create multi part
+        MockMultipartFile applicantMultiPart = new MockMultipartFile("companyDao", "", "application/json", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json).getBytes());
+
+
+
+        // create data object client will send
+        ApplicantDAO applicantDao = new ApplicantDAO(clientSideApplicant, jobId);
+
+        // server side applicant
         List<Job> applicantJobs = new ArrayList<>();
         applicantJobs.add(refJob);
-        // add job list to employee
-        savedApplicant.setJobs(applicantJobs);
-        
+        clientSideApplicant.setJobs(applicantJobs);
+
+        // create version of applicant that will have id after being saved
+        Applicant savedApplicant = clientSideApplicant;
+        // set ID to mimic it saved
+        savedApplicant.setId(ObjectCreator.generateId());
+
         // create version of job that will have the applicant assigned
         Job savedJob = refJob;
         List<Applicant> applicantList = new ArrayList<>();
         applicantList.add(savedApplicant);
         savedJob.setApplicants(applicantList);
-        
-        // create data object client will send
-        ApplicantDAO applicantDao = new ApplicantDAO(testApplicant, jobId);
-    
+
+        // create backend versions
         when(em.getReference(Job.class, jobId)).thenReturn(refJob);
-        savedApplicant.setJobs(applicantJobs);
-        
+
         when(applicantRepository.saveAndFlush(any(Applicant.class))).thenReturn(savedApplicant);
+
+
         
-        // assertThat(applicantController.CrateApplicant(applicantDao), isA(ApplicantDAO.class));
+        assertThat(applicantController.CrateApplicant(applicantDao), isA(ApplicantDAO.class));
         
     }
+
 }
