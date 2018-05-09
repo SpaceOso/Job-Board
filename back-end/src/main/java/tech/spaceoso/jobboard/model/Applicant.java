@@ -21,8 +21,10 @@ public class Applicant {
     
     @CreationTimestamp
     private LocalDateTime createdDate;
+    
     @UpdateTimestamp
     private LocalDateTime lastModifiedDate;
+    
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
@@ -36,11 +38,10 @@ public class Applicant {
     private String coverLetter;
     private String coverLetterUrl;
     private String website;
-    private String status;
-    private Boolean reviewed;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @JoinTable(
-            name="JOBS_APPLIED",
+            name="JOB_APPLICANTS",
             joinColumns = @JoinColumn(name="APPLICANT_ID"),
             inverseJoinColumns = @JoinColumn(name="JOB_ID")
     )
@@ -48,7 +49,7 @@ public class Applicant {
     
     public Applicant(){};
     
-    public Applicant(Address address, String firstName, String lastName, String email, String phoneNumber, String resume, String website, Boolean reviewed, String coverLetter) {
+    public Applicant(Address address, String firstName, String lastName, String email, String phoneNumber, String resume, String website, String coverLetter) {
         this.address = address;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -56,11 +57,10 @@ public class Applicant {
         this.phoneNumber = phoneNumber;
         this.resume = resume;
         this.website = website;
-        this.reviewed = reviewed;
         this.coverLetter = coverLetter;
     }
     
-    public Applicant(UUID id, LocalDateTime createdDate, LocalDateTime lastModifiedDate, Address address, String firstName, String lastName, String email, String phoneNumber, String resume, String website, Boolean reviewed, String coverLetter, List<Job> jobs) {
+    public Applicant(UUID id, LocalDateTime createdDate, LocalDateTime lastModifiedDate, Address address, String firstName, String lastName, String email, String phoneNumber, String resume, String website, String coverLetter, List<Job> jobs) {
         this.id = id;
         this.createdDate = createdDate;
         this.lastModifiedDate = lastModifiedDate;
@@ -71,7 +71,6 @@ public class Applicant {
         this.phoneNumber = phoneNumber;
         this.resume = resume;
         this.website = website;
-        this.reviewed = reviewed;
         this.coverLetter = coverLetter;
         this.jobs = jobs;
     }
@@ -156,14 +155,6 @@ public class Applicant {
         this.website = website;
     }
     
-    public Boolean getReviewed() {
-        return reviewed;
-    }
-    
-    public void setReviewed(Boolean reviewed) {
-        this.reviewed = reviewed;
-    }
-    
     public String getCoverLetter() {
         return coverLetter;
     }
@@ -196,13 +187,6 @@ public class Applicant {
         this.coverLetterUrl = coverLetterUrl;
     }
     
-    public String getStatus() {
-        return status;
-    }
-    
-    public void setStatus(String status) {
-        this.status = status;
-    }
     
     @Override
     public String toString() {
@@ -220,8 +204,6 @@ public class Applicant {
                 ", coverLetter='" + coverLetter + '\'' +
                 ", coverLetterUrl='" + coverLetterUrl + '\'' +
                 ", website='" + website + '\'' +
-                ", status='" + status + '\'' +
-                ", reviewed=" + reviewed +
                 ", jobs=" + jobs +
                 '}';
     }

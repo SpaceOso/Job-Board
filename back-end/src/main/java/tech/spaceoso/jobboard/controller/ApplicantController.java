@@ -6,11 +6,9 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import tech.spaceoso.jobboard.App;
-import tech.spaceoso.jobboard.model.Applicant;
-import tech.spaceoso.jobboard.model.ApplicantDAO;
-import tech.spaceoso.jobboard.model.Company;
-import tech.spaceoso.jobboard.model.Job;
+import tech.spaceoso.jobboard.model.*;
 import tech.spaceoso.jobboard.repository.ApplicantRepository;
+import tech.spaceoso.jobboard.repository.JobApplicantRepository;
 import tech.spaceoso.jobboard.repository.JobRepository;
 import tech.spaceoso.jobboard.service.AmazonClient;
 
@@ -27,15 +25,18 @@ public class ApplicantController {
     private EntityManager em;
     
     private JobRepository jobRepository;
+    private JobApplicantRepository jobApplicantRepository;
     private ApplicantRepository applicantRepository;
     private AmazonClient amazonClient;
+    
     final org.slf4j.Logger logger = LoggerFactory.getLogger(ApplicantController.class);
     
     @Autowired
-    public ApplicantController(JobRepository jobRepository, ApplicantRepository applicantRepository, AmazonClient amazonClient) {
+    public ApplicantController(JobRepository jobRepository, ApplicantRepository applicantRepository, AmazonClient amazonClient, JobApplicantRepository jobApplicantRepository) {
         this.jobRepository = jobRepository;
         this.applicantRepository = applicantRepository;
         this.amazonClient = amazonClient;
+        this.jobApplicantRepository = jobApplicantRepository;
     }
     
     @RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -46,6 +47,8 @@ public class ApplicantController {
         
         // applicantRepository.
         Applicant applicant = applicantDao.getApplicant();
+        JobApplicants jobApplicants = new JobApplicants();
+        
         Job job = em.getReference(Job.class, UUID.fromString(applicantDao.getJobId()));
         // get applicant jobs
         List<Job> applicantJobs = new ArrayList<>();
@@ -63,7 +66,6 @@ public class ApplicantController {
             applicant.setCoverLetterUrl(coverLetterUrl);
         }
         
-        
         if(applicant.getJobs() != null){
             applicantJobs = applicant.getJobs();
         }
@@ -71,6 +73,10 @@ public class ApplicantController {
         System.out.println("The job list we got from the applicant: " + applicantJobs.toString());
         applicantJobs.add(job);
         
+        jobApplicants.setApplicant(applicant);
+        jobApplicants.setJob(job);
+    
+        jobApplicantRepository.saveAndFlush(jobApplicants);
         
         Applicant savedApplicant = applicantRepository.saveAndFlush(applicantDao.getApplicant());
         

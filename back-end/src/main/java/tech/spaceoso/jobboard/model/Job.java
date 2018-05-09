@@ -20,17 +20,22 @@ public class Job {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @org.hibernate.annotations.Type(type="org.hibernate.type.PostgresUUIDType")
     private UUID id;
+    
     @CreationTimestamp
     private LocalDateTime createdDate;
+    
 //    @Temporal(TemporalType.DATE)
     @UpdateTimestamp
     @Column(name = "lastModifiedDate")
     private LocalDateTime lastModifiedDate;
+    
     private String title;
+    
     @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
     private String description;
+    
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "company_id")
     @JsonBackReference(value ="job-company")
