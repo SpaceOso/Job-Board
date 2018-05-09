@@ -40,11 +40,11 @@ public class Applicant {
     private String website;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    @JoinTable(
-            name="JOB_APPLICANTS",
-            joinColumns = @JoinColumn(name="APPLICANT_ID"),
-            inverseJoinColumns = @JoinColumn(name="JOB_ID")
-    )
+    // @JoinTable(
+    //         name="JOB_APPLICANTS",
+    //         joinColumns = @JoinColumn(name="APPLICANT_ID"),
+    //         inverseJoinColumns = @JoinColumn(name="JOB_ID")
+    // )
     private List<Job> jobs;
     
     public Applicant(){};
