@@ -40,7 +40,9 @@ public class ApplicantController {
     }
     
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ApplicantDAO CrateApplicant(@RequestPart ApplicantDAO applicantDao, @RequestPart(value = "coverLetter")Optional<MultipartFile> coverLetter){
+    public ApplicantDAO CrateApplicant(@RequestPart ApplicantDAO applicantDao,
+                                       @RequestPart(value = "coverLetter")Optional<MultipartFile> coverLetter,
+                                       @RequestPart(value = "resume")Optional<MultipartFile> resume){
         System.out.println("Inside the createApplicant call");
         System.out.println("AppcliantDAO: " + applicantDao.toString());
         System.out.println("The cover letter " + coverLetter);
@@ -64,6 +66,14 @@ public class ApplicantController {
             logger.info(coverLetter.toString());
             logger.info("The cover letter name is!!" + coverLetterUrl);
             applicant.setCoverLetterUrl(coverLetterUrl);
+        }
+        
+        if(resume.isPresent()){
+            System.out.println("THERE WAS ALSO A RESUME!!!");
+            resumeUrl = this.amazonClient.uploadFile(resume.get());
+            logger.info(resume.toString());
+            logger.info("THe resume file name is! " + resumeUrl);
+            applicant.setResumeUrl(resumeUrl);
         }
         
         if(applicant.getJobs() != null){
