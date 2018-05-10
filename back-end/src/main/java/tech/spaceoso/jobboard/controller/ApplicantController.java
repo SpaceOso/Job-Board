@@ -24,7 +24,7 @@ public class ApplicantController {
     @PersistenceContext
     private EntityManager em;
     
-    private JobRepository jobRepository;
+    // private JobRepository jobRepository;
     private JobApplicantRepository jobApplicantRepository;
     private ApplicantRepository applicantRepository;
     private AmazonClient amazonClient;
@@ -32,8 +32,7 @@ public class ApplicantController {
     final org.slf4j.Logger logger = LoggerFactory.getLogger(ApplicantController.class);
     
     @Autowired
-    public ApplicantController(JobRepository jobRepository, ApplicantRepository applicantRepository, AmazonClient amazonClient, JobApplicantRepository jobApplicantRepository) {
-        this.jobRepository = jobRepository;
+    public ApplicantController( ApplicantRepository applicantRepository, AmazonClient amazonClient, JobApplicantRepository jobApplicantRepository) {
         this.applicantRepository = applicantRepository;
         this.amazonClient = amazonClient;
         this.jobApplicantRepository = jobApplicantRepository;
@@ -43,6 +42,9 @@ public class ApplicantController {
     public ApplicantDAO CrateApplicant(@RequestPart ApplicantDAO applicantDao,
                                        @RequestPart(value = "coverLetter")Optional<MultipartFile> coverLetter,
                                        @RequestPart(value = "resume")Optional<MultipartFile> resume){
+    
+        System.out.println("Inside CreateApplicait with id: " + applicantDao.getJobId());
+        
         
         // applicantRepository.
         Applicant applicant = applicantDao.getApplicant();
@@ -57,7 +59,7 @@ public class ApplicantController {
         String resumeUrl = "";
     
         //TODO need to check that there is a file being uploaded
-        if(coverLetter.isPresent() ){
+        if(coverLetter.isPresent() && coverLetter != null ){
             System.out.println("THERE WAS A COVER LETTER TO ADD!!!!!!!");
             coverLetterUrl = this.amazonClient.uploadFile(coverLetter.get());
             logger.info(coverLetter.toString());
@@ -65,7 +67,7 @@ public class ApplicantController {
             applicant.setCoverLetterUrl(coverLetterUrl);
         }
         
-        if(resume.isPresent()){
+        if(resume.isPresent() && resume != null){
             System.out.println("THERE WAS ALSO A RESUME!!!");
             resumeUrl = this.amazonClient.uploadFile(resume.get());
             logger.info(resume.toString());
