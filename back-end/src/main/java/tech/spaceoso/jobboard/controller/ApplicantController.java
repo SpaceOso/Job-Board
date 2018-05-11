@@ -1,11 +1,15 @@
 package tech.spaceoso.jobboard.controller;
 
+import jdk.nashorn.internal.codegen.ObjectCreator;
+import org.json.JSONObject;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import tech.spaceoso.jobboard.App;
+import tech.spaceoso.jobboard.exception.ResourceNotFoundException;
 import tech.spaceoso.jobboard.model.*;
 import tech.spaceoso.jobboard.repository.ApplicantRepository;
 import tech.spaceoso.jobboard.repository.JobApplicantRepository;
@@ -38,10 +42,20 @@ public class ApplicantController {
         this.jobApplicantRepository = jobApplicantRepository;
     }
     
+    @RequestMapping(value = "/dur/{id}", method = RequestMethod.GET)
+    public ResponseEntity testerFunc(@PathVariable int id)  {
+        if(id > 10){
+            throw new ResourceNotFoundException("Hey you're bigger than ten");
+        }
+    
+        return ResponseEntity.ok().body(new Applicant());
+    }
+    
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ApplicantDAO CrateApplicant(@RequestPart ApplicantDAO applicantDao,
-                                       @RequestPart(value = "coverLetter")Optional<MultipartFile> coverLetter,
-                                       @RequestPart(value = "resume")Optional<MultipartFile> resume){
+    @ResponseBody
+    public ResponseEntity<ResponseTransfer> CrateApplicant(@RequestPart ApplicantDAO applicantDao,
+                                                          @RequestPart(value = "coverLetter")Optional<MultipartFile> coverLetter,
+                                                          @RequestPart(value = "resume")Optional<MultipartFile> resume) {
     
         System.out.println("Inside CreateApplicait with id: " + applicantDao.getJobId());
         
@@ -61,6 +75,7 @@ public class ApplicantController {
         //TODO need to check that there is a file being uploaded
         if(coverLetter.isPresent() && coverLetter != null ){
             System.out.println("THERE WAS A COVER LETTER TO ADD!!!!!!!");
+            System.out.println("The cover letter is: " + coverLetter.get().toString());
             coverLetterUrl = this.amazonClient.uploadFile(coverLetter.get());
             logger.info(coverLetter.toString());
             logger.info("The cover letter name is!!" + coverLetterUrl);
@@ -73,6 +88,9 @@ public class ApplicantController {
             logger.info(resume.toString());
             logger.info("THe resume file name is! " + resumeUrl);
             applicant.setResumeUrl(resumeUrl);
+        } else {
+            System.out.println("We are throwing an error");
+            throw new ResourceNotFoundException("Sorry, but you need to include a resume");
         }
         
         if(applicant.getJobs() != null){
@@ -91,6 +109,6 @@ public class ApplicantController {
         
         applicantDao.setApplicant(savedApplicant);
         
-        return applicantDao;
+        return ResponseEntity.ok(new ResponseTransfer("Thank you for subbmiting your application!"));
     }
 }

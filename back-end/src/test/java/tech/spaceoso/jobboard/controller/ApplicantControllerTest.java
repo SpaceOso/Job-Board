@@ -24,6 +24,7 @@ import tech.spaceoso.jobboard.model.ApplicantDAO;
 import tech.spaceoso.jobboard.repository.ApplicantRepository;
 import tech.spaceoso.jobboard.repository.JobApplicantRepository;
 import tech.spaceoso.jobboard.repository.JobRepository;
+import tech.spaceoso.jobboard.service.AmazonClient;
 
 import javax.persistence.EntityManager;
 
@@ -31,14 +32,17 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 // @WebMvcTest(ApplicantController.class)
-// @SpringBootTest
+// @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 // @AutoConfigureMockMvc
 public class ApplicantControllerTest {
     
@@ -50,6 +54,8 @@ public class ApplicantControllerTest {
     JobRepository jobRepository;
     @Mock
     JobApplicantRepository jobApplicantRepository;
+    @Mock
+    AmazonClient amazonClient;
     @Mock
     EntityManager em;
     
@@ -69,6 +75,7 @@ public class ApplicantControllerTest {
     
     @Test
     public void crateApplicant() throws Exception {
+        
         applicant.setId(null);
         ApplicantDAO applicantDao = new ApplicantDAO(applicant, "f60d0781-e3fe-419b-a4f5-8bd34be843c8");
     
@@ -91,6 +98,10 @@ public class ApplicantControllerTest {
     
         MockMultipartFile companyMultiPart = new MockMultipartFile("applicantDao", "", "application/json", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json).getBytes());
         MockMultipartFile applicantDao1 = new MockMultipartFile("applicantDao","", "application/json", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json).getBytes());
+    
+        when(amazonClient.uploadFile(coverLetterFile)).thenReturn(coverLetterFile.getOriginalFilename());
+        when(amazonClient.uploadFile(resumeFile)).thenReturn(resumeFile.getOriginalFilename());
+        
         
         this.mockMvc.perform(
                 multipart("/api/v1/applicant/create")
@@ -98,6 +109,7 @@ public class ApplicantControllerTest {
                         .file(resumeFile)
                         .file(coverLetterFile))
                 .andExpect(status().isOk())
+                // .andExpect(jsonPath("$.status").exists())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andDo(print())
                 .andReturn();
