@@ -47,9 +47,8 @@ public class ApplicantController {
     public ResponseEntity<ResponseTransfer> CrateApplicant(@RequestPart ApplicantDAO applicantDao,
                                                           @RequestPart(value = "coverLetter")Optional<MultipartFile> coverLetter,
                                                           @RequestPart(value = "resume")Optional<MultipartFile> resume) {
-    
         
-        // applicantRepository.
+        // applicantRepository
         Applicant applicant = applicantDao.getApplicant();
         JobApplicants jobApplicants = new JobApplicants();
         
@@ -58,8 +57,8 @@ public class ApplicantController {
         List<Job> applicantJobs = new ArrayList<>();
         
         // set file names for cover letter and resume
-        String coverLetterUrl = "";
-        String resumeUrl = "";
+        String coverLetterUrl;
+        String resumeUrl;
     
         //TODO need to check that there is a file being uploaded
         if(coverLetter.isPresent() && coverLetter != null ){
