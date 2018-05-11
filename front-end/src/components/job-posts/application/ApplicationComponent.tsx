@@ -76,17 +76,15 @@ class ApplicationComponent extends React.Component<MyProps> {
   }
 
   handleApplicationSubmit(data) {
-    // back end expects a string for these properties
-    data.resume = data.resumeFile.name;
-    data.coverLetter = data.coverLetterFile.name;
+
     console.log("Adding application submition here: ", data);
 
     /*We only get the info from the form here. We need to add the company and jobId info to this.*/
 
     let applicantDAO = {
       applicant: data,
-      resume: data.resume,
-      coverLetter: data.coverLetter,
+      resume: data.resumeFile !== undefined ? data.resumeFile.name : null,
+      coverLetter: data.coverLetterFile !== undefined ? data.coverLetterFile.name : null,
       jobId: this.props.jobId,
     };
 

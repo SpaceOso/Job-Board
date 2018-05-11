@@ -103,12 +103,9 @@ export function addApplicantToJob(applicantInfo) {
     data.append("coverLetter", applicantInfo.applicant.coverLetterFile);
   }
 
-
-  /*for (const entries in applicantInfo) {
-    if (applicantInfo.hasOwnProperty(entries)) {
-      data.set(entries, applicantInfo[ entries ]);
-    }
-  }*/
+  if (applicantInfo.applicant.resumeFile !== null) {
+    data.append("resume", applicantInfo.applicant.resumeFile);
+  }
 
   console.log("the data when creating new applicant: " + applicantInfo);
 

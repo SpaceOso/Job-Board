@@ -59,7 +59,6 @@ public class ApplicantController {
     
         System.out.println("Inside CreateApplicait with id: " + applicantDao.getJobId());
         
-        
         // applicantRepository.
         Applicant applicant = applicantDao.getApplicant();
         JobApplicants jobApplicants = new JobApplicants();
