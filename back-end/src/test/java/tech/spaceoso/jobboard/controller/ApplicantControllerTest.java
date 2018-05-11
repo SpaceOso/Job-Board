@@ -77,7 +77,7 @@ public class ApplicantControllerTest {
     public void crateApplicant() throws Exception {
         
         applicant.setId(null);
-        ApplicantDAO applicantDao = new ApplicantDAO(applicant, "f60d0781-e3fe-419b-a4f5-8bd34be843c8");
+        ApplicantDAO applicantDao = new ApplicantDAO(applicant, ObjectCreator.generateId().toString());
     
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
@@ -96,8 +96,7 @@ public class ApplicantControllerTest {
     
         System.out.println("The json: " + json);
     
-        MockMultipartFile companyMultiPart = new MockMultipartFile("applicantDao", "", "application/json", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json).getBytes());
-        MockMultipartFile applicantDao1 = new MockMultipartFile("applicantDao","", "application/json", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json).getBytes());
+        MockMultipartFile applicantFile = new MockMultipartFile("applicantDao","", "application/json", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json).getBytes());
     
         when(amazonClient.uploadFile(coverLetterFile)).thenReturn(coverLetterFile.getOriginalFilename());
         when(amazonClient.uploadFile(resumeFile)).thenReturn(resumeFile.getOriginalFilename());
@@ -105,7 +104,7 @@ public class ApplicantControllerTest {
         
         this.mockMvc.perform(
                 multipart("/api/v1/applicant/create")
-                        .file(applicantDao1)
+                        .file(applicantFile)
                         .file(resumeFile)
                         .file(coverLetterFile))
                 .andExpect(status().isOk())

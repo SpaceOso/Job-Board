@@ -28,7 +28,6 @@ public class ApplicantController {
     @PersistenceContext
     private EntityManager em;
     
-    // private JobRepository jobRepository;
     private JobApplicantRepository jobApplicantRepository;
     private ApplicantRepository applicantRepository;
     private AmazonClient amazonClient;
@@ -42,14 +41,6 @@ public class ApplicantController {
         this.jobApplicantRepository = jobApplicantRepository;
     }
     
-    @RequestMapping(value = "/dur/{id}", method = RequestMethod.GET)
-    public ResponseEntity testerFunc(@PathVariable int id)  {
-        if(id > 10){
-            throw new ResourceNotFoundException("Hey you're bigger than ten");
-        }
-    
-        return ResponseEntity.ok().body(new Applicant());
-    }
     
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
@@ -57,7 +48,6 @@ public class ApplicantController {
                                                           @RequestPart(value = "coverLetter")Optional<MultipartFile> coverLetter,
                                                           @RequestPart(value = "resume")Optional<MultipartFile> resume) {
     
-        System.out.println("Inside CreateApplicait with id: " + applicantDao.getJobId());
         
         // applicantRepository.
         Applicant applicant = applicantDao.getApplicant();
@@ -73,22 +63,14 @@ public class ApplicantController {
     
         //TODO need to check that there is a file being uploaded
         if(coverLetter.isPresent() && coverLetter != null ){
-            System.out.println("THERE WAS A COVER LETTER TO ADD!!!!!!!");
-            System.out.println("The cover letter is: " + coverLetter.get().toString());
             coverLetterUrl = this.amazonClient.uploadFile(coverLetter.get());
-            logger.info(coverLetter.toString());
-            logger.info("The cover letter name is!!" + coverLetterUrl);
             applicant.setCoverLetterUrl(coverLetterUrl);
         }
         
         if(resume.isPresent() && resume != null){
-            System.out.println("THERE WAS ALSO A RESUME!!!");
             resumeUrl = this.amazonClient.uploadFile(resume.get());
-            logger.info(resume.toString());
-            logger.info("THe resume file name is! " + resumeUrl);
             applicant.setResumeUrl(resumeUrl);
         } else {
-            System.out.println("We are throwing an error");
             throw new ResourceNotFoundException("Sorry, but you need to include a resume");
         }
         
@@ -96,7 +78,6 @@ public class ApplicantController {
             applicantJobs = applicant.getJobs();
         }
         
-        System.out.println("The job list we got from the applicant: " + applicantJobs.toString());
         applicantJobs.add(job);
         
         jobApplicants.setApplicant(applicant);
@@ -108,6 +89,6 @@ public class ApplicantController {
         
         applicantDao.setApplicant(savedApplicant);
         
-        return ResponseEntity.ok(new ResponseTransfer("Thank you for subbmiting your application!"));
+        return ResponseEntity.ok(new ResponseTransfer("Thank you for submitting your application!"));
     }
 }
