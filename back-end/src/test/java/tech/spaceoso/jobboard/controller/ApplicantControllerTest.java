@@ -69,8 +69,6 @@ public class ApplicantControllerTest {
     // @Autowired
     private MockMvc mockMvc;
     
-    @Autowired
-    RestTemplate restTemplate;
     
     @Before
     public void setUp() throws Exception {
