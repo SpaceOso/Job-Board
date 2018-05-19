@@ -1,13 +1,13 @@
 package tech.spaceoso.jobboard.model;
 
-public class ApplicantDAO {
+public class ApplicantDTO {
     Applicant applicant;
     String jobId;
     
-    public ApplicantDAO() {
+    public ApplicantDTO() {
     }
     
-    public ApplicantDAO(Applicant applicant, String jobId) {
+    public ApplicantDTO(Applicant applicant, String jobId) {
         this.applicant = applicant;
         this.jobId = jobId;
     }
@@ -30,7 +30,7 @@ public class ApplicantDAO {
     
     @Override
     public String toString() {
-        return "ApplicantDAO{" +
+        return "ApplicantDTO{" +
                 "applicant=" + applicant +
                 ", jobId='" + jobId + '\'' +
                 '}';

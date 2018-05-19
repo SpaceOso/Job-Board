@@ -81,14 +81,18 @@ class ApplicationComponent extends React.Component<MyProps> {
 
     /*We only get the info from the form here. We need to add the company and jobId info to this.*/
 
-    let applicantDAO = {
-      applicant: data,
-      resume: data.resumeFile !== undefined ? data.resumeFile.name : null,
-      coverLetter: data.coverLetterFile !== undefined ? data.coverLetterFile.name : null,
+    let applicant : Applicants = {...data};
+    applicant.coverLetter = data.resumeFile.name;
+    applicant.resume = data.resumeFile.name;
+
+    let applicantDTO = {
+      applicant,
+      // resume: data.resumeFile !== undefined ? data.resumeFile.name : null,
+      // coverLetter: data.coverLetterFile !== undefined ? data.coverLetterFile.name : null,
       jobId: this.props.jobId,
     };
 
-    this.props.handleApplicantInfo(applicantDAO);
+    this.props.handleApplicantInfo(applicantDTO);
   }
 
   render() {

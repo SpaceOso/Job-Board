@@ -1,25 +1,19 @@
 package tech.spaceoso.jobboard.controller;
 
-import jdk.nashorn.internal.codegen.ObjectCreator;
-import org.json.JSONObject;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import tech.spaceoso.jobboard.App;
 import tech.spaceoso.jobboard.exception.ResourceNotFoundException;
 import tech.spaceoso.jobboard.model.*;
 import tech.spaceoso.jobboard.repository.ApplicantRepository;
 import tech.spaceoso.jobboard.repository.JobApplicantRepository;
-import tech.spaceoso.jobboard.repository.JobRepository;
 import tech.spaceoso.jobboard.service.AmazonClient;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.*;
-import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("api/v1/applicant/")
@@ -44,15 +38,17 @@ public class ApplicantController {
     
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<ResponseTransfer> CrateApplicant(@RequestPart ApplicantDAO applicantDao,
+    public ResponseEntity<ResponseTransfer> CrateApplicant(@RequestPart ApplicantDTO applicantDTO,
                                                           @RequestPart(value = "coverLetter")Optional<MultipartFile> coverLetter,
                                                           @RequestPart(value = "resume")Optional<MultipartFile> resume) {
         
         // applicantRepository
-        Applicant applicant = applicantDao.getApplicant();
+        Applicant applicant = applicantDTO.getApplicant();
+        System.out.println("The applicant in the backend: " + applicant.toString());
         JobApplicants jobApplicants = new JobApplicants();
         
-        Job job = em.getReference(Job.class, UUID.fromString(applicantDao.getJobId()));
+        Job job = em.getReference(Job.class, UUID.fromString(applicantDTO.getJobId()));
+        
         // get applicant jobs
         List<Job> applicantJobs = new ArrayList<>();
         
@@ -63,11 +59,13 @@ public class ApplicantController {
         //TODO need to check that there is a file being uploaded
         if(coverLetter.isPresent() && coverLetter != null ){
             coverLetterUrl = this.amazonClient.uploadFile(coverLetter.get());
+            System.out.println("The cover letter name is: " + coverLetterUrl);
             applicant.setCoverLetterUrl(coverLetterUrl);
         }
         
         if(resume.isPresent() && resume != null){
             resumeUrl = this.amazonClient.uploadFile(resume.get());
+            System.out.println("The cover letter name is: " + resumeUrl);
             applicant.setResumeUrl(resumeUrl);
         } else {
             throw new ResourceNotFoundException("Sorry, but you need to include a resume");
@@ -84,9 +82,9 @@ public class ApplicantController {
     
         jobApplicantRepository.saveAndFlush(jobApplicants);
         
-        Applicant savedApplicant = applicantRepository.saveAndFlush(applicantDao.getApplicant());
+        Applicant savedApplicant = applicantRepository.saveAndFlush(applicantDTO.getApplicant());
         
-        applicantDao.setApplicant(savedApplicant);
+        applicantDTO.setApplicant(savedApplicant);
         
         return ResponseEntity.ok(new ResponseTransfer("Thank you for submitting your application!"));
     }

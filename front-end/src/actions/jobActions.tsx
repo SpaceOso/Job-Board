@@ -88,18 +88,17 @@ export function addApplicantToJob(applicantInfo) {
   console.log("The applicant info before we send to server: ", applicantInfo);
   const data = new FormData();
   //TODO need to update this
-  applicantInfo.applicant.resume = "testResume.doc";
 
-  const applicantDAO = {
+
+  const applicantDTO = {
     applicant: {...applicantInfo.applicant},
     jobId: applicantInfo.jobId
   };
 
-  data.append("applicantDao",
-    new Blob([JSON.stringify(applicantDAO)], {type: "application/json"}));
+  data.append("applicantDTO",
+    new Blob([JSON.stringify(applicantDTO)], {type: "application/json"}));
 
   if (applicantInfo.applicant.coverLetterFile !== null) {
-    console.log("coverletter was not empty adding: ", applicantInfo.applicant.coverLetterFile);
     data.append("coverLetter", applicantInfo.applicant.coverLetterFile);
   }
 
