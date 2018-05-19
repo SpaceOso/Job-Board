@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import tech.spaceoso.jobboard.exception.ResourceNotFoundException;
 import tech.spaceoso.jobboard.model.*;
 import tech.spaceoso.jobboard.repository.ApplicantRepository;
 import tech.spaceoso.jobboard.repository.JobApplicantRepository;
@@ -44,7 +43,7 @@ public class ApplicantController {
         
         // applicantRepository
         Applicant applicant = applicantDTO.getApplicant();
-        System.out.println("The applicant in the backend: " + applicant.toString());
+        // System.out.println("The applicant in the backend: " + applicant.toString());
         JobApplicants jobApplicants = new JobApplicants();
         
         Job job = em.getReference(Job.class, UUID.fromString(applicantDTO.getJobId()));
@@ -68,7 +67,7 @@ public class ApplicantController {
             System.out.println("The cover letter name is: " + resumeUrl);
             applicant.setResumeUrl(resumeUrl);
         } else {
-            throw new ResourceNotFoundException("Sorry, but you need to include a resume");
+            return ResponseEntity.badRequest().body(new ResponseTransfer("Sorry, but you need to include a resume"));
         }
         
         if(applicant.getJobs() != null){

@@ -75,8 +75,26 @@ public class ApplicantControllerTest {
     }
     
     @Test
-    public void createApplicant_Error_WhenNoResumeIsGiven(){
+    public void createApplicant_Error_WhenNoResumeIsGiven() throws Exception{
+        applicant.setId(null);
+
+        JsonNode json = mapper.valueToTree(applicantDTO);
     
+        MockMultipartFile applicantFile = new MockMultipartFile("applicantDTO","", "application/json", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json).getBytes());
+    
+        when(amazonClient.uploadFile(coverLetterFile)).thenReturn(coverLetterFile.getOriginalFilename());
+        
+        this.mockMvc.perform(
+                multipart("/api/v1/applicant/create")
+                        .file(applicantFile)
+                        .file(coverLetterFile))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").exists())
+                .andExpect(jsonPath("$.message").value("Sorry, but you need to include a resume"))
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andDo(print())
+                .andReturn();
+                
     }
     
     @Test
@@ -84,11 +102,6 @@ public class ApplicantControllerTest {
         
         applicant.setId(null);
         
-        Map<String, Object> newWrapper = new HashMap<>();
-        newWrapper.put("applicantDTO", applicantDTO);
-        newWrapper.put("resume", resumeFile);
-        newWrapper.put("coverLetter", coverLetterFile);
-    
         JsonNode json = mapper.valueToTree(applicantDTO);
     
         System.out.println("The json: " + json);
@@ -106,6 +119,7 @@ public class ApplicantControllerTest {
                         .file(coverLetterFile))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").exists())
+                .andExpect(jsonPath("$.message").value("Thank you for submitting your application!"))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andDo(print())
                 .andReturn();

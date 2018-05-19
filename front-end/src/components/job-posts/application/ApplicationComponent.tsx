@@ -87,8 +87,6 @@ class ApplicationComponent extends React.Component<MyProps> {
 
     let applicantDTO = {
       applicant,
-      // resume: data.resumeFile !== undefined ? data.resumeFile.name : null,
-      // coverLetter: data.coverLetterFile !== undefined ? data.coverLetterFile.name : null,
       jobId: this.props.jobId,
     };
 
