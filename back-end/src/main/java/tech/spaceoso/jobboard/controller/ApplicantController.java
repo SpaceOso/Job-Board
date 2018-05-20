@@ -48,8 +48,6 @@ public class ApplicantController {
         
         Job job = em.getReference(Job.class, UUID.fromString(applicantDTO.getJobId()));
         
-        // get applicant jobs
-        List<Job> applicantJobs = new ArrayList<>();
         
         // set file names for cover letter and resume
         String coverLetterUrl;
@@ -70,11 +68,6 @@ public class ApplicantController {
             return ResponseEntity.badRequest().body(new ResponseTransfer("Sorry, but you need to include a resume"));
         }
         
-        if(applicant.getJobs() != null){
-            applicantJobs = applicant.getJobs();
-        }
-        
-        applicantJobs.add(job);
         
         jobApplicants.setApplicant(applicant);
         jobApplicants.setJob(job);

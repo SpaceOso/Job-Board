@@ -41,10 +41,10 @@ public class Job {
     @JsonBackReference(value ="job-company")
     private Company company;
     
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "applicant_id")
-    @JsonBackReference
-    private List<Applicant> applicants;
+    // @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    // @JoinColumn(name = "applicant_id")
+    // @JsonBackReference
+    // private List<Applicant> applicants;
     
 
     public Job(){}
@@ -114,13 +114,13 @@ public class Job {
         this.company = company;
     }
     
-    public List<Applicant> getApplicants() {
-        return applicants;
-    }
+    // public List<Applicant> getApplicants() {
+    //     return applicants;
+    // }
     
-    public void setApplicants(List<Applicant> applicants) {
-        this.applicants = applicants;
-    }
+    // public void setApplicants(List<Applicant> applicants) {
+    //     this.applicants = applicants;
+    // }
     
     @Override
     public String toString() {
@@ -130,7 +130,7 @@ public class Job {
                 ", lastModifiedDate=" + lastModifiedDate +
                 ", title='" + title + '\'' +
                 ", address=" + address +
-                ", applicants=" + applicants +
+                // ", applicants=" + applicants +
                 ", description='" + description + '\'' +
                 ", company=" + company.getId() +
                 '}';

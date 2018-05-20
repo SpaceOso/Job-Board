@@ -39,8 +39,8 @@ public class Applicant {
     private String coverLetterUrl;
     private String website;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    private List<Job> jobs;
+    // @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    // private List<Job> jobs;
     
     public Applicant(){};
     
@@ -55,7 +55,7 @@ public class Applicant {
         this.coverLetter = coverLetter;
     }
     
-    public Applicant(UUID id, LocalDateTime createdDate, LocalDateTime lastModifiedDate, Address address, String firstName, String lastName, String email, String phoneNumber, String resume, String website, String coverLetter, List<Job> jobs) {
+    public Applicant(UUID id, LocalDateTime createdDate, LocalDateTime lastModifiedDate, Address address, String firstName, String lastName, String email, String phoneNumber, String resume, String website, String coverLetter) {
         this.id = id;
         this.createdDate = createdDate;
         this.lastModifiedDate = lastModifiedDate;
@@ -67,7 +67,7 @@ public class Applicant {
         this.resume = resume;
         this.website = website;
         this.coverLetter = coverLetter;
-        this.jobs = jobs;
+        // this.jobs = jobs;
     }
     
     public UUID getId() {
@@ -157,15 +157,7 @@ public class Applicant {
     public void setCoverLetter(String coverLetter) {
         this.coverLetter = coverLetter;
     }
-    
-    public List<Job> getJobs() {
-        return jobs;
-    }
-    
-    public void setJobs(List<Job> jobs) {
-        this.jobs = jobs;
-    }
-    
+
     public String getResumeUrl() {
         return resumeUrl;
     }
@@ -199,7 +191,6 @@ public class Applicant {
                 ", coverLetter='" + coverLetter + '\'' +
                 ", coverLetterUrl='" + coverLetterUrl + '\'' +
                 ", website='" + website + '\'' +
-                ", jobs=" + jobs +
                 '}';
     }
 }

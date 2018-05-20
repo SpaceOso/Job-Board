@@ -42,7 +42,7 @@ final public class ObjectCreator {
     }
     
     static public Applicant createApplicant(){
-        return new Applicant(UUID.randomUUID(), LocalDateTime.now(), LocalDateTime.now(), createAddress(), "Test", "Applicant", "test@gmail.com", "1234567", "word.pdf", "www.test.com", "sdfasdf", null);
+        return new Applicant(UUID.randomUUID(), LocalDateTime.now(), LocalDateTime.now(), createAddress(), "Test", "Applicant", "test@gmail.com", "1234567", "word.pdf", "www.test.com", "sdfasdf");
     }
 
     static public Company createCompany() {

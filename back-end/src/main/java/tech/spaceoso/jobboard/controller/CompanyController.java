@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import tech.spaceoso.jobboard.model.*;
 import tech.spaceoso.jobboard.repository.CompanyRepository;
 import tech.spaceoso.jobboard.repository.EmployeeRepository;
+import tech.spaceoso.jobboard.repository.JobApplicantRepository;
 import tech.spaceoso.jobboard.repository.JobRepository;
 import tech.spaceoso.jobboard.security.JWTBuilder;
 import tech.spaceoso.jobboard.service.AmazonClient;
@@ -31,16 +32,19 @@ public class CompanyController {
     private EmployeeRepository employeeRepository;
     private AmazonClient amazonClient;
     private JobRepository jobRepository;
+    private JobApplicantRepository jobApplicantRepository;
 
     @Autowired
     CompanyController(CompanyRepository companyRepository,
                       EmployeeRepository employeeRepository,
                       AmazonClient amazonClient,
-                      JobRepository jobRepository){
+                      JobRepository jobRepository,
+                      JobApplicantRepository jobApplicantRepository){
         this.companyRepository = companyRepository;
         this.employeeRepository = employeeRepository;
         this.amazonClient = amazonClient;
         this.jobRepository = jobRepository;
+        this.jobApplicantRepository = jobApplicantRepository;
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -99,10 +103,12 @@ public class CompanyController {
      * @return
      */
     @RequestMapping(value = "/{companyId}/get-jobs", method = RequestMethod.GET)
-    public List<Job> getCompanyJobs(@PathVariable UUID companyId){
+    public List<JobApplicants> getCompanyJobs(@PathVariable UUID companyId){
         System.out.println("looking in secured section for jobs " + companyId);
+        List<Job> companyJobs = jobRepository.findJobsByCompany_Id(companyId);
 
-        return jobRepository.findJobsByCompany_Id(companyId);
+        return jobApplicantRepository.getOnlyApplicants(companyJobs.get(0).getId());
+        // return jobApplicantRepository.findAllByJob_Id(companyJobs.get(1).getId());
     }
     
     /**

@@ -21,7 +21,7 @@ public class JobApplicants {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "APPLICANT_ID")
     private Applicant applicant;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "JOB_ID")
     private Job job;
     
