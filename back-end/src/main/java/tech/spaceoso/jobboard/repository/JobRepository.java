@@ -19,5 +19,8 @@ public interface JobRepository extends JpaRepository<Job, UUID> {
     List<Job> findJobsByCompany_Id(UUID companyId);
     
     Job getOne(UUID id);
+    
+    @Query("select j.id from Job j where j.company.id = ?1")
+    List<UUID> getAllJob_IdFromCompany_Id(UUID companyId);
 
 }

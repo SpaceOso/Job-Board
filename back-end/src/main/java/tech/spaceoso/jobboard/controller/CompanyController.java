@@ -15,9 +15,7 @@ import tech.spaceoso.jobboard.service.AmazonClient;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping(value = "/secured/company/")
@@ -103,12 +101,23 @@ public class CompanyController {
      * @return
      */
     @RequestMapping(value = "/{companyId}/get-jobs", method = RequestMethod.GET)
-    public List<JobApplicants> getCompanyJobs(@PathVariable UUID companyId){
+    public Map<UUID, List<JobApplicants>> getCompanyJobs(@PathVariable UUID companyId){
         System.out.println("looking in secured section for jobs " + companyId);
-        List<Job> companyJobs = jobRepository.findJobsByCompany_Id(companyId);
+        List<UUID> companyJobs = jobRepository.getAllJob_IdFromCompany_Id(companyId);
+        System.out.println("All the jobs that this company has are: " + companyJobs);
+        HashMap<UUID, List<JobApplicants>> jobApplicantList = new HashMap<>();
+        
+        // need to loop through list of companyJobs and find all applicants per job
+        if(!companyJobs.isEmpty()){
+            System.out.println("This company has jobs so we can search for applicants");
+            for(UUID id : companyJobs){
+                jobApplicantList.put(id, jobApplicantRepository.getOnlyApplicants(id));
+            }
+        }
+    
+        System.out.println("The final id to applicant count is: " + jobApplicantList);
 
-        return jobApplicantRepository.getOnlyApplicants(companyJobs.get(0).getId());
-        // return jobApplicantRepository.findAllByJob_Id(companyJobs.get(1).getId());
+        return jobApplicantList;
     }
     
     /**
