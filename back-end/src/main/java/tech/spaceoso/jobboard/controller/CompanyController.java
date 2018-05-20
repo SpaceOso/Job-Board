@@ -100,7 +100,7 @@ public class CompanyController {
      */
     @RequestMapping(value = "/{companyId}/get-jobs", method = RequestMethod.GET)
     public List<Job> getCompanyJobs(@PathVariable UUID companyId){
-        System.out.println("looking to get jobs for: " + companyId);
+        System.out.println("looking in secured section for jobs " + companyId);
 
         return jobRepository.findJobsByCompany_Id(companyId);
     }

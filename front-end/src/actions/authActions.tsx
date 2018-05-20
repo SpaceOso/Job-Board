@@ -52,18 +52,6 @@ export function siteFetch() {
 }
 
 export function registerEmployee(employeOjbect) {
-  /*{
-   fName: '',
-   lName: '',
-   email: '',
-   emailVerify: '',
-   password: '',
-   passwordVerify: '',
-   accountType: 'employee',
-   company: null
-   },*/
-
-
 
   return (dispatch) => {
 
