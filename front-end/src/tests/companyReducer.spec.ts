@@ -16,6 +16,7 @@ const mockCompany: Company = {
     logoImg: '',
     website: '',
     twitter: '',
+  applicantList: null,
     facebook: '',
     linkedIn: '',
     jobs: null,

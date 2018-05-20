@@ -21,6 +21,7 @@ const defaultState: Company = {
   twitter: null,
   facebook: null,
   linkedIn: null,
+  applicantList: null,
   jobs: null,
   isFetching: false,
 };
@@ -32,9 +33,11 @@ function companyReducer(state = defaultState, action): any {
     case FETCHING_THIS_COMPANY_JOBS:
       return state;
     case GET_THIS_COMPANY_JOBS_SUCCESS:
+      console.log("the jobs we're about to add to the store: ", action.payload.data.jobApplicantList);
       return {
         ...state,
-        jobs: [...action.payload.data],
+        jobs: [...action.payload.data.jobList],
+        applicantList: {...action.payload.data.jobApplicantList}
       };
     case EDITING_JOB_POST_SUCCESS:
       let newArr;

@@ -68,8 +68,8 @@ class EmployeeDashboardComponent extends React.Component<Props, any> {
   dashboardMainLayout = (props) => {
     return (
       <DashboardMainLayout
-          company={this.props.company}
-          employee={this.props.employee}
+        company={this.props.company}
+        employee={this.props.employee}
         saveJobPost={this.props.saveJobPost}
         {...props}
       />

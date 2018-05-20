@@ -8,7 +8,7 @@ import { default as SpinnerComponent } from '../../spinners/spinnerComponent';
 import JobPostUpdatesComponent from '../jobs/job-post-updates/JobPostUpdatesComponent';
 
 interface MyProps {
-    employee;
+  employee;
   company;
 }
 

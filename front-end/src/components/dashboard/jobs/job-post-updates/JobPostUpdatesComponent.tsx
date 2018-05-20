@@ -27,6 +27,7 @@ class JobPostUpdatesComponent extends React.Component<IProps, {}> {
     if (this.props.jobs === null || this.props.jobs === undefined || this.props.jobs.length <= 0) {
       return this.createEmptyMessageComponent();
     }
+    console.log("the jobs we're using to make a list: ", this.props.jobs);
     const dataInfo = [
       {
         property: 'title',

@@ -116,14 +116,23 @@ export interface Company {
   twitter: string | null;
   facebook: string | null;
   linkedIn: string | null;
-  jobs: CompanyJobView[] | null;
+  jobs: Job[] | null;
+  applicantList: ApplicantView[] | null;
   isFetching: boolean | null;
+}
+
+export interface SecuredCompany extends Company{
+  applicantList: ApplicantView[] | null;
 }
 
 export interface JobPost {
   isFetching: boolean;
   job: Job;
   company: Company;
+}
+
+export interface ApplicantView{
+  [jobId: string] : Applicants
 }
 
 export interface Applicants {

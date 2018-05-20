@@ -122,6 +122,7 @@ class CompRegisterComponent extends React.Component<CompRegisterProps, MyState> 
       },
       facebook: formData.facebook,
       twitter: formData.twitter,
+      applicantList: null,
       website: formData.website,
       linkedIn: formData.linkedIn,
       jobs: null,

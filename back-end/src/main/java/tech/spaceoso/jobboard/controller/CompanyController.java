@@ -101,28 +101,42 @@ public class CompanyController {
      * @return
      */
     @RequestMapping(value = "/{companyId}/get-jobs", method = RequestMethod.GET)
-    public Map<UUID, List<JobApplicants>> getCompanyJobs(@PathVariable UUID companyId){
-        System.out.println("Inside getCompanyJobs " + companyId);
+    public List<Job> getCompanyJobs(@PathVariable UUID companyId){
+        return jobRepository.findJobsByCompany_Id(companyId);
+    }
+    
+    @RequestMapping(value = "/{companyId}/get-jobs-and-applicants", method = RequestMethod.GET)
+    public Map<String, Object> getJobListAndApplicantList(@PathVariable UUID companyId){
+        Map<UUID, List<JobApplicants>> jobApplicantList = getApplicantsForJobs(companyId);
+        Map<String, Object> combinedList = new HashMap<>();
+        combinedList.put("jobApplicantList", jobApplicantList);
+        List<Job> jobLists = jobRepository.findJobsByCompany_Id(companyId);
+        combinedList.put("jobList", jobLists);
+    
+        return combinedList;
+    }
+    
+    /**
+     * Called when logging into dashboard
+     * @param companyId
+     * @return
+     */
+    @RequestMapping(value = "/{companyId}/get-applicants", method = RequestMethod.GET)
+    public Map<UUID, List<JobApplicants>> getApplicantsForJobs(@PathVariable UUID companyId){
         // get a list of all the jobs this company has
         List<UUID> companyJobs = jobRepository.getAllJob_IdFromCompany_Id(companyId);
-        System.out.println("Got companyJobs: " + companyJobs);
         // will collect all the applicants per job
         HashMap<UUID, List<JobApplicants>> jobApplicantList = new HashMap<>();
         
         // need to loop through list of companyJobs and find all applicants per job
         if(!companyJobs.isEmpty()){
             for(UUID id : companyJobs){
-                System.out.println("Testing for ID: " + id);
                 jobApplicantList.put(id, jobApplicantRepository.getOnlyApplicants(id));
             }
         } else {
-            System.out.println("No jobs returning null");
             return null;
         }
-    
-        System.out.println("Made it to the end:");
-        System.out.println(jobApplicantList);
-    
+        
         return jobApplicantList;
     }
     
