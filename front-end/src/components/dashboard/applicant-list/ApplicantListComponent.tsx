@@ -17,14 +17,18 @@ interface MyProps extends RouteComponentProps<any> {
 interface MyState {
   jobs: CompanyJobView[] | null;
   currentJob: CompanyJobView | null;
+  jobList: null;
   applicant: any;
+  applicantList: any;
 }
 
 class ApplicantListComponent extends React.Component<MyProps, MyState> {
   state: MyState = {
     jobs: this.props.jobs,
+    jobList: null,
     currentJob: null,
     applicant: null,
+    applicantList: null,
   };
 
   constructor(props) {
@@ -36,9 +40,15 @@ class ApplicantListComponent extends React.Component<MyProps, MyState> {
   }
 
   componentDidMount() {
-    if (this.props.jobs !== null && this.props.jobs.length > 0) {
+    if (this.props.jobs !== null && Object.keys(this.props.jobs).length > 0) {
       // adds the first jobPost to state
-      this.setState({ currentJob: this.props.jobs[ 0 ] });
+      // let jobList = Object.keys(this.props.jobs);
+      const currentJob = this.props.jobs[0];
+      console.log("state applicant list will be: ", this.props.company.applicantList[currentJob.id]);
+      this.setState({
+        currentJob: {...currentJob},
+        applicantList: this.props.company.applicantList[currentJob.id],
+      });
     }
   }
 
@@ -82,7 +92,7 @@ class ApplicantListComponent extends React.Component<MyProps, MyState> {
       );
     }
 
-    if (this.state.currentJob.Applicants.length <= 0) {
+    if (this.state.applicantList.length <= 0) {
       return (
         <div>
           Sorry your current job doesn't have any applicants
@@ -93,7 +103,7 @@ class ApplicantListComponent extends React.Component<MyProps, MyState> {
       <div>
         <h1>Candidates for {this.state.currentJob.title} - {this.state.currentJob.address.city}</h1>
         <DataTable
-          rowData={this.state.currentJob.Applicants}
+          rowData={this.state.applicantList}
           specialClasses={specialClasses}
           columnInfo={dataInfo}
           handleClick={this.onClick}
@@ -114,7 +124,10 @@ class ApplicantListComponent extends React.Component<MyProps, MyState> {
     if (this.props.jobs !== null) {
       this.props.jobs.forEach((job) => {
         if (job.id === jobId) {
-          this.setState({ currentJob: job });
+          this.setState({
+            currentJob: job,
+            applicantList: this.props.company.applicantList[job.id]
+          });
         }
       });
     }
