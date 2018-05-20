@@ -21,9 +21,11 @@ import tech.spaceoso.jobboard.ObjectCreator;
 import tech.spaceoso.jobboard.model.*;
 import tech.spaceoso.jobboard.repository.CompanyRepository;
 import tech.spaceoso.jobboard.repository.EmployeeRepository;
+import tech.spaceoso.jobboard.repository.JobApplicantRepository;
 import tech.spaceoso.jobboard.repository.JobRepository;
 
 import javax.persistence.EntityManager;
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -31,6 +33,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyIterable;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.iterableWithSize;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -58,6 +61,8 @@ public class CompanyControllerTest {
     EmployeeRepository employeeRepository;
     @Mock
     JobRepository jobRepository;
+    @Mock
+    JobApplicantRepository jobApplicantRepository;
     
     
     // tells mockito to check what needs to be inject
@@ -74,6 +79,7 @@ public class CompanyControllerTest {
     private Job jobTest = new Job(UUID.randomUUID(), LocalDateTime.now(), "Tester 1", testerAddress, "Fake job", ObjectCreator.createCompany());
     private List<Job> jobList = new ArrayList<Job>();
     private List<Employee> employerList = new ArrayList<Employee>();
+    Company company = ObjectCreator.createCompany();
     
     @Test
     public void testCreateNewCompany() throws Exception {
@@ -154,21 +160,63 @@ public class CompanyControllerTest {
     }
     
     @Test
+    public void testEmptyArrayWhenNoJobs() throws Exception{
+        given(jobRepository.getAllJob_IdFromCompany_Id(company.getId())).willReturn(new ArrayList<>());
+    
+        this.mockMvc.perform(
+                get("/secured/company/" + company.getId() + "/get-jobs"))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+    
+    @Test
     public void testGetCompanyJobs() throws Exception {
-        Company company = ObjectCreator.createCompany();
         
-        List<Job> jobs = new ArrayList<>();
+        // create two jobs
         Job job1 = ObjectCreator.createJobs();
         Job job2 = ObjectCreator.createJobs();
-        jobs.add(job1);
-        jobs.add(job2);
-
-        company.setJobs(jobs);
-
-        when(jobRepository.findJobsByCompany_Id(company.getId())).thenReturn(jobs);
-
-        assertThat(companyController.getCompanyJobs(company.getId()), is(iterableWithSize(2)));
-        assertThat(jobs, is(companyController.getCompanyJobs(company.getId())));
+        
+        // create two applicants
+        Applicant applicant1 = ObjectCreator.createApplicant();
+        applicant1.setFirstName("First");
+        Applicant applicant2 = ObjectCreator.createApplicant();
+        applicant2.setFirstName("Second");
+    
+        // we want to loop through the list of jobs that the applicant has
+        // and add all the applicants per job
+        List<UUID> uuidList = new ArrayList<>();
+        uuidList.add(job1.getId());
+        uuidList.add(job2.getId());
+    
+        System.out.println("The job list before sending: " + uuidList);
+        
+        // create two job applicants
+        JobApplicants job1Applicant = new JobApplicants();
+        job1Applicant.setJob(job1);
+        job1Applicant.setApplicant(applicant1);
+        
+        JobApplicants job2Applicant = new JobApplicants();
+        job2Applicant.setJob(job1);
+        job2Applicant.setApplicant(applicant2);
+        
+        List<JobApplicants> applicantList = new ArrayList<>();
+        applicantList.add(job1Applicant);
+        applicantList.add(job2Applicant);
+        
+        given(jobRepository.getAllJob_IdFromCompany_Id(company.getId())).willReturn(uuidList);
+        given(jobApplicantRepository.getOnlyApplicants(job1.getId())).willReturn(applicantList);
+        given(jobApplicantRepository.getOnlyApplicants(job2.getId())).willReturn(new ArrayList<>());
+        
+        this.mockMvc.perform(
+                get("/secured/company/" + company.getId() + "/get-jobs"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath(job1.getId().toString()).exists())
+                .andExpect(jsonPath(job1.getId().toString()).isArray())
+                .andExpect(jsonPath(job2.getId().toString()).exists())
+                .andExpect(jsonPath(job2.getId().toString()).isArray())
+                .andDo(print())
+        ;
+        
     }
 
     @Test

@@ -102,21 +102,27 @@ public class CompanyController {
      */
     @RequestMapping(value = "/{companyId}/get-jobs", method = RequestMethod.GET)
     public Map<UUID, List<JobApplicants>> getCompanyJobs(@PathVariable UUID companyId){
-        System.out.println("looking in secured section for jobs " + companyId);
+        System.out.println("Inside getCompanyJobs " + companyId);
+        // get a list of all the jobs this company has
         List<UUID> companyJobs = jobRepository.getAllJob_IdFromCompany_Id(companyId);
-        System.out.println("All the jobs that this company has are: " + companyJobs);
+        System.out.println("Got companyJobs: " + companyJobs);
+        // will collect all the applicants per job
         HashMap<UUID, List<JobApplicants>> jobApplicantList = new HashMap<>();
         
         // need to loop through list of companyJobs and find all applicants per job
         if(!companyJobs.isEmpty()){
-            System.out.println("This company has jobs so we can search for applicants");
             for(UUID id : companyJobs){
+                System.out.println("Testing for ID: " + id);
                 jobApplicantList.put(id, jobApplicantRepository.getOnlyApplicants(id));
             }
+        } else {
+            System.out.println("No jobs returning null");
+            return null;
         }
     
-        System.out.println("The final id to applicant count is: " + jobApplicantList);
-
+        System.out.println("Made it to the end:");
+        System.out.println(jobApplicantList);
+    
         return jobApplicantList;
     }
     

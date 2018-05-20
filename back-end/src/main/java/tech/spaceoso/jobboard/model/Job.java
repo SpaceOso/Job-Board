@@ -122,6 +122,7 @@ public class Job {
     //     this.applicants = applicants;
     // }
     
+    
     @Override
     public String toString() {
         return "Job{" +
@@ -130,9 +131,8 @@ public class Job {
                 ", lastModifiedDate=" + lastModifiedDate +
                 ", title='" + title + '\'' +
                 ", address=" + address +
-                // ", applicants=" + applicants +
                 ", description='" + description + '\'' +
-                ", company=" + company.getId() +
+                ", company=" + company +
                 '}';
     }
 }

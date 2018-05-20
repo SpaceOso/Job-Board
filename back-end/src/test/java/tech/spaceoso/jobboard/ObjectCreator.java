@@ -64,6 +64,13 @@ final public class ObjectCreator {
         return company;
     }
     
+    public static JobApplicants createJobApplicant(){
+        JobApplicants jobApplicant = new JobApplicants();
+        jobApplicant.setApplicant(ObjectCreator.createApplicant());
+        jobApplicant.setJob(ObjectCreator.createJobs());
+        return jobApplicant;
+    }
+    
     public static String asJsonString(final Object obj) throws Exception{
         try {
             return new ObjectMapper().writeValueAsString(obj);
