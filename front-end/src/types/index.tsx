@@ -142,10 +142,12 @@ export interface Applicants {
   email: string;
   phoneNumber: string;
   resume: null;
+  resumeUrl: null;
   website: string | null;
   status: string;
   reviewed: boolean;
   coverLetter: string;
+  coverLetterUrl: string;
   createdDate: string;
   lastModifiedDate: string;
   jobId: string;

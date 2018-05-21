@@ -103,8 +103,8 @@ class ApplicantInfoComponent extends React.Component<MyProps, MyState> {
     const applicant = this.props.applicant;
     const applicantEmail = this.props.applicant.email;
     const applicantPhone = this.props.applicant.phoneNumber;
-    const applicantResume = this.props.applicant.resume;
-    const applicantCoverLetter = this.props.applicant.coverLetter;
+    const applicantResume = this.props.applicant.resumeUrl;
+    const applicantCoverLetter = this.props.applicant.coverLetterUrl;
 
     return (
       <div className={'applicant-info-component'}>
@@ -144,7 +144,7 @@ class ApplicantInfoComponent extends React.Component<MyProps, MyState> {
           </div>
         </div>
         <div className={'document-container'} ref={(ref) => this.divRef = ref}>
-          {this.state.documentInReview !== null ? <Iframe src={`${IMG_URL}${this.state.documentInReview}`} height={this.state.placeholderHeight} width={'100%'}/> : 'Click above to load Resume or Cover Letter'}
+          {this.state.documentInReview !== null ? <Iframe src={`${this.state.documentInReview}`} height={this.state.placeholderHeight} width={'100%'}/> : 'Click above to load Resume or Cover Letter'}
         </div>
       </div>
     );
