@@ -140,6 +140,13 @@ public class CompanyController {
         return jobApplicantList;
     }
     
+    @RequestMapping(value = "/{companyId}/get-test", method = RequestMethod.GET)
+    public List<JobApplicants> findAllByJob_Id(@PathVariable UUID companyId){
+        
+        return jobApplicantRepository.findAllByJob_Id(companyId);
+    }
+    
+    
     /**
      * Creates a new job from within the companies dashboard
      * @param jobWrapper

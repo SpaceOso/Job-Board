@@ -3,6 +3,7 @@ package tech.spaceoso.jobboard.model;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,8 +17,6 @@ public class JobApplicants {
     @org.hibernate.annotations.Type(type="org.hibernate.type.PostgresUUIDType")
     private UUID id;
     
-    private String status;
-    private Boolean reviewed;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "APPLICANT_ID")
     private Applicant applicant;
@@ -29,9 +28,40 @@ public class JobApplicants {
     private LocalDateTime appliedOnDate;
     @UpdateTimestamp
     private LocalDateTime lastModifiedDate;
+    private String status;
+    private Boolean reviewed;
     
     
     public JobApplicants(){}
+    
+    public JobApplicants(String status, Boolean reviewed, Applicant applicant, Job job, LocalDateTime appliedOnDate, LocalDateTime lastModifiedDate) {
+        this.status = status;
+        this.reviewed = reviewed;
+        this.applicant = applicant;
+        this.job = job;
+        this.appliedOnDate = appliedOnDate;
+        this.lastModifiedDate = lastModifiedDate;
+    }
+    
+    public JobApplicants(String status, Boolean reviewed, Applicant applicant, LocalDateTime appliedOnDate, LocalDateTime lastModifiedDate){
+        this.status = status;
+        this.reviewed = reviewed;
+        this.applicant = applicant;
+        this.appliedOnDate = appliedOnDate;
+        this.lastModifiedDate = lastModifiedDate;
+        
+    }
+    
+    @Override
+    public String toString() {
+        return "JobApplicants{" +
+                "id=" + id +
+                ", applicant=" + applicant +
+                ", job=" + job +
+                ", appliedOnDate=" + appliedOnDate +
+                ", lastModifiedDate=" + lastModifiedDate +
+                '}';
+    }
     
     public UUID getId() {
         return id;
@@ -89,16 +119,4 @@ public class JobApplicants {
         this.lastModifiedDate = lastModifiedDate;
     }
     
-    @Override
-    public String toString() {
-        return "JobApplicants{" +
-                "id=" + id +
-                ", status='" + status + '\'' +
-                ", reviewed=" + reviewed +
-                ", applicant=" + applicant +
-                ", job=" + job +
-                ", appliedOnDate=" + appliedOnDate +
-                ", lastModifiedDate=" + lastModifiedDate +
-                '}';
-    }
 }
