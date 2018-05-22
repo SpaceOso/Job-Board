@@ -34,6 +34,7 @@ class ApplicantListComponent extends React.Component<MyProps, MyState> {
   constructor(props) {
     super(props);
 
+    console.log("props given to applicantList: ", this.props);
     this.onClick = this.onClick.bind(this);
     this.handleJobSelectionChange = this.handleJobSelectionChange.bind(this);
     this.displayJobDropDown = this.displayJobDropDown.bind(this);
@@ -67,20 +68,24 @@ class ApplicantListComponent extends React.Component<MyProps, MyState> {
       {
         join: true,
         property: 'firstName',
-        properties: ['firstName', 'lastName'],
+        properties: ['applicant.firstName', 'applicant.lastName'],
         header: 'Name',
       },
       {
         property: 'email',
+        join: true,
+        properties: ['applicant.email'],
         header: 'Email',
       },
       {
-        property: 'status',
-        header: 'Status',
+        property: 'review',
+        defaultValue: "Needs Review",
+        header: 'Reviewed',
       },
       {
-        property: 'interest',
-        header: 'Interest',
+        property: 'status',
+        defaultValue: "Needs Review",
+        header: 'Status',
       },
     ];
 

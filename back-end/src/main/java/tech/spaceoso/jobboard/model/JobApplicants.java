@@ -43,7 +43,8 @@ public class JobApplicants {
         this.lastModifiedDate = lastModifiedDate;
     }
     
-    public JobApplicants(String status, Boolean reviewed, Applicant applicant, LocalDateTime appliedOnDate, LocalDateTime lastModifiedDate){
+    public JobApplicants(UUID id, String status, Boolean reviewed, Applicant applicant, LocalDateTime appliedOnDate, LocalDateTime lastModifiedDate){
+        this.id = id;
         this.status = status;
         this.reviewed = reviewed;
         this.applicant = applicant;

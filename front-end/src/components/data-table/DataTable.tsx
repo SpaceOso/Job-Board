@@ -79,10 +79,11 @@ class DataTable extends React.Component<MyProps, MyState> {
   }
 
   createRowData(rowObj) {
-    console.log("createRowData: ", typeof rowObj);
+    console.log("createRowData: ", rowObj);
     return this.props.columnInfo.map((column, value) => {
 
       if (column.join !== undefined && column.join === true) {
+        console.log("starting a joined column approach");
 
         const combinedDataArr: string[] = [];
 
@@ -109,6 +110,18 @@ class DataTable extends React.Component<MyProps, MyState> {
           console.log('prop..', column.property);
           return <td key={`${rowObj.id}${value}`} data-column={column.property}>{rowObj[ column.property ].length}</td>;
         }
+      }
+
+      if(rowObj[column.property] === null || rowObj[column.property] === undefined){
+        console.log("we need to check if there there is a default value for: ", column.property);
+        if(column.property !== null || column.property !== undefined) {
+          console.log("we have a default value for ", column);
+          console.log("The value isd: ", value);
+          return <td key={`${rowObj.id}${value}`} data-column={column.property}>{column.defaultValue}</td>;
+        } else {
+          console.log("you need to create a default value for:dddd ", column.property);
+        }
+
       }
 
       return <td key={`${rowObj.id}${value}`} data-column={column.property}>{rowObj[ column.property ]}</td>;
