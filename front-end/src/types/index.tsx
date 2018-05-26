@@ -135,6 +135,15 @@ export interface ApplicantView{
   [jobId: string] : Applicants
 }
 
+export interface JobApplicant{
+  applicant: Applicants;
+  appliedOnDate: string;
+  id: string;
+  lastModifiedDate: string;
+  reviewed: boolean;
+  status: string;
+}
+
 export interface Applicants {
   id: string;
   firstName: string;

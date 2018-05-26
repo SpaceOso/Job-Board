@@ -47,8 +47,6 @@ class HeaderComponent extends React.Component<MyProps, MyState> {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-      console.log("should we update with existing", this.props);
-      console.log("and next are:", nextProps);
     if (this.props.employee.isAuth !== nextProps.employee.isAuth) {
       return true;
     }

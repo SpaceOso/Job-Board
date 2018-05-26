@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Applicants, Company, SiteFetching, StoreState } from '../../../types/index';
+import {Applicants, Company, JobApplicant, SiteFetching, StoreState} from '../../../types/index';
 import { default as SpinnerComponent } from '../../spinners/spinnerComponent';
 import ApplicantInfoComponent from './applicant-info/ApplicantInfoComponent';
 
@@ -8,8 +8,8 @@ import { saveApplicantStatus } from '../../../actions/companyDashboardActions';
 import './ApplicantViewContainer.scss';
 
 interface MyProps {
-  applicant: Applicants | null;
-    company: Company;
+  jobApplicant: JobApplicant | null;
+  company: Company;
   siteFetching: SiteFetching;
   updateApplicantInfo: (applicantInfo) => {};
 }
@@ -17,14 +17,14 @@ interface MyProps {
 const applicantViewContainer: React.SFC<MyProps> = (props) => {
   return (
     <div className={'applicant-view-container'}>
-      {props.applicant !== null ? <ApplicantInfoComponent saveApplicantInfo={props.updateApplicantInfo} applicant={props.applicant}/> : <SpinnerComponent/>}
+      {props.jobApplicant !== null ? <ApplicantInfoComponent saveApplicantInfo={props.updateApplicantInfo} jobApplicant={props.jobApplicant}/> : <SpinnerComponent/>}
     </div>
   );
 };
 
 function mapStateToProps({ company, siteFetching }: StoreState) {
   return {
-      company,
+    company,
     siteFetching,
   };
 }

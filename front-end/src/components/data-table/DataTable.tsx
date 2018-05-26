@@ -63,7 +63,6 @@ class DataTable extends React.Component<MyProps, MyState> {
   }
 
   componentDidUpdate(nextProps) {
-    console.log("componentDidUpdate:", nextProps);
 
     const a1 = nextProps.rowData;
     const a2 = this.props.rowData;
@@ -74,16 +73,13 @@ class DataTable extends React.Component<MyProps, MyState> {
   }
 
   createHeaders() {
-    console.log("createHeaders(): ", this.props.columnInfo);
     return this.props.columnInfo.map(column => <th key={column.header} data-column={column.header}>{column.header}</th>);
   }
 
   createRowData(rowObj) {
-    console.log("createRowData: ", rowObj);
     return this.props.columnInfo.map((column, value) => {
 
       if (column.join !== undefined && column.join === true) {
-        console.log("starting a joined column approach");
 
         const combinedDataArr: string[] = [];
 
@@ -92,12 +88,8 @@ class DataTable extends React.Component<MyProps, MyState> {
             const dividedString = column.properties[ i ].split('.');
             const key = dividedString[ 0 ];
             const value = dividedString[ 1 ];
-            console.log('referesh i=', i);
-            console.log("key and value:", key, value);
-            console.log("and row: no ", rowObj);
             combinedDataArr.push(rowObj[ key ][ value ]);
           } else {
-            console.log("else path with: ", i);
             combinedDataArr.push(rowObj[ column.properties[ i ] ]);
           }
         }
@@ -107,19 +99,14 @@ class DataTable extends React.Component<MyProps, MyState> {
 
       if (column.special !== undefined) {
         if (column.special === 'count') {
-          console.log('prop..', column.property);
           return <td key={`${rowObj.id}${value}`} data-column={column.property}>{rowObj[ column.property ].length}</td>;
         }
       }
 
       if(rowObj[column.property] === null || rowObj[column.property] === undefined){
-        console.log("we need to check if there there is a default value for: ", column.property);
         if(column.property !== null || column.property !== undefined) {
-          console.log("we have a default value for ", column);
-          console.log("The value isd: ", value);
           return <td key={`${rowObj.id}${value}`} data-column={column.property}>{column.defaultValue}</td>;
         } else {
-          console.log("you need to create a default value for:dddd ", column.property);
         }
 
       }
@@ -151,13 +138,10 @@ class DataTable extends React.Component<MyProps, MyState> {
   }
 
   createRows() {
-    console.log("createRows() running");
     if (this.state.pages.length <= 0) {
       return;
     }
-    console.log("this state page", this.state.pages);
     return this.state.pages[ this.state.currentPage ].map((rowObj, index) => {
-      console.log("before assembling rows with : ", rowObj);
       // TODO need to paginate this component by creating a prop that handles how many pages there should be per data table
       if (index > this.props.totalRows) {
         console.log('we should have created another page!!!');

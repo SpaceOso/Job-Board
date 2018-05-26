@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 
 // components
 import { RouteComponentProps } from 'react-router';
-import { Applicants, Company, Employee } from '../../../types';
+import {Applicants, Company, Employee, JobApplicant} from '../../../types';
 import ApplicantListComponent from '../applicant-list/ApplicantListComponent';
 import ApplicantViewContainer from '../applicant-view/ApplicantViewContainer';
 import CreateJobComponent from '../jobs/createJob/CreateJobComponent';
@@ -21,7 +21,7 @@ interface Props extends RouteComponentProps<any> {
 }
 
 interface State {
-  selectedApplicant: Applicants | null;
+  selectedApplicant: JobApplicant | null;
   mobile: boolean;
 }
 
@@ -49,6 +49,7 @@ class DashboardMainLayout extends React.Component<Props, any> {
   }
 
   handleApplicantSelect(selectedApplicant) {
+    console.log("MainLayout: ", selectedApplicant);
     this.setState({ selectedApplicant });
   }
 
@@ -75,7 +76,7 @@ class DashboardMainLayout extends React.Component<Props, any> {
   applicantVewContainer = () => {
     return (
       <ApplicantViewContainer
-        applicant={this.state.selectedApplicant}
+        jobApplicant={this.state.selectedApplicant}
       />
     );
   };

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Applicants } from '../../../../types/index';
+import {Applicants, JobApplicant} from '../../../../types/index';
 import { IMG_URL, LOCAL_URL } from '../../../../utils/utils';
 
 // styles
@@ -7,7 +7,7 @@ import Iframe from '../../../iframe/Iframe';
 import './ApplicantInfoComponent.scss';
 
 interface MyProps {
-  applicant: Applicants;
+  jobApplicant: JobApplicant;
   saveApplicantInfo: (applicantInfo) => {};
 }
 
@@ -61,7 +61,7 @@ class ApplicantInfoComponent extends React.Component<MyProps, MyState> {
     const statusUpdate = {
       interest: this.state.interest,
       status: this.state.status,
-      id: this.props.applicant.id,
+      id: this.props.jobApplicant.applicant.id,
     };
 
     this.props.saveApplicantInfo(statusUpdate);
@@ -79,10 +79,10 @@ class ApplicantInfoComponent extends React.Component<MyProps, MyState> {
 
     const socialLinks = socialSites.map((social, key) => {
       const link = social.link.toString();
-      if (this.props.applicant[ link ] !== null && this.props.applicant[ link ].length > 0) {
+      if (this.props.jobApplicant.applicant[ link ] !== null) {
         return (
           <li key={key}>
-            <a href={`http://${this.props.applicant[ link ]}`} target={'_blank'}>
+            <a href={`http://${this.props.jobApplicant.applicant[ link ]}`} target={'_blank'}>
               <img src={`${require(`../../../../../images/icon/${social.icon}`)}`} alt="link"/>
             </a>
           </li>
@@ -100,11 +100,13 @@ class ApplicantInfoComponent extends React.Component<MyProps, MyState> {
   }
 
   render() {
-    const applicant = this.props.applicant;
-    const applicantEmail = this.props.applicant.email;
-    const applicantPhone = this.props.applicant.phoneNumber;
-    const applicantResume = this.props.applicant.resumeUrl;
-    const applicantCoverLetter = this.props.applicant.coverLetterUrl;
+    console.log("applicantInfo: ", this.props.jobApplicant.applicant);
+    const applicant = this.props.jobApplicant.applicant;
+    console.log("and the applicant first name is: ", applicant.firstName);
+    const applicantEmail = this.props.jobApplicant.applicant.email;
+    const applicantPhone = this.props.jobApplicant.applicant.phoneNumber;
+    const applicantResume = this.props.jobApplicant.applicant.resumeUrl;
+    const applicantCoverLetter = this.props.jobApplicant.applicant.coverLetterUrl;
 
     return (
       <div className={'applicant-info-component'}>
