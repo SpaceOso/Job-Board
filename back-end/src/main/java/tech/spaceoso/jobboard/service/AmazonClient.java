@@ -30,7 +30,7 @@ public class AmazonClient {
     private String accessKey;
 
     @Value("${AWS_SECRET_ACCESS_KEY}")
-    private String secretKey;
+    private String secretKey ;
 
     @Value("${AWS_URL}")
     private String endpointUrl;

@@ -14,44 +14,77 @@ function socialMediaComponent(props: MyProps) {
   let twitter: JSX.Element | null = null;
   let linkedIn: JSX.Element | null = null;
 
-  if (props.company.website !== undefined) {
+  let doesCompanyHaveLinks: boolean = false;
+
+  let socialLinks = new Map();
+  socialLinks.set("website", props.company.website);
+  socialLinks.set("facebook", props.company.facebook);
+  socialLinks.set("twitter", props.company.twitter);
+  socialLinks.set("linkedIn", props.company.linkedIn);
+
+  socialLinks.forEach((v, k) =>{
+    if(v !== null){
+      if(v.length <= 1){
+        socialLinks.set(k, null);
+      }
+      if(v.includes('http')){
+        console.log(k, 'does contain a proper link');
+      } else {
+        console.log(k, 'does NOT contain  proper link');
+      }
+    }
+  });
+
+
+  console.log("what are props for this: ", socialLinks);
+
+  if (socialLinks.get("website") !== null) {
+    doesCompanyHaveLinks = true;
     website = (
       <li>
-        <a href={`http://${props.company.facebook}`} target="blank">
+        <a href={`${props.company.facebook}`} target="blank">
           <img src={`${LOCAL_URL}${require('../../../../images/icon/iconWeb.svg')}`}/>
         </a>
       </li>
     );
   }
 
-  if (props.company.facebook !== undefined) {
+  if (socialLinks.get("facebook") !== null) {
+    doesCompanyHaveLinks = true;
     faceBook = (
       <li>
-        <a href={`http://${props.company.facebook}`} target="blank">
+        <a href={`${props.company.facebook}`} target="blank">
           <img src={`${LOCAL_URL}${require('../../../../images/icon/iconFacebook.svg')}`}/>
         </a>
       </li>
     );
   }
 
-  if (props.company.twitter !== undefined) {
+  if (socialLinks.get("twitter") !== null) {
+    doesCompanyHaveLinks = true;
     twitter = (
       <li>
-        <a href={`http://${props.company.twitter}`} target="blank">
+        <a href={`${props.company.twitter}`} target="blank">
           <img src={`${LOCAL_URL}${require('../../../../images/icon/iconTwitter.svg')}`}/>
         </a>
       </li>
     );
   }
 
-  if (props.company.linkedIn !== undefined) {
+  if (socialLinks.get("linkedIn") !== null) {
+    doesCompanyHaveLinks = true;
     linkedIn = (
       <li>
-        <a href={`http://${props.company.linkedIn}`} target="blank">
+        <a href={`${props.company.linkedIn}`} target="blank">
           <img src={`${LOCAL_URL}${require('../../../../images/icon/iconLinkedin.svg')}`}/>
         </a>
       </li>
     );
+  }
+
+  // if the company doesn't have any social media links then don't render anything
+  if(!doesCompanyHaveLinks){
+    return null;
   }
 
   return (

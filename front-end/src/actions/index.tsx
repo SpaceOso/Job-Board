@@ -5,10 +5,10 @@ declare let process: {
 };
 
 // TODO need to move these declerations from this file to either the types file or utils
-let URL_Test = 'https://mr-jobPost-board.herokuapp.com/';
+let URL_Test = 'http://spring-cli-enabled-dev.us-east-1.elasticbeanstalk.com/';
 
 if (process.env.NODE_ENV === 'development') {
-    URL_Test = 'http://localhost:8080/';
+    // URL_Test = 'http://localhost:5000/';
 }
 
 export const ROOT_URL = URL_Test;

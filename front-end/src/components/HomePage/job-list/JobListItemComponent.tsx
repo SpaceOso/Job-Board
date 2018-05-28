@@ -37,7 +37,7 @@ const jobListItemComponent: React.SFC<Props> = (props) => {
         </div>
         <div className="post-info">
             {/*TODO create a helper function for dates*/}
-          <p className="post-date">{moment(new Date(jobPost.job.createdDate)).fromNow()}</p>
+          <p className="post-date">{moment().from(jobPost.job.createdDate)}</p>
           <p className="post-location">{`${jobPost.company.address.city}, ${jobPost.company.address.state}`}</p>
         </div>
       </Link>

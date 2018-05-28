@@ -34,6 +34,7 @@ public class Job {
     @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
+    @Column(columnDefinition = "TEXT")
     private String description;
     
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
