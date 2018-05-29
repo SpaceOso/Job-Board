@@ -1,8 +1,8 @@
 # Full-Stack Job Board
 
-A project I've been working on to learn the ins and outs of web applications. Front end is developed in react using Node with Express and PostgreSQL for the backend.
+A project I've been working on to learn the ins and outs of web applications. Front end is developed using React.js and TypeScript. Java and Spring Framework with PostgreSQL is ued in the backend.
 
-This project is still farm from finished but if you would like to view the current progress you can visit:
+This project is still far from finished but if you would like to view the current progress you can visit:
 
 ## Demo Link
 http://spaceoso.com/
@@ -29,13 +29,13 @@ SECRET_KEY=                 // for JWT
 S3_BUCKET=
 AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
-DB_URL=                     // my database is hosted with heroku
+DB_URL=                     
 DB_PASS=
 DB_USER=
 DB=
 DB_HOST=
 DB_PORT=
-DEV_DB_PASS=            // this is for my loca machine
+DEV_DB_PASS=            // this is for my local machine
 DEV_DB_USER=
 DEV_DB=
 DEV_DB_HOST=
