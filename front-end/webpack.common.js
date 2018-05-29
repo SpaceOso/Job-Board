@@ -1,5 +1,6 @@
 const {resolve} = require('path');
 const path = require('path');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const webpack = require('webpack');
 const DotenvPlugin = require('webpack-dotenv-plugin');
 
@@ -8,6 +9,7 @@ module.exports = {
     entry: "./src/index.tsx",
     devServer:{
         contentBase: resolve('../back-end/src/main/resources/public/'),
+        historyApiFallback: true,
     },
     output: {
         // path: resolve('../back-end/src/main/resources/public/'),

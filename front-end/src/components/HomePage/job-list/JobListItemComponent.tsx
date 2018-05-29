@@ -1,4 +1,5 @@
-import * as moment from 'moment';
+// import * as moment from 'moment';
+import * as moment from 'moment-timezone';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -15,6 +16,10 @@ export interface Props {
 
 const jobListItemComponent: React.SFC<Props> = (props) => {
   const { jobPost } = props;
+  const timeFrame = moment(new Date(jobPost.job.createdDate));
+  const timeFormat = timeFrame.tz("America/New_York").format('ha z');
+  const timeOfJob = moment(timeFrame, "YYYMMDD").fromNow();
+
   console.log("JOBPOST", jobPost);
   return (
     // LOGO
@@ -37,7 +42,7 @@ const jobListItemComponent: React.SFC<Props> = (props) => {
         </div>
         <div className="post-info">
             {/*TODO create a helper function for dates*/}
-          <p className="post-date">{moment().from(jobPost.job.createdDate)}</p>
+          <p className="post-date">{timeOfJob}</p>
           <p className="post-location">{`${jobPost.company.address.city}, ${jobPost.company.address.state}`}</p>
         </div>
       </Link>
