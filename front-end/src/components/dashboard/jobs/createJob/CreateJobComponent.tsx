@@ -86,7 +86,7 @@ class CreateJobComponent extends React.Component<MyProps, MyState> {
   render() {
     const spinner = (<SpinnerComponent/>);
     const form = (
-      <div className={'create-job-component'}>
+      <div className='create-job-component'>
         <h1>Create a new job post</h1>
         <form onSubmit={this.handleJobSubmit}>
           <div>

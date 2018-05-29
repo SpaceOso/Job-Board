@@ -2,6 +2,8 @@
 @import '../dashboardStyles';
 
 .dashboard-applicant-section {
+  @include panel();
+  padding: 2%;
   width: 100%;
   float: left;
 

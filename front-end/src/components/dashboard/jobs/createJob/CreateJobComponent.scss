@@ -1,6 +1,8 @@
 @import '../../../../styles/variables';
 
 .create-job-component{
-  width: 70%;
+  @include panel();
+  padding: 2%;
+  width: 100%;
   float: left;
 }
