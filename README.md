@@ -1,16 +1,16 @@
-# React Job Board
+# Full-Stack Job Board
 
-A project I've been working on to learn the ins and outs of web applications. Front end is developed in react + TypeScript.
-Back-end will be a Java Spring Boot application.
+A project I've been working on to learn the ins and outs of web applications. Front end is developed in react using Node with Express and PostgreSQL for the backend.
 
-This project is still far from finished but if you would like to view the current progress you can visit:
+This project is still farm from finished but if you would like to view the current progress you can visit:
 
-http://mr-job-board.herokuapp.com/
+## Demo Link
+http://spaceoso.com/
 
-To view the employer dashboard you can either create a new account or use these credentials:
+To view the company dashboard you can either create a new account or use these credentials:
 
 ````
-email: test@gmail.com
+email: tester@gmail.com
 password: 123
 ````
 
@@ -54,6 +54,7 @@ npm run build   // to build production react app
 
 * [React](https://reactjs.org/) - Front End
 * [TypeScript](https://www.typescriptlang.org/) - Front End
+* [Spring Framework](https://spring.io/) - Back End
 * [PostgreSQL](https://www.postgresql.org/) - Database
 
 ## Authors
