@@ -69,10 +69,11 @@ class SimpleForm extends React.Component<MyProps, any> {
    * @param {string} key
    * @param event
    */
-  handleChange(key, event): any {
+  handleChange(key,id, event): any {
     const keyObject = { ...this.state.inputValues };
+    console.log("state:, ", keyObject);
 
-    keyObject[ key ].content = event;
+    keyObject[ id ].content = event;
 
     this.setState({ inputValues: keyObject });
   }
@@ -167,19 +168,10 @@ class SimpleForm extends React.Component<MyProps, any> {
           placeholder={input.placeHolder}
           required={input.required}
           type={input.type}
-          // onChange={(event) => this.handleChange(this.state, 'title', event.target.value)}
+          autoComplete="off"
+          onChange={(event) => this.handleChange(this.state, iID, event)}
           margin="normal"
         />
-        {/*<label htmlFor={iID}>{input.label}</label>
-        <input
-          required={input.required}
-          placeholder={input.placeHolder}
-          id={iID}
-          name={input.name}
-          ref={(ref: HTMLInputElement) => this.filesArray[ iID ] = ref}
-          accept={input.accept}
-          type={input.type}
-        />*/}
         {this.state.inputValues[ iID ].SF_error === true ? <div className="input-error-box">{this.state.inputValues[ iID ].SF_errorMessage}</div> : null}
       </div>
     );
@@ -219,18 +211,11 @@ class SimpleForm extends React.Component<MyProps, any> {
               placeholder={input.placeHolder}
               required={input.required}
               type={input.type}
+              autoComplete="off"
               key={`${index}${iID}`}
-            // onChange={(event) => this.handleChange(this.state, 'title', event.target.value)}
+              onChange={(event) => this.handleChange(this.state,iID, event.target.value)}
               margin="normal"
           />
-        /*<SimpleFormInput
-          iID={iID}
-          input={input}
-          index={index}
-          key={`${index}${iID}`}
-          changeCB={this.handleChange}
-          inputValues={this.state.inputValues}
-        />*/
       );
     });
 
@@ -246,7 +231,7 @@ class SimpleForm extends React.Component<MyProps, any> {
       <div className="simple-form" style={this.props.style}>
         <form action="" onSubmit={this.handleSubmit}>
           <h1>{this.props.header}</h1>
-          <div>{this.createInputs()}</div>
+          <div className="input-container">{this.createInputs()}</div>
           {this.props.cancelButton ? < input type={'button'} className="btn-standard" onClick={this.props.cancelButton.click} value={this.props.cancelButton.btnText} /> : null}
           <button className="btn-standard">Submit</button>
         </form>

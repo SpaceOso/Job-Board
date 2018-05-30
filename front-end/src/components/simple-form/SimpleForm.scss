@@ -3,7 +3,8 @@
 
 .simple-form {
   color: $carbon;
-  width: 50rem;
+  width: 100%;
+  max-width: 500px;
   background-color: $panelBg;
   margin: auto;
   //font-size: 1.8rem;
@@ -14,6 +15,12 @@
   @include panelBorders();
   //@include panelShadow();
 
+  .input-container{
+    max-width: 250px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+  }
   .job-form-group {
     text-align: left;
     margin: 0 0 2rem 0;
