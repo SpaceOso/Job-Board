@@ -7,6 +7,7 @@ import TinymceComponent from '../../../tinymce/TinymceComponent';
 
 import './CreateJobComponent.scss';
 import {JobDTO} from "../../../../types";
+import TextField from "@material-ui/core/TextField";
 
 interface MyProps {
   submitJobPost;
@@ -86,11 +87,19 @@ class CreateJobComponent extends React.Component<MyProps, MyState> {
   render() {
     const spinner = (<SpinnerComponent/>);
     const form = (
-      <div className={'create-job-component'}>
+      <div >
         <h1>Create a new job post</h1>
         <form onSubmit={this.handleJobSubmit}>
           <div>
-            <label htmlFor="job-title">Job Title</label>
+            <TextField
+              id="job-title"
+              label="Job Title"
+              placeholder="Enter Job Title"
+              required
+              onChange={(event) => this.handleChange(this.state, 'title', event.target.value)}
+              margin="normal"
+            />
+            {/*<label htmlFor="job-title">Job Title</label>
             <input
               type="text"
               required
@@ -98,7 +107,8 @@ class CreateJobComponent extends React.Component<MyProps, MyState> {
               placeholder="Enter Job Title"
               value={this.state.title}
               onChange={(event) => this.handleChange(this.state, 'title', event.target.value)}
-            />
+            />*/}
+
             <div>
               <h3>Job Location</h3>
               <label htmlFor="job-street">Street</label>

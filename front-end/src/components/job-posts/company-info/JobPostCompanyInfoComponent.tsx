@@ -49,7 +49,7 @@ class JobPostCompanyInfoComponent extends React.Component<MyProps, any> {
       <aside className="jp-company-aside">
         <img className="company-logo panel-shadow" src={logo} alt={`${company.name} Logo`}/>
         <div className="info-container panel-shadow" id="about-section">
-          <h1 className="title">About {company.name}</h1>
+          <h2 className="title">About {company.name}</h2>
           <p className="jp-company-location">{`${company.address.city}, ${company.address.state}`}</p>
         </div>
         <SocialMediaComponent company={company}/>

@@ -4,7 +4,6 @@
   background-color: $white;
   color: $carbon;
   text-align: left;
-  font-size: 1.6rem;
   width: 40%;
   max-width: 350px;
   display: inline-block;
@@ -40,8 +39,8 @@
 
   .title{
     color: $jobTitle;
+    margin-top: 0;
     font-weight: bold;
-    font-size: 2.0rem;
   }
 }
 
@@ -54,8 +53,6 @@
   li{
     width: 32px;
     height: 32px;
-    //max-width: 32px;
-    //max-height: 32px;
     margin-right: 22px;
     display: inline-block;
   }

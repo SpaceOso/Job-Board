@@ -2,7 +2,7 @@
 @import "../components/header/Header";
 
 html {
-  font-size: 62.5%; /* font-size 1em = 10px on default browser settings */
+  //font-size: 62.5%; /* font-size 1em = 10px on default browser settings */
   box-sizing: border-box;
 }
 
@@ -28,7 +28,7 @@ body {
   //background-color: #EFEFEF;
   box-sizing: border-box;
   font-family: 'Open Sans', sans-serif;
-  font-size: 1.6rem;
+  //font-size: 1.6rem;
 }
 
 a {
@@ -56,15 +56,15 @@ a {
 /*=======================================*/
 /*STANDARD SIZES*/
 /*=======================================*/
-h1 {
-  font-size: 2.6rem;
-}
+//h1 {
+//  font-size: 2.6rem;
+//}
+//
+//h3 {
+//  font-size: 2.0rem;
+//}
 
-h3 {
-  font-size: 2.0rem;
-}
-
-input {
+/*input {
   background-color: $inputBg;
   -webkit-appearance: none;
   outline: none;
@@ -76,14 +76,14 @@ input {
   padding: .5rem;
   color: $inputText;
   min-height: 45px;
-}
+}*/
 
-input[type='text']::placeholder,
+/*input[type='text']::placeholder,
 input[type='email']::placeholder,
 input[type='password']::placeholder {
   color: $carbon;
   font-size: 1.3rem;
-}
+}*/
 
 select {
   background-color: $inputBg;

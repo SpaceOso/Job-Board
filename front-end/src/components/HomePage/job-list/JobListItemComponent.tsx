@@ -33,9 +33,9 @@ const jobListItemComponent: React.SFC<Props> = (props) => {
         </div>
         {/*JOB INFORMATION*/}
         <div className="job-info">
-          <h1 className="job-title">
+          <h2 className="job-title">
             {jobPost.job.title}
-          </h1>
+          </h2>
           <p className="job-company">
             {jobPost.company.name}
           </p>

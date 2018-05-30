@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Button from '@material-ui/core/Button';
 
 // styles
 import './EmployeeDashboardHome.scss';
@@ -29,6 +30,9 @@ class EmployeeDashboardHome extends React.Component<MyProps> {
         </h1>
         <img className={'home-logo'} src={`${this.props.company.logoImg}`} alt=""/>
         <JobPostUpdatesComponent jobs={this.props.company.jobs}/>
+        <Button variant="raised" color="primary">
+          Tester
+        </Button>
       </div>
     );
   }

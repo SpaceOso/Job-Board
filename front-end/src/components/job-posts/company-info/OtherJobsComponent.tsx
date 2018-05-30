@@ -38,7 +38,7 @@ function otherJobsComponent(props: MyProps) {
 
   return (
     <div className="info-container panel-shadow">
-      <h1 className="title">{`Other jobs by ${props.company.name}`}</h1>
+      <h2 className="title">{`Other jobs by ${props.company.name}`}</h2>
       <ul className="other-job-ul">
         {createJobList(props)}
       </ul>

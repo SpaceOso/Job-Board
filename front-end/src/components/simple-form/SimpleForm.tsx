@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import './SimpleForm.scss';
 import SimpleFormInput from './SimpleFormInput';
+import TextField from "@material-ui/core/es/TextField";
 
 export interface SFInput {
   label: string;
@@ -160,7 +161,16 @@ class SimpleForm extends React.Component<MyProps, any> {
         className={this.state.inputValues[ iID ].SF_error === true ? 'job-form-group error' : 'job-form-group'}
         key={`${index}${iID}`}
       >
-        <label htmlFor={iID}>{input.label}</label>
+        <TextField
+          id={iID}
+          label={input.label}
+          placeholder={input.placeHolder}
+          required={input.required}
+          type={input.type}
+          // onChange={(event) => this.handleChange(this.state, 'title', event.target.value)}
+          margin="normal"
+        />
+        {/*<label htmlFor={iID}>{input.label}</label>
         <input
           required={input.required}
           placeholder={input.placeHolder}
@@ -169,7 +179,7 @@ class SimpleForm extends React.Component<MyProps, any> {
           ref={(ref: HTMLInputElement) => this.filesArray[ iID ] = ref}
           accept={input.accept}
           type={input.type}
-        />
+        />*/}
         {this.state.inputValues[ iID ].SF_error === true ? <div className="input-error-box">{this.state.inputValues[ iID ].SF_errorMessage}</div> : null}
       </div>
     );
@@ -203,14 +213,24 @@ class SimpleForm extends React.Component<MyProps, any> {
       }
 
       return (
-        <SimpleFormInput
+          <TextField
+              id={iID}
+              label={input.label}
+              placeholder={input.placeHolder}
+              required={input.required}
+              type={input.type}
+              key={`${index}${iID}`}
+            // onChange={(event) => this.handleChange(this.state, 'title', event.target.value)}
+              margin="normal"
+          />
+        /*<SimpleFormInput
           iID={iID}
           input={input}
           index={index}
           key={`${index}${iID}`}
           changeCB={this.handleChange}
           inputValues={this.state.inputValues}
-        />
+        />*/
       );
     });
 
