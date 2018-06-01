@@ -3,24 +3,52 @@ import * as React from 'react';
 import './SimpleForm.scss';
 import SimpleFormInput from './SimpleFormInput';
 import TextField from "@material-ui/core/es/TextField";
+import {map} from "tinymce";
 
 export interface SFInput {
-  label: string;
-  required: boolean;
-  type: string;
+  label?: string;
+  required?: boolean;
+  type?: string;
   name?: string;
   accept?: string;
-  placeHolder: string;
-  id: string;
+  placeHolder?: string;
+  id?: string;
+}
+
+export interface SF_Object extends SFInput{
+  content: string,
+  SF_error: false,
+  SF_errorMessage: '',
 }
 
 interface FormObject {
-  [key: string]: any;
+  [key: string]: SF_Object;
 }
+
+interface FormObjectArr{
+  [key: number]: Array<FormObject>;
+}
+
+/*
+* [
+* 0:[
+*   {
+*     "email":
+*   }
+* ]
+* {
+*   "Email": {
+*   }
+* },
+*   "email":{
+*
+*   }
+* ]
+* */
 
 interface MyProps {
   header: string;
-  inputs: SFInput[];
+  inputs:  Array<SFInput> | Array<Array<SFInput>>;
   submitBtnText: string;
   verifyInputs: string[] | null;
   onSubmitCB: (any) => void;
@@ -29,47 +57,77 @@ interface MyProps {
   cancelButton?: { click: (e: React.FormEvent<HTMLInputElement>) => void, btnText: string };
 }
 
+interface myState {
+  inputs: Array<SFInput>;
+}
+
 class SimpleForm extends React.Component<MyProps, any> {
   private filesArray: any = {};
 
   constructor(props) {
     super(props);
-
-    const propObj: any = {};
+    alert("constrc called");
+    console.log("Contructor props: ", this.props);
+    // let propObj: any = {};
+    // let propObj:Array<SF_Object> | Array<Array<FormObject>> | null = null;
 
     /**
      * Crate an object for each input to hold the employee input and to know if there is an
      * error associated with that input.
      */
-    this.props.inputs.map((input) => {
-      propObj[ input.id ] = {
-        content: '',
-        SF_error: false,
-        SF_errorMessage: '',
-        type: input.type,
-        required: input.required,
-      };
-    });
+      // let localObj: Array<Array<FormObject>> = [];
+      let propObj: Array<Array<FormObject>> = [];
+      let localObj: any = [];
+      console.log("the inputs before we start:", JSON.stringify(this.props.inputs));
+      localObj = this.props.inputs;
+
+      localObj.forEach((input, index) => {
+        propObj[index] = [];
+        console.log("what is the actual input: ", input.length);
+
+        input.forEach((singleInput, index2) => {
+          console.log("and the single input is: ", singleInput, index);
+          console.log("current index ", index2);
+          console.log("current id: ", singleInput.id);
+          return propObj[index].push({
+            ...singleInput,
+            content: '',
+            SF_error: false,
+            SF_errorMessage: '',
+          });
+        });
+
+      });
+
+    console.log("What does groupedArray looked like?", JSON.stringify(propObj));
 
     this.state = {
       inputsToVerify: this.props.verifyInputs !== null ? this.props.verifyInputs.map(input => input + '-verify') : null,
       formSubmitted: false,
       formErrors: false,
-      inputValues: { ...propObj },
+      inputValues: [...propObj],
     };
+
 
     this.createInputs = this.createInputs.bind(this);
     this.createFileInput = this.createFileInput.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.createSingleInput = this.createSingleInput.bind(this);
   }
 
+  static getDerivedStateFromProps(nextProps, prevState){
+    console.log("getDrivedStateFromProps(): ", nextProps);
+  }
   /**
    *
    * @param {string} key
    * @param event
    */
   handleChange(key,id, event): any {
+    console.log("SF: key: ", key);
+    console.log("SF: id: ", id);
+    console.log("SF: event: ", event);
     const keyObject = { ...this.state.inputValues };
     console.log("state:, ", keyObject);
 
@@ -86,10 +144,11 @@ class SimpleForm extends React.Component<MyProps, any> {
    */
   handleVerificationError(setError: boolean, message: string, inputId: string) {
     const inputRef = { ...this.state.inputValues };
-
+    console.log("what are the inpurRefs?: ", inputRef);
     if (setError === true) {
-      inputRef[ inputId + '-verify' ].SF_error = true;
-      inputRef[ inputId + '-verify' ].SF_errorMessage = message;
+      inputRef[inputId].error = true;
+      // inputRef[ inputId + '-verify' ].SF_error = true;
+      // inputRef[ inputId + '-verify' ].SF_errorMessage = message;
     } else if (setError === false) {
       inputRef[ inputId + '-verify' ].SF_error = false;
       inputRef[ inputId + '-verify' ].SF_errorMessage = message;
@@ -103,6 +162,7 @@ class SimpleForm extends React.Component<MyProps, any> {
    * Checks if any two items that need verification match
    */
   checkForErrors(): void {
+    console.log("checkForErrors");
     const inputs = { ...this.state.inputValues };
     let formError = false;
 
@@ -113,7 +173,9 @@ class SimpleForm extends React.Component<MyProps, any> {
 
         // Need to match any inputs that need verification
         if (this.state.inputsToVerify.includes(input + '-verify')) {
+          console.log("We have iputs to check")
           if (inputs[ input ].content !== inputs[ input + '-verify' ].content) {
+            console.log("We did find an error");
             formError = true;
             this.handleVerificationError(true, 'Does not match', input);
           } else {
@@ -152,6 +214,7 @@ class SimpleForm extends React.Component<MyProps, any> {
   }
 
   handleSubmit(event) {
+    console.log("The event is being fired: ", event);
     (event as Event).preventDefault();
     this.checkForErrors();
   }
@@ -177,50 +240,86 @@ class SimpleForm extends React.Component<MyProps, any> {
     );
   }
 
-  createJointInputs(inputs: JSX.Element[]): JSX.Element[] {
-    const inputPerRow: number = 2;
-    const totalInputs: number = inputs.length;
-    const adjustArray: any[] = [];
+  createJointInputs(inputsfe, index:number): JSX.Element {
+    console.log("createJointInputs() wtf: ", inputsfe);
 
-    for (let i = 0; i < totalInputs; i + 1) {
-      adjustArray.push(
-        <div key={`${i}joinedinput`} className={'joined-row'}>
-          {inputs[ i ]}
-          {inputs[ i + 1 ]}
-        </div>,
-      );
-      i = i + inputPerRow;
-    }
-    return adjustArray;
-  }
+    inputsfe.forEach(input => console.log("stupid"));
 
-  createInputs(): JSX.Element[ ] {
-    const inputElements = this.props.inputs.map((input, index) => {
-
-      // inputID
-      const iID = input.id;
-
-      if (input.type === 'file') {
-        return this.createFileInput(input, index, iID);
-      }
-
-      return (
-          <TextField
-              id={iID}
-              label={input.label}
-              placeholder={input.placeHolder}
-              required={input.required}
-              type={input.type}
-              autoComplete="off"
-              key={`${index}${iID}`}
-              onChange={(event) => this.handleChange(this.state,iID, event.target.value)}
-              margin="normal"
-          />
-      );
+    let inputsCreated: any = inputsfe.forEach((input, index) => {
+      console.log("inside creating joints with: ", input);
+      console.log("inside creating joints with: ", index);
+      this.createSingleInput(input, index)
     });
 
-    if (this.props.joined === true) {
-      return this.createJointInputs(inputElements);
+    return (
+      <div className='joined-row' key={index + 1}>
+        {inputsCreated}
+      </div>
+    )
+  }
+
+  createSingleInput(input: any, index: number) : JSX.Element{
+    console.log("creatingSingleInput(): ", input);
+    // inputID
+    const iID = input.id;
+
+    if (input.type === 'file') {
+      return this.createFileInput(input, index, iID);
+    }
+
+    return (
+      <TextField
+        id={iID}
+        label={input.label}
+        placeholder={input.placeHolder}
+        required={input.required}
+        type={input.type}
+        autoComplete="off"
+        key={`${index}${iID}`}
+        onChange={(event) => this.handleChange(this.state,iID, event.target.value)}
+        margin="normal"
+      />
+    );
+  }
+
+  createInputs(): Array<JSX.Element> {
+    let inputElements: JSX.Element[] = [];
+    let singleArray = this.state.inputValues as SF_Object[];
+
+    // need to check to see if we have grouped sections
+    if(this.props.joined){
+      console.log("what about here...?", this.state.inputValues[0].length);
+      let groupedArray = this.state.inputValues as SF_Object[][];
+      inputElements = this.state.inputValues.map((inputGroup, index) => {
+        console.log("inputGroup: ", inputGroup.length);
+        this.createJointInputs(inputGroup, index + 1)
+      })
+
+    } else {
+      inputElements = singleArray.map((input, index) => {
+
+        // inputID
+        const iID = input.id;
+
+        if (input.type === 'file') {
+          return this.createFileInput(input, index, iID);
+        }
+
+        return (
+          <TextField
+            id={iID}
+            label={input.label}
+            placeholder={input.placeHolder}
+            required={input.required}
+            type={input.type}
+            error={input.SF_error}
+            autoComplete="off"
+            key={`${index}${iID}`}
+            onChange={(event) => this.handleChange(this.state,iID, event.target.value)}
+            margin="normal"
+          />
+        );
+      });
     }
 
     return inputElements;
@@ -231,7 +330,9 @@ class SimpleForm extends React.Component<MyProps, any> {
       <div className="simple-form" style={this.props.style}>
         <form action="" onSubmit={this.handleSubmit}>
           <h1>{this.props.header}</h1>
-          <div className="input-container">{this.createInputs()}</div>
+          <div className={"input-container"}>
+            {this.state.inputValues !== null ? this.createInputs() : null}
+            </div>
           {this.props.cancelButton ? < input type={'button'} className="btn-standard" onClick={this.props.cancelButton.click} value={this.props.cancelButton.btnText} /> : null}
           <button className="btn-standard">Submit</button>
         </form>

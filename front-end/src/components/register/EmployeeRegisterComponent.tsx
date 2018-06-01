@@ -31,6 +31,7 @@ interface FormInputs {
   type: string;
   placeHolder: string;
   id: string;
+  groupId: number | null;
 }
 
 interface MyState {
@@ -39,49 +40,61 @@ interface MyState {
 
 class EmployeeRegisterComponent extends React.Component<MyProps, MyState> {
 
-  private inputs: FormInputs[] = [
-    {
-      label: 'First Name',
-      required: true,
-      type: 'text',
-      placeHolder: 'Enter First Name',
-      id: 'firstName',
-    },
-    {
-      label: 'Last Name',
-      required: true,
-      type: 'text',
-      placeHolder: 'Enter Last Name',
-      id: 'lastName',
-    },
-    {
-      label: 'Email',
-      required: true,
-      type: 'email',
-      placeHolder: 'Enter your email',
-      id: 'email',
-    },
-    {
-      label: 'Confirm Email',
-      required: true,
-      type: 'email',
-      placeHolder: 'Please confirm your email',
-      id: 'email-verify',
-    },
-    {
-      label: 'Password',
-      required: true,
-      type: 'password',
-      placeHolder: 'Enter password',
-      id: 'password',
-    },
-    {
-      label: 'Verify Password',
-      required: true,
-      type: 'password',
-      placeHolder: 'Please Verify Password',
-      id: 'password-verify',
-    },
+  private inputs: FormInputs[][] = [
+    [
+      {
+        label: 'First Name',
+        required: true,
+        type: 'text',
+        placeHolder: 'Enter First Name',
+        id: 'firstName',
+        groupId: 0,
+      },
+      {
+        label: 'Last Name',
+        required: true,
+        type: 'text',
+        placeHolder: 'Enter Last Name',
+        id: 'lastName',
+        groupId: 0,
+      },
+    ],
+    [
+      {
+        label: 'Email',
+        required: true,
+        type: 'email',
+        placeHolder: 'Enter your email',
+        id: 'email',
+        groupId: 1,
+      },
+      {
+        label: 'Confirm Email',
+        required: true,
+        type: 'email',
+        placeHolder: 'Please confirm your email',
+        id: 'email-verify',
+        groupId: 1,
+      },
+    ],
+    [
+      {
+        label: 'Password',
+        required: true,
+        type: 'password',
+        placeHolder: 'Enter password',
+        id: 'password',
+        groupId: 2,
+      },
+      {
+        label: 'Verify Password',
+        required: true,
+        type: 'password',
+        placeHolder: 'Please Verify Password',
+        id: 'password-verify',
+        groupId: 2,
+      },
+    ]
   ];
 
   constructor(props) {

@@ -16,10 +16,13 @@
   //@include panelShadow();
 
   .input-container{
-    max-width: 250px;
-    margin: auto;
+    //max-width: 250px;
+    //margin: auto;
     display: flex;
-    flex-direction: column;
+      flex-direction: column;
+    .row{
+      flex-direction: row;
+    }
   }
   .job-form-group {
     text-align: left;
@@ -58,6 +61,8 @@
 }
 
 .joined-row{
+  display: flex;
+  justify-content: space-around;
   .job-form-group{
     display: inline-block;
     margin: 10px;

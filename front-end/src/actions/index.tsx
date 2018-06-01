@@ -8,7 +8,7 @@ declare let process: {
 let URL_Test = 'http://spring-cli-enabled-dev.us-east-1.elasticbeanstalk.com/';
 
 if (process.env.NODE_ENV === 'development') {
-    // URL_Test = 'http://localhost:5000/';
+    URL_Test = 'http://localhost:5000/';
 }
 
 export const ROOT_URL = URL_Test;
