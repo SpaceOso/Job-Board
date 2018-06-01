@@ -66,7 +66,6 @@ class SimpleForm extends React.Component<MyProps, any> {
 
   constructor(props) {
     super(props);
-    alert("constrc called");
     console.log("Contructor props: ", this.props);
     // let propObj: any = {};
     // let propObj:Array<SF_Object> | Array<Array<FormObject>> | null = null;
@@ -89,12 +88,21 @@ class SimpleForm extends React.Component<MyProps, any> {
           console.log("and the single input is: ", singleInput, index);
           console.log("current index ", index2);
           console.log("current id: ", singleInput.id);
+
+          // return propObj[index][singleInput.id] = {
+          //   ...singleInput,
+          //   content: '',
+          //   SF_error: false,
+          //   SF_errorMessage: '',
+          // };
+
           return propObj[index].push({
             ...singleInput,
             content: '',
             SF_error: false,
             SF_errorMessage: '',
           });
+
         });
 
       });
@@ -245,11 +253,13 @@ class SimpleForm extends React.Component<MyProps, any> {
 
     inputsfe.forEach(input => console.log("stupid"));
 
-    let inputsCreated: any = inputsfe.forEach((input, index) => {
+    const inputsCreated: any = inputsfe.map((input, index) => {
       console.log("inside creating joints with: ", input);
       console.log("inside creating joints with: ", index);
-      this.createSingleInput(input, index)
+      return this.createSingleInput(input, index)
     });
+
+    console.log("tester you", inputsCreated);
 
     return (
       <div className='joined-row' key={index + 1}>
@@ -291,10 +301,9 @@ class SimpleForm extends React.Component<MyProps, any> {
       console.log("what about here...?", this.state.inputValues[0].length);
       let groupedArray = this.state.inputValues as SF_Object[][];
       inputElements = this.state.inputValues.map((inputGroup, index) => {
-        console.log("inputGroup: ", inputGroup.length);
-        this.createJointInputs(inputGroup, index + 1)
+        console.log("inputGroup: ", inputGroup);
+        return this.createJointInputs(inputGroup, index + 1)
       })
-
     } else {
       inputElements = singleArray.map((input, index) => {
 
@@ -331,7 +340,7 @@ class SimpleForm extends React.Component<MyProps, any> {
         <form action="" onSubmit={this.handleSubmit}>
           <h1>{this.props.header}</h1>
           <div className={"input-container"}>
-            {this.state.inputValues !== null ? this.createInputs() : null}
+            {this.createInputs()}
             </div>
           {this.props.cancelButton ? < input type={'button'} className="btn-standard" onClick={this.props.cancelButton.click} value={this.props.cancelButton.btnText} /> : null}
           <button className="btn-standard">Submit</button>
