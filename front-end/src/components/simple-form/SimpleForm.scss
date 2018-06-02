@@ -10,17 +10,13 @@
   width: 100%;
   background-color: $panelBg;
   margin: auto;
-  //font-size: 1.8rem;
   padding: $contentPadding;
   -webkit-border-radius: 25rem;
   -moz-border-radius: 25rem;
   border-radius: 2rem;
   @include panelBorders();
-  //@include panelShadow();
 
   .input-container{
-    //max-width: 250px;
-    //margin: auto;
     display: flex;
       flex-direction: column;
     .row{
@@ -65,7 +61,17 @@
 
 .joined-row{
   display: flex;
-  justify-content: space-around;
+  //justify-content: space-around;
+  > div{
+    margin: 10px;
+  }
+  .file-input-container{
+    display: flex;
+    align-items: baseline;
+    p{
+      margin: 0 10px;
+    }
+  }
   .job-form-group{
     display: inline-block;
     margin: 10px;

@@ -108,20 +108,20 @@ class SimpleForm extends React.Component<MyProps, any> {
     console.log("id ", id);
     console.log("event", event);
 
-    if(keyObject[id].type === "logo"){
+    if (keyObject[id].type === "logo") {
       console.log("we clicked on a logo");
 
     }
-
 
     keyObject[id].content = event;
 
     this.setState({inputValues: keyObject});
   }
 
-  handleFileInputChange = (e: React.FormEvent<HTMLInputElement>) => {
+  handleFileInputChange = (e: React.FormEvent<HTMLInputElement>, id) => {
     console.log("handle file change: ", e.currentTarget.value);
     // this.props.changeCB(this.props.iID, e.currentTarget.value);
+
   };
 
   /**
@@ -151,6 +151,23 @@ class SimpleForm extends React.Component<MyProps, any> {
   checkForErrors(): void {
     const inputs = {...this.state.inputValues};
     let formError = false;
+
+    // need to check that all required inputs are there
+    Object.keys(inputs).map((input) => {
+      // Need to match any inputs that need verification
+      if (inputs[input].required) {
+        console.log("this was required ", input);
+        console.log(inputs[input]);
+        if(inputs[input].content.length <= 0){
+          console.log("we failed on : ", input);
+          this.handleVerificationError(true, 'Does not match', input);
+          formError = true;
+        } else {
+          formError = false;
+          this.handleVerificationError(false, '', input);
+        }
+      }
+    });
 
     if (this.state.inputsToVerify !== null) {
 
@@ -204,55 +221,44 @@ class SimpleForm extends React.Component<MyProps, any> {
 
   createFileInput(input, index, iID): JSX.Element {
 
+    const errorMessage = <p>You need a resume!</p>;
+    let fileName: string;
+
+    if(this.filesArray[iID] !== undefined && this.filesArray[iID].files[0] !== undefined){
+      fileName = this.filesArray[iID].files[0].name;
+    }
+    console.log("file input: ", this.filesArray);
+
     return (
-      <React.Fragment
-           key={`${index}${iID}`}>
+      <div className="file-input-container"
+        key={`${index}${iID}`}>
+
         <input
-          accept="image/*"
+          accept={input.accept}
           id={iID}
           className="no-input"
           multiple
-          ref={(ref: HTMLInputElement) => this.filesArray[ iID ] = ref}
+          ref={(ref: HTMLInputElement) => this.filesArray[iID] = ref}
           type="file"
-          onChange={(event) => this.handleFileInputChange(event)}
+          onChange={(event) => this.handleChange(this.state, iID, event)}
         />
         <label htmlFor={iID}>
           <Button
             variant="raised"
             component="span"
+            color={input.SF_error ? 'secondary' : 'primary'}
           >
             {input.placeHolder}
           </Button>
+        {input.SF_error ? errorMessage : null}
         </label>
-      </React.Fragment>
-
-  )
-/*
-    return (
-      <div
-        className={this.state.inputValues[iID].SF_error === true ? 'job-form-group error' : 'job-form-group'}
-        key={`${index}${iID}`}
-      >
-        <TextField
-          id={iID}
-          label={input.label}
-          placeholder={input.placeHolder}
-          required={input.required}
-          type={input.type}
-          autoComplete="off"
-          onChange={(event) => this.handleChange(this.state, iID, event)}
-          margin="normal"
-        />
-        {this.state.inputValues[iID].SF_error === true ?
-          <div className="input-error-box">{this.state.inputValues[iID].SF_errorMessage}</div> : null}
+        {fileName !== undefined ? <p>{fileName}</p> : null}
       </div>
-    );
-*/
-
+    )
 
   }
 
-  createJointInputs(inputGroups): JSX.Element[] | null{
+  createJointInputs(inputGroups): JSX.Element[] | null {
     let testArr: any = [];
 
     /* Checks to see if an array with that groupId is created
@@ -260,7 +266,7 @@ class SimpleForm extends React.Component<MyProps, any> {
     Object.keys(inputGroups).forEach((input) => {
       const groupId: number = inputGroups[input].groupId;
 
-      if(testArr[groupId] === undefined){
+      if (testArr[groupId] === undefined) {
         testArr[groupId] = [];
         testArr[groupId].push(inputGroups[input]);
       } else {
@@ -276,15 +282,15 @@ class SimpleForm extends React.Component<MyProps, any> {
       })
     });
 
-    if(!this.props.joined){
+    if (!this.props.joined) {
       return inputsCreated;
     }
 
-    return inputsCreated.map((inputChunk, index) =>{
+    return inputsCreated.map((inputChunk, index) => {
       return (
         <div className='joined-row' key={index + 1}>
-        {inputChunk}
-      </div>
+          {inputChunk}
+        </div>
       )
     });
   }

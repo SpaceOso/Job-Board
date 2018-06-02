@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import ModalComponent from '../../modal/ModalComponent';
-import SimpleForm from '../../simple-form/SimpleForm';
+import SimpleForm, {SFInput} from '../../simple-form/SimpleForm';
 import {Applicants} from "../../../types";
 
 interface MyProps {
@@ -14,59 +14,76 @@ interface MyProps {
 }
 
 class ApplicationComponent extends React.Component<MyProps> {
-  private locationInputs = [
-    {
-      label: 'First Name',
-      required: true,
-      type: 'text',
-      placeHolder: 'First Name',
-      id: 'firstName',
-    },
-    {
-      label: 'Last Name',
-      required: true,
-      type: 'text',
-      placeHolder: 'Last Name',
-      id: 'lastName',
-    },
-    {
-      label: 'email',
-      required: true,
-      type: 'text',
-      placeHolder: 'email',
-      id: 'email',
-    },
-    {
-      label: 'Phone Number',
-      required: true,
-      type: 'tel',
-      placeHolder: '555-555-555',
-      id: 'phoneNumber',
-    },
-    {
-      label: 'website',
-      required: false,
-      type: 'text',
-      placeHolder: 'www.yourwebsite.com',
-      id: 'website',
-    },
-    {
-      label: 'Resume',
-      required: true,
-      type: 'file',
-      name: 'resume',
-      accept: '.pdf',
-      placeHolder: 'upload your resume',
-      id: 'resumeFile',
-    },
-    {
-      label: 'Cover Letter',
-      required: false,
-      type: 'file',
-      accept: '.pdf',
-      placeHolder: 'upload your resume',
-      id: 'coverLetterFile',
-    },
+  private locationInputs: SFInput[][] = [
+    [
+      {
+        label: 'First Name',
+        required: true,
+        type: 'text',
+        placeHolder: 'First Name',
+        errorText: "First Name Please!",
+        id: 'firstName',
+      },
+      {
+        label: 'Last Name',
+        required: true,
+        type: 'text',
+        placeHolder: 'Last Name',
+        errorText: "Last Name Please!",
+        id: 'lastName',
+      },
+    ],
+    [
+      {
+        label: 'email',
+        required: true,
+        type: 'text',
+        placeHolder: 'email',
+        errorText: "Enter email please!",
+        id: 'email',
+      },
+      {
+        label: 'Phone Number',
+        required: true,
+        type: 'tel',
+        placeHolder: '555-555-555',
+        errorText: "Enter phone number please!",
+        id: 'phoneNumber',
+      },
+    ],
+    [
+      {
+        label: 'Portfolio Site',
+        required: false,
+        type: 'text',
+        placeHolder: 'www.yourportfolio.com',
+        errorText: "Portfolio link please!",
+        id: 'website',
+      },
+    ],
+    [
+      {
+        label: 'Resume',
+        required: true,
+        type: 'file',
+        name: 'resume',
+        accept: '.pdf',
+        placeHolder: 'Resume',
+        errorText: "Upload your resume home-boy!",
+        id: 'resumeFile',
+      },
+    ],
+    [
+      {
+        label: 'Cover Letter',
+        required: false,
+        type: 'file',
+        accept: '.pdf',
+        placeHolder: 'Cover Letter',
+        errorText: "Error! What happened?! Try again!",
+        id: 'coverLetterFile',
+      },
+    ],
   ];
 
   constructor(props) {
@@ -101,6 +118,11 @@ class ApplicationComponent extends React.Component<MyProps> {
       btnText: 'Cancel',
     };
 
+    const formStyles = {
+      width: '29%',
+      maxWidth: '450px',
+    };
+
     return (
       <ModalComponent>
         <div className="modal">
@@ -111,7 +133,7 @@ class ApplicationComponent extends React.Component<MyProps> {
             verifyInputs={null}
             onSubmitCB={this.handleApplicationSubmit}
             joined={true}
-            style={{ width: 'auto' }}
+            style={formStyles}
             cancelButton={cancelButton}
           />
         </div>

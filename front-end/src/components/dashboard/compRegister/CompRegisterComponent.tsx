@@ -194,7 +194,7 @@ class CompRegisterComponent extends React.Component<CompRegisterProps, MyState> 
             header={'Company Information'}
             inputs={this.inputs}
             style={formStyles}
-            joined={false}
+            joined={true}
             submitBtnText={'Enter Company'}
             verifyInputs={null}
             onSubmitCB={this.handleCompanySubmit}
