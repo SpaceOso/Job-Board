@@ -13,6 +13,7 @@ export interface SFInput {
   accept?: string;
   placeHolder?: string;
   id?: string;
+  errorText?: string,
 }
 
 export interface SF_Object extends SFInput {
@@ -57,11 +58,9 @@ class SimpleForm extends React.Component<MyProps, any> {
      * Crate an object for each input to hold the employee input and to know if there is an
      * error associated with that input.
      */
-      // let localObj: Array<Array<FormObject>> = [];
-    // let propObj: Array<FormObject> = [];
     let propObj: FormObject = {};
-    let localObj: any = [];
-    localObj = this.props.inputs;
+    console.log('wut')
+    let localObj = this.props.inputs as SFInput[][];
 
     localObj.forEach((input, index) => {
       input.forEach((singleInput, index2) => {
@@ -74,20 +73,9 @@ class SimpleForm extends React.Component<MyProps, any> {
           SF_errorMessage: '',
         }
 
-        /*return propObj.push({
-          [singleInput.id]: {
-            ...singleInput,
-            content: '',
-            groupId: index,
-            SF_error: false,
-            SF_errorMessage: '',
-          }
-        });*/
-
       });
     });
 
-    console.log("the built state object: ", propObj);
 
     this.state = {
       inputsToVerify: this.props.verifyInputs !== null ? this.props.verifyInputs.map(input => input + '-verify') : null,
@@ -117,7 +105,7 @@ class SimpleForm extends React.Component<MyProps, any> {
     console.log("SF: key: ", key);
     console.log("SF: id: ", id);
     console.log("SF: event: ", event);
-    const keyObject = [...this.state.inputValues];
+    const keyObject = {...this.state.inputValues};
     console.log("state:, ", keyObject);
 
     keyObject[id].content = event;
@@ -133,14 +121,15 @@ class SimpleForm extends React.Component<MyProps, any> {
    */
   handleVerificationError(setError: boolean, message: string, inputId: string) {
     const inputRef = {...this.state.inputValues};
-    console.log("what are the inpurRefs?: ", inputRef);
+
+    console.log("The id of the wrong input: ", inputId);
+
     if (setError === true) {
-      inputRef[inputId].error = true;
-      // inputRef[ inputId + '-verify' ].SF_error = true;
-      // inputRef[ inputId + '-verify' ].SF_errorMessage = message;
+      inputRef[inputId].SF_error = true;
+      inputRef[inputId].errorMessage = inputRef[inputId].errorText;
     } else if (setError === false) {
-      inputRef[inputId + '-verify'].SF_error = false;
-      inputRef[inputId + '-verify'].SF_errorMessage = message;
+      inputRef[inputId].SF_error = false;
+      inputRef[inputId].errorMessage = null;
     }
 
     this.setState({inputValues: {...inputRef}});
@@ -165,10 +154,11 @@ class SimpleForm extends React.Component<MyProps, any> {
           console.log("We have iputs to check")
           if (inputs[input].content !== inputs[input + '-verify'].content) {
             console.log("We did find an error");
+            console.log(inputs[input+ '-verify'])
             formError = true;
-            this.handleVerificationError(true, 'Does not match', input);
+            this.handleVerificationError(true, 'Does not match', input + '-verify');
           } else {
-            this.handleVerificationError(false, '', input);
+            this.handleVerificationError(false, '', input + '-verify');
           }
         }
       });
@@ -230,33 +220,29 @@ class SimpleForm extends React.Component<MyProps, any> {
     );
   }
 
-  createJointInputs(inputsfe): JSX.Element[] | null{
-    console.log("createJointInputs() : ", inputsfe);
-    let inputElements: JSX.Element[][] = [];
+  createJointInputs(inputGroups): JSX.Element[] | null{
     let testArr: any = [];
 
-    Object.keys(inputsfe).forEach((input) => {
-      console.log("current input: ", input);
-      if(testArr[inputsfe[input].groupId] === undefined){
-        testArr[inputsfe[input].groupId] = [];
-        testArr[inputsfe[input].groupId].push(inputsfe[input]);
+    /* Checks to see if an array with that groupId is created
+    * if not it creates the array and inserts an element with the the same groupId*/
+    Object.keys(inputGroups).forEach((input) => {
+      const groupId: number = inputGroups[input].groupId;
+
+      if(testArr[groupId] === undefined){
+        testArr[groupId] = [];
+        testArr[groupId].push(inputGroups[input]);
       } else {
-        testArr[inputsfe[input].groupId].push(inputsfe[input]);
+        testArr[groupId].push(inputGroups[input]);
       }
+
     });
 
-    console.log("inputElements created: ", testArr);
-
     // returning this itself will gives a list
-    const inputsCreated: any = testArr.map((chunkedInputs, index) => {
-      console.log("inside creating joints with: ", chunkedInputs);
-      console.log("inside creating joints with: ", index);
+    const inputsCreated: any = testArr.map((chunkedInputs) => {
       return chunkedInputs.map((singleInput, index) => {
         return this.createSingleInput(singleInput, index)
       })
     });
-
-    console.log("tester you", inputsCreated);
 
     return inputsCreated.map((inputChunk, index) =>{
       return (
@@ -265,12 +251,6 @@ class SimpleForm extends React.Component<MyProps, any> {
       </div>
       )
     });
-
-   /* return (
-      <div className='joined-row' key={index + 1}>
-        {inputsCreated}
-      </div>*/
-    // )
   }
 
   createSingleInput(input: any, index: number): JSX.Element {
@@ -289,6 +269,8 @@ class SimpleForm extends React.Component<MyProps, any> {
         placeholder={input.placeHolder}
         required={input.required}
         type={input.type}
+        error={input.SF_error}
+        helperText={input.errorMessage}
         autoComplete="off"
         key={`${index}${iID}`}
         onChange={(event) => this.handleChange(this.state, iID, event.target.value)}

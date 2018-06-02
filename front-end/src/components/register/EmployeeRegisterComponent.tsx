@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Link, Redirect} from 'react-router-dom';
 
 import {AuthEmployee, SiteFetching, Employee, SiteErrors} from '../../types';
-import SimpleForm from '../simple-form/SimpleForm';
+import SimpleForm, {SFInput} from '../simple-form/SimpleForm';
 import {default as SpinnerComponent} from '../spinners/spinnerComponent';
 
 // styles
@@ -40,23 +40,23 @@ interface MyState {
 
 class EmployeeRegisterComponent extends React.Component<MyProps, MyState> {
 
-  private inputs: FormInputs[][] = [
+  private inputs: SFInput[][] = [
     [
       {
         label: 'First Name',
         required: true,
         type: 'text',
         placeHolder: 'Enter First Name',
+        errorText: "Please Enter a First Name.",
         id: 'firstName',
-        groupId: 0,
       },
       {
         label: 'Last Name',
         required: true,
         type: 'text',
         placeHolder: 'Enter Last Name',
+        errorText: "Please Enter a Last Name.",
         id: 'lastName',
-        groupId: 0,
       },
     ],
     [
@@ -65,16 +65,16 @@ class EmployeeRegisterComponent extends React.Component<MyProps, MyState> {
         required: true,
         type: 'email',
         placeHolder: 'Enter your email',
+        errorText: "Please enter a valid email.",
         id: 'email',
-        groupId: 1,
       },
       {
         label: 'Confirm Email',
         required: true,
         type: 'email',
         placeHolder: 'Please confirm your email',
+        errorText: "Yo! Double check your email.",
         id: 'email-verify',
-        groupId: 1,
       },
     ],
     [
@@ -83,16 +83,16 @@ class EmployeeRegisterComponent extends React.Component<MyProps, MyState> {
         required: true,
         type: 'password',
         placeHolder: 'Enter password',
+        errorText: "Please Enter a password",
         id: 'password',
-        groupId: 2,
       },
       {
         label: 'Verify Password',
         required: true,
         type: 'password',
         placeHolder: 'Please Verify Password',
+        errorText: "You're killing me smalls! Double check!",
         id: 'password-verify',
-        groupId: 2,
       },
     ]
   ];
