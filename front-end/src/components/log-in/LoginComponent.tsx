@@ -4,7 +4,7 @@ import * as bcrypt from 'bcryptjs';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import {SiteErrors, SiteFetching, Employee, AuthEmployee} from '../../types';
-import SimpleForm from '../simple-form/SimpleForm';
+import SimpleForm, {SFInput} from '../simple-form/SimpleForm';
 import { default as SpinnerComponent } from '../spinners/spinnerComponent';
 
 /**
@@ -28,21 +28,25 @@ interface MyState {
 }
 
 class LogInComponent extends React.Component<MyProps, MyState> {
-  private inputs = [
-    {
-      label: 'Enter Email:',
-      required: true,
-      type: 'email',
-      placeHolder: 'Enter Email:',
-      id: 'email',
-    },
-    {
-      label: 'Enter Password:',
-      required: true,
-      type: 'password',
-      placeHolder: 'Enter Password',
-      id: 'password',
-    },
+  private inputs: SFInput[][] = [
+    [
+      {
+        label: 'Enter Email:',
+        required: true,
+        type: 'email',
+        placeHolder: 'Enter Email:',
+        errorText: 'Please Enter an email',
+        id: 'email',
+      },
+      {
+        label: 'Enter Password:',
+        required: true,
+        type: 'password',
+        errorText: 'Please Enter a Password',
+        placeHolder: 'Enter Password',
+        id: 'password',
+      },
+    ]
   ];
 
   constructor(props) {
@@ -109,6 +113,7 @@ class LogInComponent extends React.Component<MyProps, MyState> {
               inputs={this.inputs}
               submitBtnText="Log In"
               verifyInputs={null}
+              // joined={true}
               onSubmitCB={this.handleSubmit}
             />
             <div>

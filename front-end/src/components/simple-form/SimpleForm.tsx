@@ -59,7 +59,6 @@ class SimpleForm extends React.Component<MyProps, any> {
      * error associated with that input.
      */
     let propObj: FormObject = {};
-    console.log('wut')
     let localObj = this.props.inputs as SFInput[][];
 
     localObj.forEach((input, index) => {
@@ -93,7 +92,6 @@ class SimpleForm extends React.Component<MyProps, any> {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    console.log("getDrivedStateFromProps(): ", nextProps);
   }
 
   /**
@@ -102,11 +100,7 @@ class SimpleForm extends React.Component<MyProps, any> {
    * @param event
    */
   handleChange(key, id, event): any {
-    console.log("SF: key: ", key);
-    console.log("SF: id: ", id);
-    console.log("SF: event: ", event);
     const keyObject = {...this.state.inputValues};
-    console.log("state:, ", keyObject);
 
     keyObject[id].content = event;
 
@@ -121,8 +115,6 @@ class SimpleForm extends React.Component<MyProps, any> {
    */
   handleVerificationError(setError: boolean, message: string, inputId: string) {
     const inputRef = {...this.state.inputValues};
-
-    console.log("The id of the wrong input: ", inputId);
 
     if (setError === true) {
       inputRef[inputId].SF_error = true;
@@ -140,7 +132,6 @@ class SimpleForm extends React.Component<MyProps, any> {
    * Checks if any two items that need verification match
    */
   checkForErrors(): void {
-    console.log("checkForErrors");
     const inputs = {...this.state.inputValues};
     let formError = false;
 
@@ -151,10 +142,7 @@ class SimpleForm extends React.Component<MyProps, any> {
 
         // Need to match any inputs that need verification
         if (this.state.inputsToVerify.includes(input + '-verify')) {
-          console.log("We have iputs to check")
           if (inputs[input].content !== inputs[input + '-verify'].content) {
-            console.log("We did find an error");
-            console.log(inputs[input+ '-verify'])
             formError = true;
             this.handleVerificationError(true, 'Does not match', input + '-verify');
           } else {
@@ -193,7 +181,6 @@ class SimpleForm extends React.Component<MyProps, any> {
   }
 
   handleSubmit(event) {
-    console.log("The event is being fired: ", event);
     (event as Event).preventDefault();
     this.checkForErrors();
   }
@@ -244,6 +231,10 @@ class SimpleForm extends React.Component<MyProps, any> {
       })
     });
 
+    if(!this.props.joined){
+      return inputsCreated;
+    }
+
     return inputsCreated.map((inputChunk, index) =>{
       return (
         <div className='joined-row' key={index + 1}>
@@ -254,7 +245,6 @@ class SimpleForm extends React.Component<MyProps, any> {
   }
 
   createSingleInput(input: any, index: number): JSX.Element {
-    console.log("creatingSingleInput(): ", input);
     // inputID
     const iID = input.id;
 
@@ -280,40 +270,7 @@ class SimpleForm extends React.Component<MyProps, any> {
   }
 
   createInputs(): Array<JSX.Element> {
-    let inputElements: JSX.Element[] = [];
-    let singleArray = this.state.inputValues as SF_Object[];
-
-    // need to check to see if we have grouped sections
-    if (this.props.joined) {
-      inputElements = this.createJointInputs(this.state.inputValues);
-    } else {
-      inputElements = singleArray.map((input, index) => {
-
-        // inputID
-        const iID = input.id;
-
-        if (input.type === 'file') {
-          return this.createFileInput(input, index, iID);
-        }
-
-        return (
-          <TextField
-            id={iID}
-            label={input.label}
-            placeholder={input.placeHolder}
-            required={input.required}
-            type={input.type}
-            error={input.SF_error}
-            autoComplete="off"
-            key={`${index}${iID}`}
-            onChange={(event) => this.handleChange(this.state, iID, event.target.value)}
-            margin="normal"
-          />
-        );
-      });
-    }
-
-    return inputElements;
+    return this.createJointInputs(this.state.inputValues);
   }
 
   render() {
