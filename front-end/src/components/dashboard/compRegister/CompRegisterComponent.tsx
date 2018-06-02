@@ -17,82 +17,103 @@ interface MyState {
   forms: JSX.Element[];
 }
 
+
 class CompRegisterComponent extends React.Component<CompRegisterProps, MyState> {
   private filesInput: HTMLInputElement;
-  private inputs: SFInput[] = [
-    {
-      label: 'Company Name',
-      required: true,
-      type: 'text',
-      placeHolder: 'Enter company name',
-      id: 'name',
-    },
-    {
-      label: 'Company logo:',
-      required: false,
-      type: 'file',
-      name: 'company-logo',
-      accept: 'image/gif, image/png, image/jpeg',
-      placeHolder: 'Upload company logo',
-      id: 'logo',
-    },
-    {
-      label: 'Company Website',
-      required: true,
-      type: 'text',
-      placeHolder: 'website',
-      id: 'website',
-    },
-    {
-      label: 'twitter',
-      required: false,
-      type: 'text',
-      placeHolder: 'twitter',
-      id: 'twitter',
-    },
-    {
-      label: 'facebook',
-      required: false,
-      type: 'text',
-      placeHolder: 'facebook',
-      id: 'facebook',
-    },
-    {
-      label: 'linkedin',
-      required: false,
-      type: 'text',
-      placeHolder: 'linkedin',
-      id: 'linkedIn',
-    },
-    {
-      label: 'street:',
-      required: true,
-      type: 'address',
-      placeHolder: 'address',
-      id: 'street',
-    },
-    {
-      label: 'city:',
-      required: true,
-      type: 'text',
-      placeHolder: 'city',
-      id: 'city',
-    },
-    {
-      label: 'state:',
-      required: true,
-      type: 'text',
-      placeHolder: 'state',
-      id: 'state',
-    },
-    {
-      label: 'zip',
-      required: true,
-      type: 'text',
-      placeHolder: 'zip',
-      id: 'zip',
-    },
+  private inputs: SFInput[][] = [
+    [
+      {
+        label: 'Company Name',
+        required: true,
+        type: 'text',
+        placeHolder: 'Enter company name',
+        errorText: "Your company doesn't have a name?",
+        id: 'name',
+      },
+      {
+        label: 'Company Website',
+        required: true,
+        type: 'text',
+        placeHolder: 'website',
+        errorText: "You need a link homie!",
+        id: 'website',
+      },
+      {
+        label: 'Company logo:',
+        required: false,
+        type: 'file',
+        name: 'company-logo',
+        accept: 'image/gif, image/png, image/jpeg',
+        errorText: "WHAT DID YOU DO?! Try again please!",
+        placeHolder: 'Logo',
+        id: 'logo',
+      },
+    ],
+    [
+      {
+        label: 'twitter',
+        required: false,
+        type: 'text',
+        placeHolder: 'twitter',
+        errorText: "WHAT DID YOU DO?! Try again please!",
+        id: 'twitter',
+      },
+      {
+        label: 'facebook',
+        required: false,
+        type: 'text',
+        placeHolder: 'facebook',
+        errorText: "WHAT DID YOU DO?! Try again please!",
+        id: 'facebook',
+      },
+      {
+        label: 'linkedin',
+        required: false,
+        type: 'text',
+        placeHolder: 'linkedin',
+        errorText: "WHAT DID YOU DO?! Try again please!",
+        id: 'linkedIn',
+      },
+    ],
+    [
+      {
+        label: 'street:',
+        required: true,
+        type: 'address',
+        placeHolder: 'address',
+        errorText: "WHAT DID YOU DO?! Try again please!",
+        id: 'street',
+      },
+      {
+        label: 'city:',
+        required: true,
+        type: 'text',
+        placeHolder: 'city',
+        errorText: "WHAT DID YOU DO?! Try again please!",
+        id: 'city',
+      },
+    ],
+    [
+      {
+        label: 'state:',
+        required: true,
+        type: 'text',
+        placeHolder: 'state',
+        errorText: "WHAT DID YOU DO?! Try again please!",
+        id: 'state',
+      },
+      {
+        label: 'zip',
+        required: true,
+        type: 'text',
+        placeHolder: 'zip',
+        errorText: "WHAT DID YOU DO?! Try again please!",
+        id: 'zip',
+      },
+    ]
+
   ];
+
 
   constructor(props) {
     super(props);
@@ -160,22 +181,24 @@ class CompRegisterComponent extends React.Component<CompRegisterProps, MyState> 
   }
 
   renderRegisterForm() {
+
+    const formStyles = {
+      width: '700px',
+      margin: 'auto',
+    };
+
     return (
       <div className="comp-register">
         <h1>We need to set up your company before we can start!</h1>
-        <div className="form-container">
-          <div id="location-group">
-            <SimpleForm
-              header={'Company Information'}
-              inputs={this.inputs}
-              joined={true}
-              style={{width: 'auto'}}
-              submitBtnText={'Enter Company'}
-              verifyInputs={null}
-              onSubmitCB={this.handleCompanySubmit}
-            />
-          </div>
-        </div>
+          <SimpleForm
+            header={'Company Information'}
+            inputs={this.inputs}
+            style={formStyles}
+            joined={false}
+            submitBtnText={'Enter Company'}
+            verifyInputs={null}
+            onSubmitCB={this.handleCompanySubmit}
+          />
       </div>
     );
   }

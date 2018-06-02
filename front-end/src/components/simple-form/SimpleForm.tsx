@@ -3,6 +3,7 @@ import * as React from 'react';
 import './SimpleForm.scss';
 import SimpleFormInput from './SimpleFormInput';
 import TextField from "@material-ui/core/es/TextField";
+import Button from '@material-ui/core/Button';
 import {map} from "tinymce";
 
 export interface SFInput {
@@ -89,6 +90,7 @@ class SimpleForm extends React.Component<MyProps, any> {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.createSingleInput = this.createSingleInput.bind(this);
+    this.handleFileInputChange = this.handleFileInputChange.bind(this);
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -102,10 +104,25 @@ class SimpleForm extends React.Component<MyProps, any> {
   handleChange(key, id, event): any {
     const keyObject = {...this.state.inputValues};
 
+    console.log("key ", key);
+    console.log("id ", id);
+    console.log("event", event);
+
+    if(keyObject[id].type === "logo"){
+      console.log("we clicked on a logo");
+
+    }
+
+
     keyObject[id].content = event;
 
     this.setState({inputValues: keyObject});
   }
+
+  handleFileInputChange = (e: React.FormEvent<HTMLInputElement>) => {
+    console.log("handle file change: ", e.currentTarget.value);
+    // this.props.changeCB(this.props.iID, e.currentTarget.value);
+  };
 
   /**
    * Will either add or remove the SF_error and error message
@@ -186,6 +203,31 @@ class SimpleForm extends React.Component<MyProps, any> {
   }
 
   createFileInput(input, index, iID): JSX.Element {
+
+    return (
+      <React.Fragment
+           key={`${index}${iID}`}>
+        <input
+          accept="image/*"
+          id={iID}
+          className="no-input"
+          multiple
+          ref={(ref: HTMLInputElement) => this.filesArray[ iID ] = ref}
+          type="file"
+          onChange={(event) => this.handleFileInputChange(event)}
+        />
+        <label htmlFor={iID}>
+          <Button
+            variant="raised"
+            component="span"
+          >
+            {input.placeHolder}
+          </Button>
+        </label>
+      </React.Fragment>
+
+  )
+/*
     return (
       <div
         className={this.state.inputValues[iID].SF_error === true ? 'job-form-group error' : 'job-form-group'}
@@ -205,6 +247,9 @@ class SimpleForm extends React.Component<MyProps, any> {
           <div className="input-error-box">{this.state.inputValues[iID].SF_errorMessage}</div> : null}
       </div>
     );
+*/
+
+
   }
 
   createJointInputs(inputGroups): JSX.Element[] | null{

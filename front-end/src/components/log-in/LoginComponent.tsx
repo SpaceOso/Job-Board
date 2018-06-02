@@ -97,6 +97,11 @@ class LogInComponent extends React.Component<MyProps, MyState> {
   }
 
   render() {
+
+    const formStyle = {
+      width: '24%',
+    };
+
     return (
       this.props.siteFetching.isFetching === true ?
 
@@ -113,6 +118,7 @@ class LogInComponent extends React.Component<MyProps, MyState> {
               inputs={this.inputs}
               submitBtnText="Log In"
               verifyInputs={null}
+              style={formStyle}
               // joined={true}
               onSubmitCB={this.handleSubmit}
             />

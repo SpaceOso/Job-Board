@@ -149,7 +149,7 @@ class EmployeeRegisterComponent extends React.Component<MyProps, MyState> {
             onSubmitCB={this.handleSubmit}
             verifyInputs={['email', 'password']}
             joined={true}
-            style={{width: '57rem'}}
+            style={{width: '32%'}}
           />
           <div>
             <p>

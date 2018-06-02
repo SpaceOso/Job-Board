@@ -1,10 +1,13 @@
 @import "/../../styles/_variables";
 
+.no-input{
+  display: none;
+}
+
 
 .simple-form {
   color: $carbon;
   width: 100%;
-  max-width: 500px;
   background-color: $panelBg;
   margin: auto;
   //font-size: 1.8rem;
