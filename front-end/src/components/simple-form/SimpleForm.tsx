@@ -15,40 +15,24 @@ export interface SFInput {
   id?: string;
 }
 
-export interface SF_Object extends SFInput{
+export interface SF_Object extends SFInput {
   content: string,
   SF_error: false,
   SF_errorMessage: '',
+  groupId: number,
 }
 
 interface FormObject {
   [key: string]: SF_Object;
 }
 
-interface FormObjectArr{
+interface FormObjectArr {
   [key: number]: Array<FormObject>;
 }
 
-/*
-* [
-* 0:[
-*   {
-*     "email":
-*   }
-* ]
-* {
-*   "Email": {
-*   }
-* },
-*   "email":{
-*
-*   }
-* ]
-* */
-
 interface MyProps {
   header: string;
-  inputs:  Array<SFInput> | Array<Array<SFInput>>;
+  inputs: Array<SFInput> | Array<Array<SFInput>>;
   submitBtnText: string;
   verifyInputs: string[] | null;
   onSubmitCB: (any) => void;
@@ -66,7 +50,6 @@ class SimpleForm extends React.Component<MyProps, any> {
 
   constructor(props) {
     super(props);
-    console.log("Contructor props: ", this.props);
     // let propObj: any = {};
     // let propObj:Array<SF_Object> | Array<Array<FormObject>> | null = null;
 
@@ -75,45 +58,42 @@ class SimpleForm extends React.Component<MyProps, any> {
      * error associated with that input.
      */
       // let localObj: Array<Array<FormObject>> = [];
-      let propObj: Array<Array<FormObject>> = [];
-      let localObj: any = [];
-      console.log("the inputs before we start:", JSON.stringify(this.props.inputs));
-      localObj = this.props.inputs;
+    // let propObj: Array<FormObject> = [];
+    let propObj: FormObject = {};
+    let localObj: any = [];
+    localObj = this.props.inputs;
 
-      localObj.forEach((input, index) => {
-        propObj[index] = [];
-        console.log("what is the actual input: ", input.length);
+    localObj.forEach((input, index) => {
+      input.forEach((singleInput, index2) => {
 
-        input.forEach((singleInput, index2) => {
-          console.log("and the single input is: ", singleInput, index);
-          console.log("current index ", index2);
-          console.log("current id: ", singleInput.id);
+        return propObj[singleInput.id] = {
+          ...singleInput,
+          content: '',
+          groupId: index,
+          SF_error: false,
+          SF_errorMessage: '',
+        }
 
-          // return propObj[index][singleInput.id] = {
-          //   ...singleInput,
-          //   content: '',
-          //   SF_error: false,
-          //   SF_errorMessage: '',
-          // };
-
-          return propObj[index].push({
+        /*return propObj.push({
+          [singleInput.id]: {
             ...singleInput,
             content: '',
+            groupId: index,
             SF_error: false,
             SF_errorMessage: '',
-          });
-
-        });
+          }
+        });*/
 
       });
+    });
 
-    console.log("What does groupedArray looked like?", JSON.stringify(propObj));
+    console.log("the built state object: ", propObj);
 
     this.state = {
       inputsToVerify: this.props.verifyInputs !== null ? this.props.verifyInputs.map(input => input + '-verify') : null,
       formSubmitted: false,
       formErrors: false,
-      inputValues: [...propObj],
+      inputValues: {...propObj},
     };
 
 
@@ -124,24 +104,25 @@ class SimpleForm extends React.Component<MyProps, any> {
     this.createSingleInput = this.createSingleInput.bind(this);
   }
 
-  static getDerivedStateFromProps(nextProps, prevState){
+  static getDerivedStateFromProps(nextProps, prevState) {
     console.log("getDrivedStateFromProps(): ", nextProps);
   }
+
   /**
    *
    * @param {string} key
    * @param event
    */
-  handleChange(key,id, event): any {
+  handleChange(key, id, event): any {
     console.log("SF: key: ", key);
     console.log("SF: id: ", id);
     console.log("SF: event: ", event);
-    const keyObject = { ...this.state.inputValues };
+    const keyObject = [...this.state.inputValues];
     console.log("state:, ", keyObject);
 
-    keyObject[ id ].content = event;
+    keyObject[id].content = event;
 
-    this.setState({ inputValues: keyObject });
+    this.setState({inputValues: keyObject});
   }
 
   /**
@@ -151,18 +132,18 @@ class SimpleForm extends React.Component<MyProps, any> {
    * @param {string} inputId - The indexed id of the input we want to alter
    */
   handleVerificationError(setError: boolean, message: string, inputId: string) {
-    const inputRef = { ...this.state.inputValues };
+    const inputRef = {...this.state.inputValues};
     console.log("what are the inpurRefs?: ", inputRef);
     if (setError === true) {
       inputRef[inputId].error = true;
       // inputRef[ inputId + '-verify' ].SF_error = true;
       // inputRef[ inputId + '-verify' ].SF_errorMessage = message;
     } else if (setError === false) {
-      inputRef[ inputId + '-verify' ].SF_error = false;
-      inputRef[ inputId + '-verify' ].SF_errorMessage = message;
+      inputRef[inputId + '-verify'].SF_error = false;
+      inputRef[inputId + '-verify'].SF_errorMessage = message;
     }
 
-    this.setState({ inputValues: { ...inputRef } });
+    this.setState({inputValues: {...inputRef}});
   }
 
   /**
@@ -171,7 +152,7 @@ class SimpleForm extends React.Component<MyProps, any> {
    */
   checkForErrors(): void {
     console.log("checkForErrors");
-    const inputs = { ...this.state.inputValues };
+    const inputs = {...this.state.inputValues};
     let formError = false;
 
     if (this.state.inputsToVerify !== null) {
@@ -182,7 +163,7 @@ class SimpleForm extends React.Component<MyProps, any> {
         // Need to match any inputs that need verification
         if (this.state.inputsToVerify.includes(input + '-verify')) {
           console.log("We have iputs to check")
-          if (inputs[ input ].content !== inputs[ input + '-verify' ].content) {
+          if (inputs[input].content !== inputs[input + '-verify'].content) {
             console.log("We did find an error");
             formError = true;
             this.handleVerificationError(true, 'Does not match', input);
@@ -208,14 +189,14 @@ class SimpleForm extends React.Component<MyProps, any> {
 
     for (const input in this.state.inputValues) {
       if (this.state.inputValues.hasOwnProperty(input)) {
-        formObject[ input ] = this.state.inputValues[ input ].content;
+        formObject[input] = this.state.inputValues[input].content;
       }
     }
 
     // TODO check to see if there is files that were uploaded
     if (Object.keys(this.filesArray).length > 0) {
       Object.keys(this.filesArray).map((file) => {
-        formObject[ file ] = this.filesArray[ file ].files[ 0 ];
+        formObject[file] = this.filesArray[file].files[0];
       });
     }
     this.props.onSubmitCB(formObject);
@@ -230,7 +211,7 @@ class SimpleForm extends React.Component<MyProps, any> {
   createFileInput(input, index, iID): JSX.Element {
     return (
       <div
-        className={this.state.inputValues[ iID ].SF_error === true ? 'job-form-group error' : 'job-form-group'}
+        className={this.state.inputValues[iID].SF_error === true ? 'job-form-group error' : 'job-form-group'}
         key={`${index}${iID}`}
       >
         <TextField
@@ -243,32 +224,56 @@ class SimpleForm extends React.Component<MyProps, any> {
           onChange={(event) => this.handleChange(this.state, iID, event)}
           margin="normal"
         />
-        {this.state.inputValues[ iID ].SF_error === true ? <div className="input-error-box">{this.state.inputValues[ iID ].SF_errorMessage}</div> : null}
+        {this.state.inputValues[iID].SF_error === true ?
+          <div className="input-error-box">{this.state.inputValues[iID].SF_errorMessage}</div> : null}
       </div>
     );
   }
 
-  createJointInputs(inputsfe, index:number): JSX.Element {
-    console.log("createJointInputs() wtf: ", inputsfe);
+  createJointInputs(inputsfe): JSX.Element[] | null{
+    console.log("createJointInputs() : ", inputsfe);
+    let inputElements: JSX.Element[][] = [];
+    let testArr: any = [];
 
-    inputsfe.forEach(input => console.log("stupid"));
+    Object.keys(inputsfe).forEach((input) => {
+      console.log("current input: ", input);
+      if(testArr[inputsfe[input].groupId] === undefined){
+        testArr[inputsfe[input].groupId] = [];
+        testArr[inputsfe[input].groupId].push(inputsfe[input]);
+      } else {
+        testArr[inputsfe[input].groupId].push(inputsfe[input]);
+      }
+    });
 
-    const inputsCreated: any = inputsfe.map((input, index) => {
-      console.log("inside creating joints with: ", input);
+    console.log("inputElements created: ", testArr);
+
+    // returning this itself will gives a list
+    const inputsCreated: any = testArr.map((chunkedInputs, index) => {
+      console.log("inside creating joints with: ", chunkedInputs);
       console.log("inside creating joints with: ", index);
-      return this.createSingleInput(input, index)
+      return chunkedInputs.map((singleInput, index) => {
+        return this.createSingleInput(singleInput, index)
+      })
     });
 
     console.log("tester you", inputsCreated);
 
-    return (
+    return inputsCreated.map((inputChunk, index) =>{
+      return (
+        <div className='joined-row' key={index + 1}>
+        {inputChunk}
+      </div>
+      )
+    });
+
+   /* return (
       <div className='joined-row' key={index + 1}>
         {inputsCreated}
-      </div>
-    )
+      </div>*/
+    // )
   }
 
-  createSingleInput(input: any, index: number) : JSX.Element{
+  createSingleInput(input: any, index: number): JSX.Element {
     console.log("creatingSingleInput(): ", input);
     // inputID
     const iID = input.id;
@@ -286,7 +291,7 @@ class SimpleForm extends React.Component<MyProps, any> {
         type={input.type}
         autoComplete="off"
         key={`${index}${iID}`}
-        onChange={(event) => this.handleChange(this.state,iID, event.target.value)}
+        onChange={(event) => this.handleChange(this.state, iID, event.target.value)}
         margin="normal"
       />
     );
@@ -297,13 +302,8 @@ class SimpleForm extends React.Component<MyProps, any> {
     let singleArray = this.state.inputValues as SF_Object[];
 
     // need to check to see if we have grouped sections
-    if(this.props.joined){
-      console.log("what about here...?", this.state.inputValues[0].length);
-      let groupedArray = this.state.inputValues as SF_Object[][];
-      inputElements = this.state.inputValues.map((inputGroup, index) => {
-        console.log("inputGroup: ", inputGroup);
-        return this.createJointInputs(inputGroup, index + 1)
-      })
+    if (this.props.joined) {
+      inputElements = this.createJointInputs(this.state.inputValues);
     } else {
       inputElements = singleArray.map((input, index) => {
 
@@ -324,7 +324,7 @@ class SimpleForm extends React.Component<MyProps, any> {
             error={input.SF_error}
             autoComplete="off"
             key={`${index}${iID}`}
-            onChange={(event) => this.handleChange(this.state,iID, event.target.value)}
+            onChange={(event) => this.handleChange(this.state, iID, event.target.value)}
             margin="normal"
           />
         );
@@ -341,8 +341,10 @@ class SimpleForm extends React.Component<MyProps, any> {
           <h1>{this.props.header}</h1>
           <div className={"input-container"}>
             {this.createInputs()}
-            </div>
-          {this.props.cancelButton ? < input type={'button'} className="btn-standard" onClick={this.props.cancelButton.click} value={this.props.cancelButton.btnText} /> : null}
+          </div>
+          {this.props.cancelButton ?
+            < input type={'button'} className="btn-standard" onClick={this.props.cancelButton.click}
+                    value={this.props.cancelButton.btnText}/> : null}
           <button className="btn-standard">Submit</button>
         </form>
         {/*<div className="form-error-box">Erorr: Please see errors above.</div>*/}
