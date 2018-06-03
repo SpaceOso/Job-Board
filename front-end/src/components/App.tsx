@@ -17,7 +17,7 @@ interface Props {
   logInOnLoad;
   logOutEmployee: () => {};
   employee: AuthEmployee;
-  company: Company;
+  // company: Company;
   siteFetching: SiteFetching;
   siteErrors: SiteErrors;
 }

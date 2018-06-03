@@ -1,12 +1,14 @@
 import * as React from 'react';
-import { CompanyJobView } from '../../../../types';
+import {Company, CompanyJobView, Job, PrivateJobView} from '../../../../types';
+import SpinnerComponent from '../../../spinners/spinnerComponent';
 import DataTable from '../../../data-table/DataTable';
 
 // styles
 import './JobPostUpdatesComponent.scss';
 
 interface IProps {
-  jobs: CompanyJobView[];
+  jobs: Job[];
+  company: Company;
 }
 
 class JobPostUpdatesComponent extends React.Component<IProps, {}> {
@@ -14,6 +16,7 @@ class JobPostUpdatesComponent extends React.Component<IProps, {}> {
   constructor(props) {
     super(props);
 
+    console.log("the props that we get for the jobpost update: ", this.props);
     this.createList = this.createList.bind(this);
     this.handleJobClick = this.handleJobClick.bind(this);
   }
@@ -28,6 +31,14 @@ class JobPostUpdatesComponent extends React.Component<IProps, {}> {
       return this.createEmptyMessageComponent();
     }
     console.log("the jobs we're using to make a list: ", this.props.jobs);
+
+    let jobObjects: PrivateJobView[] = [...this.props.jobs];
+
+    jobObjects.forEach(job =>{
+      console.log(job);
+      job.applicants = this.props.company.applicantList[job.id];
+    });
+
     const dataInfo = [
       {
         property: 'title',
@@ -40,14 +51,21 @@ class JobPostUpdatesComponent extends React.Component<IProps, {}> {
         connector: ', ',
         header: 'Location',
       },
-      // {
-      //   property: 'Applicants',
-      //   special: 'count',
-      //   header: 'Applicants',
-      // },
+      {
+        property: 'applicants',
+        special: 'count',
+        header: 'Applicants',
+      },
     ];
     return (
-      <DataTable rowData={this.props.jobs} columnInfo={dataInfo} handleClick={this.handleJobClick} totalRows={5} specialClasses={null} itemId={'2343'}/>
+      <DataTable
+        rowData={jobObjects}
+        columnInfo={dataInfo}
+        handleClick={this.handleJobClick}
+        totalRows={5}
+        specialClasses={null}
+        itemId={'2343'}
+      />
     );
   }
 
@@ -60,9 +78,15 @@ class JobPostUpdatesComponent extends React.Component<IProps, {}> {
   }
 
   render() {
+
+    if(this.props.company.isFetching){
+      console.log("company is fetching..")
+      return <SpinnerComponent />
+    }
+
     return (
       <div className={'jobPost-post-updates-container'}>
-        <h1>Job Post Updates</h1>
+        <h2>Job Post Updates</h2>
         <div className={'jobPost-post-updates'}>
           {this.createList()}
         </div>

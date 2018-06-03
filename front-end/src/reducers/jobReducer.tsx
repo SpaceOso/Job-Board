@@ -10,9 +10,7 @@ function jobReducer(state: StoreState, action) {
             const newJobs = {};
             const jobDateRegex: RegExp = /.+?(?=T)/g;
 
-            console.log("now in reducer with: ", action.payload.data);
             action.payload.data.map((job) => {
-                console.log("Current jobPost:", job.job);
                 //TODO need to create a jobPost model based on the backend jobwrapper
                 let currentJob: JobPost = {
                     isFetching: false,

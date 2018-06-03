@@ -31,10 +31,10 @@ class EmployeeDashboardComponent extends React.Component<Props, any> {
   }
 
   componentWillMount() {
-    if (this.props.company.id !== null) {
-      console.log("EmployerDashboard:", this.props.company);
+    // if (this.props.company.id !== null) {
+      console.log("EmployerDashboard: 2", this.props.company);
       this.props.fetchCompanyJobs(this.props.company.id);
-    }
+    // }
   }
 
   /**
@@ -78,10 +78,8 @@ class EmployeeDashboardComponent extends React.Component<Props, any> {
 
   render() {
 
-    if (this.state.isFetching === true) {
-      if (this.props.company.isFetching !== true) {
-        this.setState({ fetching: false });
-      }
+    if (this.props.company.isFetching === true) {
+      console.log("state is Fetching");
       return <SpinnerComponent/>;
     }
 

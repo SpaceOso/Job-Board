@@ -3,6 +3,7 @@ import { ADD_LOGIN_ERROR, CLEAR_ALL_ERRORS, REMOVE_LOGIN_ERROR, ROOT_URL, SITE_I
 
 import {Company, Employee, EmployeeWrapper} from '../types';
 import { removeAuth, setAuth } from '../utils/utils';
+import {fetchAllCompanyJobModels} from "./companyDashboardActions";
 
 export const REGISTER_EMPLOYEE = 'REGISTER_EMPLOYEE';
 export const FETCHING_EMPLOYEE = 'FETCHING_EMPLOYEE';
@@ -199,7 +200,7 @@ export function logInOnLoad(token) {
         console.log("login/logcheck", response);
 
         if (response.data.employee.companyIdentifier !== null) {
-            console.log("was not null calling setCompanyAndEmployee");
+          console.log("logInOnLoad: ", response.data.company);
           dispatch(setCompanyAndEmployee(response.data.company, response.data.employee));
         } else {
             console.log("was null so we're calling logInEmployeeSuccess with : ", response.data.employee);
@@ -276,10 +277,13 @@ export function logInEmployee(employee) {
 export function setCompanyAndEmployee(company, employee) {
   console.log("setCompanyAndEmployee", company, employee);
   return (dispatch) => {
+    dispatch(setSiteIdle());
+    // dispatch()
+    console.log("going to call with: ", company.id);
+    dispatch(fetchAllCompanyJobModels(company.id));
     dispatch(removeLogInError());
     dispatch(setCompany(company));
     dispatch(setCompanyIdAfterRegistration({companyIdentifier: company.id}));
     dispatch(logInEmployeeSuccess(employee));
-    dispatch(setSiteIdle());
   };
 }

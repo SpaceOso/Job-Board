@@ -39,7 +39,7 @@ export interface SiteError {
 }
 
 export interface PrivateJobView extends Job {
-  applicants: string[];
+  applicants?: any[];
 }
 
 export interface SiteErrors {

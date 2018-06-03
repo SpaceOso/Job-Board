@@ -74,6 +74,7 @@ function companyReducer(state = defaultState, action): any {
         ...defaultState,
       };
     case SET_COMPANY:
+      console.log('SET_COMPANY');
       return {
         ...state,
         ...action.payload,

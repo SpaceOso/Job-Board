@@ -66,7 +66,7 @@ class DashboardMainLayout extends React.Component<Props, any> {
   editJobsLayout = (props) => {
     return (
       <EditJobsLayout
-          company={this.props.company}
+        company={this.props.company}
         jobs={this.props.company.jobs}
         {...props}
       />
@@ -93,10 +93,11 @@ class DashboardMainLayout extends React.Component<Props, any> {
     );
   };
 
-    employeeDashboardHome = () => {
+    employeeDashboardHome = (props) => {
     return (
       <EmployeeDashboardHome
-          employee={this.props.employee}
+        {...props}
+        employee={this.props.employee}
         company={this.props.company}
       />
     );

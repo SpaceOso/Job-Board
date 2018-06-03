@@ -25,10 +25,8 @@ body {
 
 body {
   text-align: center;
-  //background-color: #EFEFEF;
   box-sizing: border-box;
-  font-family: 'Open Sans', sans-serif;
-  //font-size: 1.6rem;
+  font-family: 'Ubuntu', sans-serif;
 }
 
 a {
@@ -45,46 +43,15 @@ a {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  //justify-content: space-between;
 }
 
 .content {
-  /* 0 flex-grow, 0 flex-shrink, auto flex-basis */
   flex: 1 0 auto;
 }
 
 /*=======================================*/
 /*STANDARD SIZES*/
 /*=======================================*/
-//h1 {
-//  font-size: 2.6rem;
-//}
-//
-//h3 {
-//  font-size: 2.0rem;
-//}
-
-/*input {
-  background-color: $inputBg;
-  -webkit-appearance: none;
-  outline: none;
-  border-style: none;
-  -webkit-border-radius: .2rem;
-  -moz-border-radius: .2rem;
-  border-radius: 5px;
-  border: 1px solid $inputTextBorder;
-  padding: .5rem;
-  color: $inputText;
-  min-height: 45px;
-}*/
-
-/*input[type='text']::placeholder,
-input[type='email']::placeholder,
-input[type='password']::placeholder {
-  color: $carbon;
-  font-size: 1.3rem;
-}*/
-
 select {
   background-color: $inputBg;
   height: 45px;

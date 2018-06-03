@@ -20,7 +20,6 @@ const jobListItemComponent: React.SFC<Props> = (props) => {
   const timeFormat = timeFrame.tz("America/New_York").format('ha z');
   const timeOfJob = moment(timeFrame, "YYYMMDD").fromNow();
 
-  console.log("JOBPOST", jobPost);
   return (
     // LOGO
     <div className="job-list-item panel-shadow">

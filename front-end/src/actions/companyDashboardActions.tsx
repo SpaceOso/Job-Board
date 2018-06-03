@@ -49,6 +49,7 @@ export function editingJobPost() {
 }
 
 export function fetchAllCompanyJobModels(companyId) {
+  console.log("fetchAllCompanyJobModels: ", companyId);
   return (dispatch) => {
     dispatch(siteFetch());
     dispatch(companyFetching());
