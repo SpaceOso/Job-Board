@@ -16,7 +16,7 @@ interface MyProps extends RouteComponentProps<any> {
 
 interface MyState {
   jobs: CompanyJobView[] | null;
-  currentJob: CompanyJobView | null;
+  currentJob: string | CompanyJobView;
   jobList: null;
   applicant: any;
   applicantList: any;
@@ -38,6 +38,7 @@ class ApplicantListComponent extends React.Component<MyProps, MyState> {
     this.onClick = this.onClick.bind(this);
     this.handleJobSelectionChange = this.handleJobSelectionChange.bind(this);
     this.displayJobDropDown = this.displayJobDropDown.bind(this);
+    this.returnNoApplicantComponent = this.returnNoApplicantComponent.bind(this);
   }
 
   componentDidMount() {
@@ -47,15 +48,18 @@ class ApplicantListComponent extends React.Component<MyProps, MyState> {
       const currentJob = this.props.jobs[0];
       console.log("state applicant list will be: ", this.props.company.applicantList[currentJob.id]);
       this.setState({
-        currentJob: {...currentJob},
+        currentJob: '-',
+        // currentJob: {...currentJob},
         applicantList: this.props.company.applicantList[currentJob.id],
       });
     }
   }
 
   createList() {
-    if (this.state.currentJob !== null) {
-      console.log('new list created with jobPost:', this.state.currentJob.title);
+    const currentJob = this.state.currentJob as CompanyJobView;
+
+    if (currentJob !== null) {
+      console.log('new list created with jobPost:', currentJob.title );
     }
     const specialClasses = {
       Interested: 'interested',
@@ -89,34 +93,36 @@ class ApplicantListComponent extends React.Component<MyProps, MyState> {
       },
     ];
 
-    if (this.state.currentJob === null) {
-      return (
-        <div>
-          Sorry you don't have any jobs to display applicants for.
-        </div>
-      );
+    if (this.state.currentJob === null || this.state.applicantList.length <= 0) {
+      return this.returnNoApplicantComponent("No one has applied to this job yet! Maybe you should promote* it?");
     }
 
-    if (this.state.applicantList.length <= 0) {
-      return (
-        <div>
-          Sorry your current job doesn't have any applicants
-        </div>
-      );
+    if(this.state.currentJob === '-'){
+      return this.returnNoApplicantComponent("Please select a job from the dropdown above");
     }
+
     return (
       <div>
-        <h1>Candidates for {this.state.currentJob.title} - {this.state.currentJob.address.city}</h1>
+        <h1>Candidates for {currentJob.title} - {currentJob.address.city}</h1>
         <DataTable
           rowData={this.state.applicantList}
           specialClasses={specialClasses}
           columnInfo={dataInfo}
           handleClick={this.onClick}
           totalRows={5}
-          itemId={this.state.currentJob.id}
+          itemId={currentJob.id}
         />
       </div>
     );
+  }
+
+
+  returnNoApplicantComponent = (message) =>{
+    return(
+      <div className='no-applicants'>
+        <h2>{message}</h2>
+      </div>
+    )
   }
 
   onClick(selectedApplicant) {
@@ -141,10 +147,12 @@ class ApplicantListComponent extends React.Component<MyProps, MyState> {
   displayJobDropDown() {
     if (this.props.jobs !== null) {
       return (
-        <div>
-          Currently viewing applicants for job:
+        <div className='applicant-drop-down-container'>
+          <h2>Currently viewing applicants for job:</h2>
           <DropDownComponent
             list={this.props.jobs}
+            defaultValue={this.props.jobs[0]}
+            helperText={'Job Details:'}
             listName={'jobPost-select'}
             onChangeCB={this.handleJobSelectionChange}
           />
@@ -154,6 +162,7 @@ class ApplicantListComponent extends React.Component<MyProps, MyState> {
   }
 
   render() {
+
     return (
       <div className="dashboard-applicant-section">
         {this.props.jobs !== null ? this.displayJobDropDown() : null}

@@ -8,7 +8,23 @@
   .data-row td:first-child {
     position: relative;
   }
-;
+
+  .no-applicants{
+    @include panel();
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    margin-top: 10px;
+  }
+
+  .applicant-drop-down-container{
+    @include panel();
+    padding: 10px;
+    h2{
+      margin: 0;
+    }
+  }
 
   .data-row td:first-child::before {
     content: '';
