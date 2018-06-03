@@ -1,6 +1,13 @@
 import axios from 'axios';
 import { setAuth } from '../utils/utils';
-import {setCompanyAndEmployee, setSiteIdle, siteFetch} from './authActions';
+import {
+  logInEmployeeSuccess,
+  removeLogInError,
+  setCompanyAndEmployee,
+  setCompanyIdAfterRegistration,
+  setSiteIdle,
+  siteFetch
+} from './authActions';
 import {COMPANY_FETCHING, COMPANY_IDLE, EDITING_JOB_POST_SUCCESS, ROOT_URL} from './index';
 import * as moment from "moment";
 import _date = moment.unitOfTime._date;
@@ -51,13 +58,14 @@ export function editingJobPost() {
 export function fetchAllCompanyJobModels(companyId) {
   console.log("fetchAllCompanyJobModels: ", companyId);
   return (dispatch) => {
-    dispatch(siteFetch());
-    dispatch(companyFetching());
 
     axios.get(`${ROOT_URL}secured/company/${companyId}/get-jobs-and-applicants`)
       .then((data) => {
         console.log("the response that we get from get-jobs:", data);
         dispatch(getThisCompanyJobsSuccess(data));
+        dispatch(removeLogInError());
+
+        dispatch(setSiteIdle());
         dispatch(companyIdle());
       })
       .catch(error =>{

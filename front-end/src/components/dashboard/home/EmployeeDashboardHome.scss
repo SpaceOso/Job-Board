@@ -4,6 +4,8 @@
 .dashboard-home{
   width: 70%;
   float: left;
+  @include panel();
+  padding: 20px;
   .home-logo{
     max-width: 56px;
     float: right;

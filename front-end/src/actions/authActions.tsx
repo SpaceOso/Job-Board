@@ -3,7 +3,8 @@ import { ADD_LOGIN_ERROR, CLEAR_ALL_ERRORS, REMOVE_LOGIN_ERROR, ROOT_URL, SITE_I
 
 import {Company, Employee, EmployeeWrapper} from '../types';
 import { removeAuth, setAuth } from '../utils/utils';
-import {fetchAllCompanyJobModels} from "./companyDashboardActions";
+import {companyFetching, companyIdle, fetchAllCompanyJobModels} from "./companyDashboardActions";
+import {company} from "aws-sdk/clients/importexport";
 
 export const REGISTER_EMPLOYEE = 'REGISTER_EMPLOYEE';
 export const FETCHING_EMPLOYEE = 'FETCHING_EMPLOYEE';
@@ -39,6 +40,7 @@ export function registerEmployeeError(error) {
 }
 
 export function setSiteIdle() {
+  console.log('setSiteIdle()');
   return {
     type: SITE_IDLE,
     payload: { isFetching: false },
@@ -166,7 +168,7 @@ export function clearAllErrors() {
   };
 }
 
-// updated the employee model with company id after one is registered
+// updated the employee model with company id after one is registered9
 export function setCompanyIdAfterRegistration(data){
   return{
     type: SET_COMPANY_ID_AFTER_REGISTRATION,
@@ -203,7 +205,7 @@ export function logInOnLoad(token) {
           console.log("logInOnLoad: ", response.data.company);
           dispatch(setCompanyAndEmployee(response.data.company, response.data.employee));
         } else {
-            console.log("was null so we're calling logInEmployeeSuccess with : ", response.data.employee);
+          console.log("was null so we're calling logInEmployeeSuccess with : ", response.data.employee);
           dispatch(logInEmployeeSuccess(response.data.employee));
           dispatch(setSiteIdle());
         }
@@ -257,7 +259,9 @@ export function logInEmployee(employee) {
         setAuth(token);
 
         if (response.data.employee.companyIdentifier !== null) {
-          dispatch(setCompanyAndEmployee(response.data.company, response.data.employee));
+          // return dispatch(setCompanyAndEmployee(response.data.company, response.data.employee))
+          return dispatch(setCompanyAndEmployee(response.data.company, response.data.employee))
+            .then()
         } else {
           console.log("it did equal null now where here");
           dispatch(logInEmployeeSuccess(response.data.employee));
@@ -266,7 +270,7 @@ export function logInEmployee(employee) {
 
       })
       .catch((error) => {
-        console.log("we are not finding the employee:", error.response.data);
+        console.log("we are not finding the employee:", error.response);
         dispatch(setSiteIdle());
         dispatch(logInEmployeeError(error.response.data.message));
 
@@ -277,13 +281,16 @@ export function logInEmployee(employee) {
 export function setCompanyAndEmployee(company, employee) {
   console.log("setCompanyAndEmployee", company, employee);
   return (dispatch) => {
-    dispatch(setSiteIdle());
+    // dispatch(setSiteIdle());
     // dispatch()
     console.log("going to call with: ", company.id);
-    dispatch(fetchAllCompanyJobModels(company.id));
-    dispatch(removeLogInError());
+    dispatch(siteFetch());
+    dispatch(companyFetching());
     dispatch(setCompany(company));
     dispatch(setCompanyIdAfterRegistration({companyIdentifier: company.id}));
-    dispatch(logInEmployeeSuccess(employee));
+    dispatch(logInEmployeeSuccess(employee))
+    dispatch(fetchAllCompanyJobModels(company.id));
+
+    // dispatch(setSiteIdle());
   };
 }

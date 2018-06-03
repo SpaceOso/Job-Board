@@ -39,7 +39,6 @@ function employeeReducer(state = defaultState, action): any {
         ...state,
         ...action.payload,
         // isAuth: true,
-        isFetching: false,
       };
     case LOGIN_EMPLOYEE_SUCCESS:
         console.log("updating login employee sucess with:", action.payload);
@@ -47,7 +46,6 @@ function employeeReducer(state = defaultState, action): any {
         ...state,
         ...action.payload,
         isAuth: true,
-        isFetching: false,
       };
     case LOG_OUT_EMPLOYEE:
 

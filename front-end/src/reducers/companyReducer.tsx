@@ -75,10 +75,10 @@ function companyReducer(state = defaultState, action): any {
       };
     case SET_COMPANY:
       console.log('SET_COMPANY');
+      console.log(action.payload);
       return {
         ...state,
-        ...action.payload,
-        isFetching: false
+        ...action.payload
       };
     default:
       return state;

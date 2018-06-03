@@ -33,7 +33,7 @@ class EmployeeDashboardComponent extends React.Component<Props, any> {
   componentWillMount() {
     // if (this.props.company.id !== null) {
       console.log("EmployerDashboard: 2", this.props.company);
-      this.props.fetchCompanyJobs(this.props.company.id);
+      // this.props.fetchCompanyJobs(this.props.company.id);
     // }
   }
 

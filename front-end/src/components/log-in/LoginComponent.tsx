@@ -20,8 +20,8 @@ interface MyProps {
 }
 
 interface MyState {
-    employeeEmail: string;
-    employeePassword: string;
+  employeeEmail: string;
+  employeePassword: string;
   redirect: string;
   isFetching: boolean;
   errors: object;
@@ -53,8 +53,8 @@ class LogInComponent extends React.Component<MyProps, MyState> {
     super(props);
 
     this.state = {
-        employeeEmail: '',
-        employeePassword: '',
+      employeeEmail: '',
+      employeePassword: '',
       redirect: '',
       isFetching: false,
       errors: {},
@@ -75,7 +75,7 @@ class LogInComponent extends React.Component<MyProps, MyState> {
 
   handleSubmit(employeeObject) {
 
-      console.log("LoginComponent callback: ", employeeObject);
+    console.log("LoginComponent callback: ", employeeObject);
 
     const employee = {
       email: employeeObject.email,
@@ -113,6 +113,7 @@ class LogInComponent extends React.Component<MyProps, MyState> {
             <div>
               {this.props.siteFetching.isFetching ? <SpinnerComponent/> : null}
             </div>
+            <p>Demo: email = tester@gmail.com, password: 123</p>
             <SimpleForm
               header="Sign In"
               inputs={this.inputs}

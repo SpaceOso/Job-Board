@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Button from '@material-ui/core/Button';
 
 // components
 import {JobPost} from '../../types';
@@ -34,7 +35,7 @@ class JobPostInfoComponent extends React.Component<JobPostInfoProps> {
                         className="job-description"
                         dangerouslySetInnerHTML={{__html: this.props.jobPost.job.description}}
                     />
-                    <button className="btn-standard" onClick={this.props.handleApplicationClick}>Apply Now</button>
+                    <Button variant="raised" color="primary" className="btn-standard" onClick={this.props.handleApplicationClick}>Apply Now</Button>
                 </div>
             </div>
         );

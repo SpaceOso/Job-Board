@@ -18,6 +18,12 @@
     margin-top: 10px;
   }
 
+  .candidate-list-section{
+    @include panel();
+    padding: 20px;
+    margin-top: 10px;
+  }
+
   .applicant-drop-down-container{
     @include panel();
     padding: 10px;

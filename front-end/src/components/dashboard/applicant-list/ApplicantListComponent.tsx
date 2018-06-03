@@ -102,7 +102,7 @@ class ApplicantListComponent extends React.Component<MyProps, MyState> {
     }
 
     return (
-      <div>
+      <section className='candidate-list-section'>
         <h1>Candidates for {currentJob.title} - {currentJob.address.city}</h1>
         <DataTable
           rowData={this.state.applicantList}
@@ -112,7 +112,7 @@ class ApplicantListComponent extends React.Component<MyProps, MyState> {
           totalRows={5}
           itemId={currentJob.id}
         />
-      </div>
+      </section>
     );
   }
 

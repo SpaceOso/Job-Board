@@ -91,6 +91,8 @@ class SimpleForm extends React.Component<MyProps, any> {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.createSingleInput = this.createSingleInput.bind(this);
     this.handleFileInputChange = this.handleFileInputChange.bind(this);
+    this.createCancelButton = this.createCancelButton.bind(this);
+    this.handleCancelEvent = this.handleCancelEvent.bind(this);
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -104,13 +106,12 @@ class SimpleForm extends React.Component<MyProps, any> {
   handleChange(key, id, event): any {
     const keyObject = {...this.state.inputValues};
 
-    console.log("key ", key);
-    console.log("id ", id);
-    console.log("event", event);
-
-    if (keyObject[id].type === "logo") {
-      console.log("we clicked on a logo");
-
+    if(id === 'resumeFile'){
+      if (this.filesArray[id].files.length > 0 ) {
+        keyObject[id].SF_error = false;
+      } else {
+        keyObject[id].SF_error = true;
+      }
     }
 
     keyObject[id].content = event;
@@ -119,9 +120,7 @@ class SimpleForm extends React.Component<MyProps, any> {
   }
 
   handleFileInputChange = (e: React.FormEvent<HTMLInputElement>, id) => {
-    console.log("handle file change: ", e.currentTarget.value);
     // this.props.changeCB(this.props.iID, e.currentTarget.value);
-
   };
 
   /**
@@ -156,12 +155,19 @@ class SimpleForm extends React.Component<MyProps, any> {
     Object.keys(inputs).map((input) => {
       // Need to match any inputs that need verification
       if (inputs[input].required) {
-        console.log("this was required ", input);
-        console.log(inputs[input]);
         if(inputs[input].content.length <= 0){
-          console.log("we failed on : ", input);
+
           this.handleVerificationError(true, 'Does not match', input);
           formError = true;
+        } else if(input === 'resumeFile') {
+          if (this.filesArray[input].files.length > 0) {
+            inputs[input].SF_error = false;
+            formError = false;
+            this.handleVerificationError(false, '', input);
+          } else {
+            this.handleVerificationError(true, 'Does not match', input);
+            formError = true;
+          }
         } else {
           formError = false;
           this.handleVerificationError(false, '', input);
@@ -227,7 +233,6 @@ class SimpleForm extends React.Component<MyProps, any> {
     if(this.filesArray[iID] !== undefined && this.filesArray[iID].files[0] !== undefined){
       fileName = this.filesArray[iID].files[0].name;
     }
-    console.log("file input: ", this.filesArray);
 
     return (
       <div className="file-input-container"
@@ -244,6 +249,7 @@ class SimpleForm extends React.Component<MyProps, any> {
         />
         <label htmlFor={iID}>
           <Button
+            size='small'
             variant="raised"
             component="span"
             color={input.SF_error ? 'secondary' : 'primary'}
@@ -324,6 +330,23 @@ class SimpleForm extends React.Component<MyProps, any> {
     return this.createJointInputs(this.state.inputValues);
   }
 
+  handleCancelEvent(e){
+    this.props.cancelButton.click(e);
+  }
+
+  createCancelButton(){
+    return(
+      <Button
+        variant='raised'
+        style={{margin: '10px'}}
+        color='secondary'
+        onClick={this.handleCancelEvent}
+      >
+        {this.props.cancelButton.btnText}
+      </Button>
+      )
+  }
+
   render() {
     return (
       <div className="simple-form" style={this.props.style}>
@@ -333,9 +356,8 @@ class SimpleForm extends React.Component<MyProps, any> {
             {this.createInputs()}
           </div>
           {this.props.cancelButton ?
-            < input type={'button'} className="btn-standard" onClick={this.props.cancelButton.click}
-                    value={this.props.cancelButton.btnText}/> : null}
-          <button className="btn-standard">Submit</button>
+            this.createCancelButton(): null}
+          <Button type='submit' variant='raised' style={{margin: '10px'}} color='primary' className="btn-standard">Submit</Button>
         </form>
         {/*<div className="form-error-box">Erorr: Please see errors above.</div>*/}
       </div>

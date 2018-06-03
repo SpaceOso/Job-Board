@@ -10,7 +10,7 @@ import './styles/LoginComponent.scss';
 
 function mapStateToProps({ employee, siteFetching, siteErrors }: StoreState) {
   return {
-      employee,
+    employee,
     siteFetching,
     siteErrors,
 
