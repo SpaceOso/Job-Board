@@ -123,7 +123,7 @@ class ApplicantListComponent extends React.Component<MyProps, MyState> {
         <h2>{message}</h2>
       </div>
     )
-  }
+  };
 
   onClick(selectedApplicant) {
     console.log('selectedApplicant', selectedApplicant);

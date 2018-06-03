@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-// utils
 import { setFormState } from '../../../../utils/utils';
 import { default as SpinnerComponent } from '../../../spinners/spinnerComponent';
 import TinymceComponent from '../../../tinymce/TinymceComponent';
+import Button from '@material-ui/core/Button';
 
 import './CreateJobComponent.scss';
 import {JobDTO} from "../../../../types";
@@ -49,6 +49,8 @@ class CreateJobComponent extends React.Component<MyProps, MyState> {
 
   handleJobSubmit(event: any): void {
 
+    console.log("handleJobSubmit()", event);
+
     const jobWrapper: JobDTO  = {
       job: {
         id: null,
@@ -85,10 +87,17 @@ class CreateJobComponent extends React.Component<MyProps, MyState> {
   }
 
   render() {
+    const styles = {
+      inputs: {
+        margin: '0 10px'
+      }
+    };
+
+    console.log("inputs: ", styles.inputs);
     const spinner = (<SpinnerComponent/>);
     const form = (
-      <div >
-        <h1>Create a new job post</h1>
+      <div className='create-job-component'>
+        <h2 id='job-create-header'>Create a new job post</h2>
         <form onSubmit={this.handleJobSubmit}>
           <div>
             <TextField
@@ -98,77 +107,59 @@ class CreateJobComponent extends React.Component<MyProps, MyState> {
               required
               onChange={(event) => this.handleChange(this.state, 'title', event.target.value)}
               margin="normal"
+              style={styles.inputs}
             />
-            {/*<label htmlFor="job-title">Job Title</label>
-            <input
-              type="text"
-              required
-              id="job-title"
-              placeholder="Enter Job Title"
-              value={this.state.title}
-              onChange={(event) => this.handleChange(this.state, 'title', event.target.value)}
-            />*/}
-
-            <div>
-              <h3>Job Location</h3>
-              <label htmlFor="job-street">Street</label>
-              <input
-                type="text"
-                required
+            <h2 id='job-location-header'>Job Location</h2>
+            <div className='job-location-form'>
+              <TextField
                 id="job-street"
-                placeholder="Enter Job Street"
-                value={this.state.street}
+                label="Street Address"
+                placeholder="Enter Street Address"
+                required
                 onChange={(event) => this.handleChange(this.state, 'street', event.target.value)}
+                margin="normal"
+                style={styles.inputs}
               />
-              <label htmlFor="job-city">City</label>
-              <input
-                type="text"
-                required
+              <TextField
                 id="job-city"
+                label="City"
                 placeholder="Enter Job city"
-                value={this.state.city}
+                required
                 onChange={(event) => this.handleChange(this.state, 'city', event.target.value)}
+                margin="normal"
+                style={styles.inputs}
               />
-              <label htmlFor="job-city">State</label>
-              <input
-                type="text"
-                required
+              <TextField
                 id="job-state"
+                label="State"
                 placeholder="Enter Job State"
-                value={this.state.state}
-                onChange={(event) => this.handleChange(this.state, 'state', event.target.value)}
-              />
-              <label htmlFor="job-city">Zip</label>
-              <input
-                type="text"
                 required
+                onChange={(event) => this.handleChange(this.state, 'state', event.target.value)}
+                margin="normal"
+                style={styles.inputs}
+              />
+              <TextField
                 id="job-zip"
+                label="Zip"
                 placeholder="Enter Job Zip"
-                value={this.state.zip}
+                required
                 onChange={(event) => this.handleChange(this.state, 'zip', event.target.value)}
+                margin="normal"
+                style={styles.inputs}
               />
             </div>
           </div>
+          <h2 id='description-header'>Job Description</h2>
           <div>
-            <label htmlFor="job-description">Job Description</label>
             <TinymceComponent
               id="job-create"
               onEditorChange={this.handleJobDescriptionChange}
               priorContent={null}
             />
           </div>
-          <div>
-            <label htmlFor="keywords">Enter keywords</label>
-            <input
-              type="text"
-              required
-              id="keywords"
-              placeholder="Enter keywords"
-              value={this.state.keywords}
-              onChange={(event) => this.handleChange(this.state, 'keywords', event.target.value)}
-            />
-          </div>
-          <button>Submit Job</button>
+          <Button variant="raised" color="primary" type='submit' style={{margin: '10px'}}>
+            Submit Job
+          </Button>
         </form>
       </div>
     );

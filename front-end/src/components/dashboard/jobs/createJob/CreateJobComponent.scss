@@ -1,6 +1,26 @@
 @import '../../../../styles/variables';
 
 .create-job-component{
-  width: 70%;
+  width: 100%;
   float: left;
+  @include panel();
+  padding: 20px;
+  h2{
+    margin: 0;
+  }
+
+  #job-create-header,
+  #job-location-header,
+  #description-header{
+    margin: 10px 0;
+  }
+
+  .job-location-form{
+    display: flex;
+    //justify-content: space-between;
+    align-items: center;
+    >*{
+      margin-right: 10px;
+    }
+  }
 }
