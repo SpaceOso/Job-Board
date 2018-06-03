@@ -30,20 +30,12 @@ class EmployeeDashboardComponent extends React.Component<Props, any> {
     this.dashboardMainLayout = this.dashboardMainLayout.bind(this);
   }
 
-  componentWillMount() {
-    // if (this.props.company.id !== null) {
-      console.log("EmployerDashboard: 2", this.props.company);
-      // this.props.fetchCompanyJobs(this.props.company.id);
-    // }
-  }
-
   /**
    *
    * @param companyData {Company} - The company information from CompRegisterComponent
    * @param file {File} - The logo of the company
    */
   handleCompanyRegistration(companyData, file) {
-    console.log('handleCompanyRegistration:', companyData, file);
     const employeeData = { ...companyData, employeeId: this.props.employee.id, logoFile: file };
     this.props.submitCompanyRegistration(employeeData);
   }
@@ -79,7 +71,6 @@ class EmployeeDashboardComponent extends React.Component<Props, any> {
   render() {
 
     if (this.props.company.isFetching === true) {
-      console.log("state is Fetching");
       return <SpinnerComponent/>;
     }
 

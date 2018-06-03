@@ -49,7 +49,6 @@ class DashboardMainLayout extends React.Component<Props, any> {
   }
 
   handleApplicantSelect(selectedApplicant) {
-    console.log("MainLayout: ", selectedApplicant);
     this.setState({ selectedApplicant });
   }
 

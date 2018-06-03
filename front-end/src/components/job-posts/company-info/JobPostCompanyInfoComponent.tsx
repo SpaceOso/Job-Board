@@ -26,7 +26,6 @@ class JobPostCompanyInfoComponent extends React.Component<MyProps, any> {
   }
 
   handleClick(jobId) {
-    console.log('JOB ID:', jobId);
     if (this.props.loadJob !== undefined) {
       this.props.loadJob(jobId);
     }

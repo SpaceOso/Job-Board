@@ -79,7 +79,6 @@ class JobPostLayout extends React.Component<JobPostProps, MyState> {
   }
 
   handleJobApplicantInfo(data) {
-    console.log('in the jobPost post layout about to add applicant:', data);
     this.props.addApplicantToJob(data);
   }
 

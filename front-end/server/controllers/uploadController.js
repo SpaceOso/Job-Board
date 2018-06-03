@@ -18,7 +18,6 @@ let s3 = new AWS.S3();
 
 const uploadPath = path.join(__dirname, '../..', '/public/uploads/images');
 
-console.log('uploadPath:', uploadPath);
 let storageType = {};
 /**
  * If we are in prod we want to use s3 storage for files, if not we save files locally

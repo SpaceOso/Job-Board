@@ -159,17 +159,7 @@ class CompRegisterComponent extends React.Component<CompRegisterProps, MyState> 
       logoFile: formData.logo
     };
 
-    console.log("CompRegisterComponent", companyWrapper);
-
     this.props.submitData(companyWrapper, formData.logo);
-
-    /* If there was a file uploaded update logoImg state property */
-   /* if (formData.logo !== undefined) {
-      this.props.submitData(formData, formData.logo);
-    } else {
-      this.props.submitData(formData, null);
-    }*/
-
   }
 
   handleChange(key, event) {

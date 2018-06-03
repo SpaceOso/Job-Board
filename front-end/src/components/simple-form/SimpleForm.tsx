@@ -95,9 +95,6 @@ class SimpleForm extends React.Component<MyProps, any> {
     this.handleCancelEvent = this.handleCancelEvent.bind(this);
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-  }
-
   /**
    *
    * @param {string} key

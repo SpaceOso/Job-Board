@@ -49,8 +49,6 @@ class CreateJobComponent extends React.Component<MyProps, MyState> {
 
   handleJobSubmit(event: any): void {
 
-    console.log("handleJobSubmit()", event);
-
     const jobWrapper: JobDTO  = {
       job: {
         id: null,
@@ -78,7 +76,6 @@ class CreateJobComponent extends React.Component<MyProps, MyState> {
   }
 
   handleEditorChange = (e) => {
-    // console.log('Content was updated:', e.target.getContent());
   };
 
   handleJobDescriptionChange(content) {
@@ -93,7 +90,6 @@ class CreateJobComponent extends React.Component<MyProps, MyState> {
       }
     };
 
-    console.log("inputs: ", styles.inputs);
     const spinner = (<SpinnerComponent/>);
     const form = (
       <div className='create-job-component'>

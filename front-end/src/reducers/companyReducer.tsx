@@ -33,7 +33,6 @@ function companyReducer(state = defaultState, action): any {
     case FETCHING_THIS_COMPANY_JOBS:
       return state;
     case GET_THIS_COMPANY_JOBS_SUCCESS:
-      console.log("the jobs we're about to add to the store: ", action.payload.data.jobApplicantList);
       return {
         ...state,
         jobs: [...action.payload.data.jobList],
@@ -48,8 +47,6 @@ function companyReducer(state = defaultState, action): any {
         newArr = [];
         newArr.push(action.payload);
       }
-
-      console.log('newArr:', newArr);
 
       return {
         ...state,
@@ -74,8 +71,6 @@ function companyReducer(state = defaultState, action): any {
         ...defaultState,
       };
     case SET_COMPANY:
-      console.log('SET_COMPANY');
-      console.log(action.payload);
       return {
         ...state,
         ...action.payload

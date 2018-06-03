@@ -94,8 +94,6 @@ class ApplicationComponent extends React.Component<MyProps> {
 
   handleApplicationSubmit(data) {
 
-    console.log("Adding application submition here: ", data);
-
     /*We only get the info from the form here. We need to add the company and jobId info to this.*/
 
     let applicant : Applicants = {...data};

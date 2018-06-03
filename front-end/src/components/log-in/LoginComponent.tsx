@@ -75,8 +75,6 @@ class LogInComponent extends React.Component<MyProps, MyState> {
 
   handleSubmit(employeeObject) {
 
-    console.log("LoginComponent callback: ", employeeObject);
-
     const employee = {
       email: employeeObject.email,
       password: employeeObject.password,

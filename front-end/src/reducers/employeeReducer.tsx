@@ -27,7 +27,6 @@ function employeeReducer(state = defaultState, action): any {
 // function employeeReducer(state, action):Employee {
   switch (action.type) {
     case REGISTER_EMPLOYEE_SUCCESS:
-      console.log("REGISTER_EMPLOYE_SUCCESS");
       return {
         ...state,
         ...action.payload,
@@ -38,10 +37,8 @@ function employeeReducer(state = defaultState, action): any {
       return {
         ...state,
         ...action.payload,
-        // isAuth: true,
       };
     case LOGIN_EMPLOYEE_SUCCESS:
-        console.log("updating login employee sucess with:", action.payload);
       return {
         ...state,
         ...action.payload,

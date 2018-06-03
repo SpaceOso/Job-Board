@@ -16,26 +16,21 @@ class JobPostUpdatesComponent extends React.Component<IProps, {}> {
   constructor(props) {
     super(props);
 
-    console.log("the props that we get for the jobpost update: ", this.props);
     this.createList = this.createList.bind(this);
     this.handleJobClick = this.handleJobClick.bind(this);
   }
 
   handleJobClick(event) {
-    console.log('jobPost has been clicked', event);
   }
 
   createList() {
-    console.log("CREATING LISTS");
     if (this.props.jobs === null || this.props.jobs === undefined || this.props.jobs.length <= 0) {
       return this.createEmptyMessageComponent();
     }
-    console.log("the jobs we're using to make a list: ", this.props.jobs);
 
     let jobObjects: PrivateJobView[] = [...this.props.jobs];
 
     jobObjects.forEach(job =>{
-      console.log(job);
       job.applicants = this.props.company.applicantList[job.id];
     });
 
@@ -80,7 +75,6 @@ class JobPostUpdatesComponent extends React.Component<IProps, {}> {
   render() {
 
     if(this.props.company.isFetching){
-      console.log("company is fetching..")
       return <SpinnerComponent />
     }
 

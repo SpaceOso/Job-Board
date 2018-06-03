@@ -53,7 +53,6 @@ class EditJobsLayout extends React.Component<MyProps, myState> {
       { property: 'description', header: 'Job Description' },
     ];
 
-    console.log('inside the edit layout with props: ', this.props);
     return (
       <div className="dashboard-edit-job-section">
         {this.state.editingJob === true ? <Redirect to={`${this.props.match.url}/editJob`}/> : null}

@@ -31,7 +31,6 @@ describe('/api/login/', () => {
         expect(res.body.employee).to.have.all.keys(employeeKeys);
         expect(res.body.token).to.be.a('string');
         // TODO need to test employee that does not have an company saved
-        // console.log(res.body);
         done();
       });
 

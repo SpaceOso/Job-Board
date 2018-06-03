@@ -60,15 +60,12 @@ function currentJobPostReducer(state = thisState, action) {
         ...action.payload.data.company,
       };
 
-      console.log("sending:", currentJob);
-
       return {
         ...state,
         ...currentJob
       };
     }
     case SINGLE_JOB_SUCCESS:
-      console.log("single jobPost success:", action.payload);
       return {
         ...state,
         ...action.payload,

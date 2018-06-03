@@ -36,8 +36,6 @@ function socialMediaComponent(props: MyProps) {
   });
 
 
-  console.log("what are props for this: ", socialLinks);
-
   if (socialLinks.get("website") !== null) {
     doesCompanyHaveLinks = true;
     website = (

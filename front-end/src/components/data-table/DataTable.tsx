@@ -143,9 +143,6 @@ class DataTable extends React.Component<MyProps, MyState> {
     }
     return this.state.pages[ this.state.currentPage ].map((rowObj, index) => {
       // TODO need to paginate this component by creating a prop that handles how many pages there should be per data table
-      if (index > this.props.totalRows) {
-        console.log('we should have created another page!!!');
-      }
 
       let specialClassName = '';
 

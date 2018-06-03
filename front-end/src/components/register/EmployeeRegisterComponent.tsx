@@ -124,13 +124,10 @@ class EmployeeRegisterComponent extends React.Component<MyProps, MyState> {
       error: "",
     };
 
-
-    console.log('we\'re trying to submit newEmployee:', newEmployee);
     this.props.registerEmployee(newEmployee);
   }
 
   redirectToDashboard() {
-    console.log("redirectToDashboard...");
     return (
       <Redirect to={`/employee/dashboard/${this.props.employee.id}/register`} push/>
     );

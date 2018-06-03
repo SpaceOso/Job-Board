@@ -40,7 +40,6 @@ export function registerEmployeeError(error) {
 }
 
 export function setSiteIdle() {
-  console.log('setSiteIdle()');
   return {
     type: SITE_IDLE,
     payload: { isFetching: false },
@@ -60,8 +59,6 @@ export function registerEmployee(employeOjbect) {
 
     dispatch(siteFetch());
 
-    console.log("going to attempt to create a new employee:", employeOjbect);
-
     let employeeWrapper : EmployeeWrapper = {
       company: null,
       companyId: null,
@@ -70,9 +67,6 @@ export function registerEmployee(employeOjbect) {
 
     axios.post(`${ROOT_URL}api/v1/employee/create`, employeeWrapper)
       .then((response) => {
-        /*response: {employee, token}*/
-        console.log("this is the reponse we get when we register:", response);
-
 
         localStorage.setItem('tkn', response.data.token);
 
@@ -83,7 +77,6 @@ export function registerEmployee(employeOjbect) {
 
       })
       .catch((error) => {
-        console.log("we got an error on saving a new user: ", error);
         dispatch(setSiteIdle());
         dispatch(registerEmployeeError(error));
         dispatch(logInEmployeeError(error.response.data.message));
@@ -162,7 +155,6 @@ export function removeLogInError() {
 }
 
 export function clearAllErrors() {
-  console.log('clearing all errors!');
   return {
     type: CLEAR_ALL_ERRORS,
   };
@@ -188,8 +180,6 @@ export function logInEmployeeSuccess(data) {
 // gets the token passed from localStorage
 export function logInOnLoad(token) {
 
-  console.log("loginOnLoad with:", token);
-
   return (dispatch) => {
 
     dispatch(siteFetch());
@@ -199,13 +189,9 @@ export function logInOnLoad(token) {
         // set token as part of our request headers
         setAuth(token);
 
-        console.log("login/logcheck", response);
-
         if (response.data.employee.companyIdentifier !== null) {
-          console.log("logInOnLoad: ", response.data.company);
           dispatch(setCompanyAndEmployee(response.data.company, response.data.employee));
         } else {
-          console.log("was null so we're calling logInEmployeeSuccess with : ", response.data.employee);
           dispatch(logInEmployeeSuccess(response.data.employee));
           dispatch(setSiteIdle());
         }
@@ -216,7 +202,6 @@ export function logInOnLoad(token) {
         const errorMsg = "credentials expired";
         if (errorMsg === 'credentials expired') {
           // TODO we need to send them to the log in page
-          console.log('we need to have them re-log');
         }
         dispatch(clearAllErrors());
         dispatch(setSiteIdle());
@@ -230,7 +215,6 @@ export function logInEmployee(employee) {
     email
     password
   };*/
-    console.log("logging in with this employee:", employee);
     employee.username = employee.email;
   return (dispatch) => {
 
@@ -249,7 +233,6 @@ export function logInEmployee(employee) {
         method: "post",
     })
       .then((response) => {
-          console.log("the resposne that we are getting..", response);
 
         // save token to local storage
         const token = response.data.token;
@@ -259,18 +242,14 @@ export function logInEmployee(employee) {
         setAuth(token);
 
         if (response.data.employee.companyIdentifier !== null) {
-          // return dispatch(setCompanyAndEmployee(response.data.company, response.data.employee))
           return dispatch(setCompanyAndEmployee(response.data.company, response.data.employee))
-            .then()
         } else {
-          console.log("it did equal null now where here");
           dispatch(logInEmployeeSuccess(response.data.employee));
           dispatch(setSiteIdle());
         }
 
       })
       .catch((error) => {
-        console.log("we are not finding the employee:", error.response);
         dispatch(setSiteIdle());
         dispatch(logInEmployeeError(error.response.data.message));
 
@@ -279,18 +258,12 @@ export function logInEmployee(employee) {
 }
 
 export function setCompanyAndEmployee(company, employee) {
-  console.log("setCompanyAndEmployee", company, employee);
   return (dispatch) => {
-    // dispatch(setSiteIdle());
-    // dispatch()
-    console.log("going to call with: ", company.id);
     dispatch(siteFetch());
     dispatch(companyFetching());
     dispatch(setCompany(company));
     dispatch(setCompanyIdAfterRegistration({companyIdentifier: company.id}));
     dispatch(logInEmployeeSuccess(employee))
     dispatch(fetchAllCompanyJobModels(company.id));
-
-    // dispatch(setSiteIdle());
   };
 }

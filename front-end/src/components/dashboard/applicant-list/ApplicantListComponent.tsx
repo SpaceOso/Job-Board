@@ -34,7 +34,6 @@ class ApplicantListComponent extends React.Component<MyProps, MyState> {
   constructor(props) {
     super(props);
 
-    console.log("props given to applicantList: ", this.props);
     this.onClick = this.onClick.bind(this);
     this.handleJobSelectionChange = this.handleJobSelectionChange.bind(this);
     this.displayJobDropDown = this.displayJobDropDown.bind(this);
@@ -44,12 +43,9 @@ class ApplicantListComponent extends React.Component<MyProps, MyState> {
   componentDidMount() {
     if (this.props.jobs !== null && Object.keys(this.props.jobs).length > 0) {
       // adds the first jobPost to state
-      // let jobList = Object.keys(this.props.jobs);
       const currentJob = this.props.jobs[0];
-      console.log("state applicant list will be: ", this.props.company.applicantList[currentJob.id]);
       this.setState({
         currentJob: '-',
-        // currentJob: {...currentJob},
         applicantList: this.props.company.applicantList[currentJob.id],
       });
     }
@@ -58,9 +54,6 @@ class ApplicantListComponent extends React.Component<MyProps, MyState> {
   createList() {
     const currentJob = this.state.currentJob as CompanyJobView;
 
-    if (currentJob !== null) {
-      console.log('new list created with jobPost:', currentJob.title );
-    }
     const specialClasses = {
       Interested: 'interested',
       'Needs Review': 'needsReview',
@@ -126,7 +119,6 @@ class ApplicantListComponent extends React.Component<MyProps, MyState> {
   };
 
   onClick(selectedApplicant) {
-    console.log('selectedApplicant', selectedApplicant);
     this.setState({ applicant: selectedApplicant });
     this.props.handleApplicantSelect(selectedApplicant);
   }

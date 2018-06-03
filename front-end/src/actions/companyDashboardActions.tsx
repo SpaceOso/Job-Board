@@ -56,12 +56,10 @@ export function editingJobPost() {
 }
 
 export function fetchAllCompanyJobModels(companyId) {
-  console.log("fetchAllCompanyJobModels: ", companyId);
   return (dispatch) => {
 
     axios.get(`${ROOT_URL}secured/company/${companyId}/get-jobs-and-applicants`)
       .then((data) => {
-        console.log("the response that we get from get-jobs:", data);
         dispatch(getThisCompanyJobsSuccess(data));
         dispatch(removeLogInError());
 
@@ -104,13 +102,10 @@ export function companyIdle() {
 export function saveJobPost(jobPostInfo) {
   return (dispatch) => {
 
-    console.log("trying to post a new job ", jobPostInfo);
-
     dispatch(companyFetching());
 
     axios.post(`${ROOT_URL}secured/company/jobposts/create`, jobPostInfo)
       .then((response) => {
-        console.log("the resposne that we get", response);
         if(response.data.job === null || response.data.job === undefined){
           throw new Error("Sorry couldn't not create your new job. Please make sure you have an internet connection");
         }
@@ -118,7 +113,6 @@ export function saveJobPost(jobPostInfo) {
         dispatch(setSiteIdle());
       })
       .catch((error) => {
-        console.log("error creating a new job ", error);
         // TODO need to add an error handlers
         dispatch(setSiteIdle());
       });
@@ -153,7 +147,6 @@ function createFormData(object: Object, form?: FormData, namespace?: string): Fo
  */
 export function submitCompanyRegistration(companyInfo) {
 
-  console.log("companyInfo before formdata", companyInfo);
   const companyWrapper = {
     company: {...companyInfo.company},
     employeeId: companyInfo.employeeId,
@@ -168,18 +161,13 @@ export function submitCompanyRegistration(companyInfo) {
   data.append("companyWrapper",
     new Blob([JSON.stringify(companyWrapper)], {type: "application/json"}));
 
-  console.log("the blob:", JSON.stringify(companyWrapper));
-
   return (dispatch) => {
 
     dispatch(siteFetch());
 
-    console.log("about to register a new company with:", data);
-
     axios.post(`${ROOT_URL}secured/company/create`, data)
       .then((response) => {
 
-        console.log('response from the server:', response);
         /*recieving {token, company}*/
         setAuth(response.data.token);
         response.data.employee.companyIdentifier = response.data.companyId;

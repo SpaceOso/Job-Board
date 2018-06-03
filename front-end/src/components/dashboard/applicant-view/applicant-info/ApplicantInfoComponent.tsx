@@ -57,7 +57,6 @@ class ApplicantInfoComponent extends React.Component<MyProps, MyState> {
   }
 
   saveStatusUpdate(event) {
-    console.log('saving status updates:');
     const statusUpdate = {
       interest: this.state.interest,
       status: this.state.status,
@@ -100,9 +99,7 @@ class ApplicantInfoComponent extends React.Component<MyProps, MyState> {
   }
 
   render() {
-    console.log("applicantInfo: ", this.props.jobApplicant.applicant);
     const applicant = this.props.jobApplicant.applicant;
-    console.log("and the applicant first name is: ", applicant.firstName);
     const applicantEmail = this.props.jobApplicant.applicant.email;
     const applicantPhone = this.props.jobApplicant.applicant.phoneNumber;
     const applicantResume = this.props.jobApplicant.applicant.resumeUrl;

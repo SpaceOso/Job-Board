@@ -73,8 +73,6 @@ export function getJobs() {
 
     axios.get(`${ROOT_URL}api/v1/jobposts/list/home-page`)
       .then((response) => {
-        console.log(`${ROOT_URL}pi/v1/jobposts/list/home-page`);
-        console.log("the jobs from the backend:", response);
         dispatch(getJobsSuccess(response));
       })
       .catch((error) => {
@@ -85,7 +83,6 @@ export function getJobs() {
 
 export function addApplicantToJob(applicantInfo) {
 
-  console.log("The applicant info before we send to server: ", applicantInfo);
   const data = new FormData();
   //TODO need to update this
 
@@ -106,8 +103,6 @@ export function addApplicantToJob(applicantInfo) {
     data.append("resume", applicantInfo.applicant.resumeFile);
   }
 
-  console.log("the data when creating new applicant: " + applicantInfo);
-
   return (dispatch) => {
     dispatch(fetchingJobs());
     axios.post(`${ROOT_URL}api/v1/applicant/create`, data)
@@ -123,10 +118,8 @@ export function addApplicantToJob(applicantInfo) {
 export function getJobById(id) {
   return (dispatch) => {
     dispatch(fetchingJobs());
-    console.log("Getting single jobPost: ", id);
       axios.get(`${ROOT_URL}${'api/v1/jobposts/'}${id}`)
       .then((response) => {
-          console.log("and the response from jobPost: ", response);
         dispatch(singleJobSuccess(response.data));
       })
       .catch((error) => {
