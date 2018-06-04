@@ -3,10 +3,12 @@
     "outDir": "./public/",        // path to output directory
     "sourceMap": true,          // allow sourcemap support
     "moduleResolution": "Node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "strictNullChecks": false,   // enable strict null checks as a best practice
     "module": "commonjs",       // specifiy module code generation
     "jsx": "react",             // use typescript to transpile jsx to js
-    "target": "es5",            // specify ECMAScript target version
+    "target": "es6",            // specify ECMAScript target version
     "lib": ["es2017","dom"],
     "allowJs": true            // allow a partial TypeScript and JavaScript codebase
   },
