@@ -14,15 +14,19 @@ interface MyProps {
   updateApplicantInfo: (applicantInfo) => {};
 }
 
-const applicantViewContainer: React.SFC<MyProps> = (props) => {
+export const applicantViewContainer = (props) => {
   return (
     <div className={'applicant-view-container'}>
-      {props.jobApplicant !== null ? <ApplicantInfoComponent saveApplicantInfo={props.updateApplicantInfo} jobApplicant={props.jobApplicant}/> : <SpinnerComponent/>}
+      {props.jobApplicant !== null ?
+        <ApplicantInfoComponent
+          saveApplicantInfo={props.updateApplicantInfo}
+          jobApplicant={props.jobApplicant}/> :
+        <SpinnerComponent/>}
     </div>
   );
 };
 
-function mapStateToProps({ company, siteFetching }: StoreState) {
+function mapStateToProps({ company, siteFetching }: StoreState, props) {
   return {
     company,
     siteFetching,

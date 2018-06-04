@@ -41,10 +41,10 @@ class ApplicantInfoComponent extends React.Component<MyProps, MyState> {
   }
 
   handleChange(event) {
-    this.setState({
-      [ event.target.id ]: event.target.value,
-      statusUpdated: true,
-    });
+    // this.setState({
+    //   [ event.target.id ]: event.target.value,
+    //   statusUpdated: true,
+    // });
   }
 
   setDocumentToReview(document) {

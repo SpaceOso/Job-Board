@@ -1,9 +1,15 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { applyMiddleware, createStore } from 'redux';
-import * as ReduxPromise from 'redux-promise';
+// import { applyMiddleware, createStore } from 'redux';
+import * as redux from 'redux';
+// import * as ReduxPromise from 'redux-promise';
 import reduxThunk from 'redux-thunk';
+import { StoreState } from './types/index';
+
+declare module 'redux' {
+  export type GenericStoreEnhancer = any;
+}
 
 // styles
 import './styles/main.scss';
@@ -15,10 +21,11 @@ import rootReducer from './reducers/rootReducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import AppContainer from './components/AppContainer';
 
-import { StoreState } from './types/index';
 
-export const store = createStore<StoreState>(
-  rootReducer, composeWithDevTools(applyMiddleware(reduxThunk, ReduxPromise)),
+
+export const store = redux.createStore(
+  rootReducer,
+  composeWithDevTools(redux.applyMiddleware(reduxThunk))
 );
 
 class JobBoard extends React.Component {
