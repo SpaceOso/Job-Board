@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 // actions
-import {AuthEmployee, Employee} from '../../types';
+import { AuthEmployee } from '../../types';
 import Slide from '../animations/Slide';
 import ModalComponent from '../modal/ModalComponent';
 import SideMenu from '../side-menu/SideMenu';
@@ -24,8 +24,8 @@ class HeaderComponent extends React.Component<MyProps, MyState> {
   state: MyState = {
     auth: false,
     loggedIn: false,
-    mobile: false,
     menuOpen: false,
+    mobile: false,
   };
 
   constructor(props) {
@@ -40,9 +40,9 @@ class HeaderComponent extends React.Component<MyProps, MyState> {
 
   componentDidMount() {
     this.setState({
-      mobile: window.innerWidth <= 1046,
-      loggedIn: this.props.employee === null,
       auth: this.props.employee.isAuth,
+      loggedIn: this.props.employee === null,
+      mobile: window.innerWidth <= 1046,
     });
   }
 
@@ -101,7 +101,13 @@ class HeaderComponent extends React.Component<MyProps, MyState> {
         navButtons.push(...this.createMobileLinks(dashboardLink));
 
         navButtons.push(
-          <NavLink key={'log-out'} onClick={this.logOut} className="employee-dashboard-btn" activeClassName={'selected'} to={'/'}>
+          <NavLink
+            key={'log-out'}
+            onClick={this.logOut}
+            className="employee-dashboard-btn"
+            activeClassName={'selected'}
+            to={'/'}
+          >
             <i className={`fas fa-sign-out-alt`}/>Log Out
           </NavLink>,
         );
@@ -134,7 +140,12 @@ class HeaderComponent extends React.Component<MyProps, MyState> {
 
     return navAttributes.map((link) => {
       return (
-        <NavLink key={link.link} className="employee-dashboard-btn" activeClassName={'selected'} to={`${dashboardLink}/${link.link}`}>
+        <NavLink
+          key={link.link}
+          className="employee-dashboard-btn"
+          activeClassName={'selected'}
+          to={`${dashboardLink}/${link.link}`}
+        >
           <i style={{ fontSize: '23px' }} className={`fas ${link.img}`}/>
           <span style={{ marginLeft: '9px' }}>{link.title}</span>
         </NavLink>

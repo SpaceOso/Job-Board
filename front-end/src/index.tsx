@@ -3,7 +3,6 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 // import { applyMiddleware, createStore } from 'redux';
 import * as redux from 'redux';
-// import * as ReduxPromise from 'redux-promise';
 import reduxThunk from 'redux-thunk';
 import { StoreState } from './types/index';
 
@@ -21,11 +20,9 @@ import rootReducer from './reducers/rootReducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import AppContainer from './components/AppContainer';
 
-
-
 export const store = redux.createStore(
   rootReducer,
-  composeWithDevTools(redux.applyMiddleware(reduxThunk))
+  composeWithDevTools(redux.applyMiddleware(reduxThunk)),
 );
 
 class JobBoard extends React.Component {
