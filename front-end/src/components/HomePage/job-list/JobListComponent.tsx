@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { JobPost} from '../../../types';
-import SpinnerComponent from '../../spinners/spinnerComponent';
+import { JobPost } from '../../../types';
+import { default as SpinnerComponent } from '../../spinners/spinnerComponent';
 import { default as JobListItemComponent } from './JobListItemComponent';
 
 export interface Props {
@@ -20,7 +20,7 @@ class JobListComponent extends React.Component<Props> {
   returnJobList() {
     return (
       Object.keys(this.props.jobs).map((job) => {
-        const currentJob = this.props.jobs[ job ];
+        const currentJob = this.props.jobs[job];
         if (currentJob !== true) {
           return <JobListItemComponent key={currentJob.job.id + 1} jobPost={currentJob}/>;
         }

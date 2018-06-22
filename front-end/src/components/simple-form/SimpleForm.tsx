@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import './SimpleForm.scss';
 import SimpleFormInput from './SimpleFormInput';
-import TextField from "@material-ui/core/es/TextField";
+import TextField from "@material-ui/core/TextField";
 import Button from '@material-ui/core/Button';
 import {map} from "tinymce";
 

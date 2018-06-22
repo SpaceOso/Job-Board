@@ -1,5 +1,6 @@
 const {resolve} = require('path');
 const path = require('path');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const webpack = require('webpack');
 const DotenvPlugin = require('webpack-dotenv-plugin');
 
@@ -8,6 +9,8 @@ module.exports = {
     devServer:{
         contentBase: resolve('../back-end/src/main/resources/public/'),
         historyApiFallback: true,
+        compress: true,
+        port: 8080,
     },
     output: {
         // path: resolve('../back-end/src/main/resources/public/'),
@@ -21,6 +24,12 @@ module.exports = {
         extensions: [".ts", ".tsx", ".js", ".jsx"]
     },
     plugins: [
+        new UglifyJsPlugin({
+            uglifyOptions:{
+                ecma: 7,
+                comporess: true,
+            }
+        }),
         new DotenvPlugin({
             sample: './.env.hide',
             path: './.env',

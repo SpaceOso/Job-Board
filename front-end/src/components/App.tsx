@@ -10,14 +10,17 @@ import NotFoundComponent from './not-found/NotFoundComponent';
 import EmployeeRegisterContainer from './register/EmployeeRegisterContainer';
 
 // actions
-import {Company, SiteErrors, SiteFetching, Employee, AuthEmployee} from '../types';
+import {
+  AuthEmployee,
+  SiteErrors,
+  SiteFetching,
+} from '../types';
 import ProtectedComponent from './dashboard/protected/ProtectedComponent';
 
 interface Props {
   logInOnLoad;
   logOutEmployee: () => {};
   employee: AuthEmployee;
-  // company: Company;
   siteFetching: SiteFetching;
   siteErrors: SiteErrors;
 }
@@ -46,7 +49,6 @@ class App extends React.Component<Props> {
     return (
       <BrowserRouter>
         <LayoutComponent employee={this.props.employee} logOutEmployee={this.props.logOutEmployee}>
-          {/*<Route exact path="/" component={JumboTron}/>*/}
           <Switch>
             <Route exact path="/" component={JobListContainer as any}/>
             <Route exact path="/register" component={EmployeeRegisterContainer as any}/>
