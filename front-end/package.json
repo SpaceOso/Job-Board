@@ -11,7 +11,7 @@
     "start": "node -r dotenv/config bin/www.js -w app.js",
     "server": "set NODE_ENV=development&& nodemon  bin/www.js",
     "test": "mocha  --require ts-node/register src/**/*.spec.ts",
-    "build": "webpack --config webpack.prod.js",
+    "build": "webpack --mode production",
     "build:dev": "set NODE_ENV=development webpack --env.dev --hot",
     "dev": "webpack-dev-server --mode development --open",
     "dev2": "webpack-dev-server --open --config webpack.dev.js --history-api-fallback --port 3000 --hot",
